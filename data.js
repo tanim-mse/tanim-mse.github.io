@@ -5,8 +5,6 @@ const DEFAULT_DATA = {
   "heroLabel": "Materials Science & Engineering",
   "typewriterWords": [
     "Materials Engineer",
-    "Nanotechnology Researcher",
-    "Sustainable Engineering Advocate",
     "Problem Solver",
     "RUET Student"
   ],
