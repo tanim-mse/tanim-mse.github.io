@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tanim — Materials Science Engineer</title>
+<meta name="description" content="Portfolio of Tanim, Materials Science & Engineering student at RUET.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="#home" class="nav-logo">TI</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="nav-link active">Home</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#skills" class="nav-link">Skills</a></li>
+      <li><a href="#projects" class="nav-link">Projects</a></li>
+      <li><a href="#research" class="nav-link">Research</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="admin.html" class="admin-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Admin
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="#home" class="mobile-link">Home</a>
+  <a href="#about" class="mobile-link">About</a>
+  <a href="#skills" class="mobile-link">Skills</a>
+  <a href="#projects" class="mobile-link">Projects</a>
+  <a href="#research" class="mobile-link">Research</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+  <a href="admin.html" class="mobile-link admin-mobile">🔒 Admin Panel</a>
+</div>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <p class="hero-label" id="heroLabel">Materials Science & Engineering</p>
+    <h1 class="hero-name" id="heroName">Tanim</h1>
+    <div class="hero-typewriter">
+      <span class="tw-prefix">I am a </span>
+      <span class="tw-text" id="twText"></span>
+      <span class="tw-cursor">|</span>
+    </div>
+    <p class="hero-sub" id="heroSub">B.Sc. Student at RUET · Passionate about advanced materials, nanotechnology & sustainable engineering</p>
+    <div class="hero-btns">
+      <a href="#" class="btn btn-primary" id="cvBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download CV
+      </a>
+      <a href="#projects" class="btn btn-ghost">View My Work</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>scroll</span>
+  </div>
+</section>
+
+<!-- About -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">Get to Know Me</div>
+      <h2 class="section-title">About <span class="grad">Me</span></h2>
+    </div>
+    <div class="about-grid reveal">
+      <div class="avatar-wrap">
+        <div class="avatar-glow"></div>
+        <img id="avatarImg" class="avatar-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect width='300' height='300' fill='%230f0f1a'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='sans-serif' font-size='80' fill='%237c3aed'%3ETI%3C/text%3E%3C/svg%3E" alt="Tanim">
+      </div>
+      <div class="about-text">
+        <p id="aboutBio">I am Tanim, a Materials Science and Engineering student at RUET with a deep passion for exploring the intersection of advanced materials, nanotechnology, and sustainable engineering solutions. I thrive at the boundary of science and innovation, driven by curiosity and a commitment to meaningful research.</p>
+        <div class="about-stats">
+          <div class="stat-card">
+            <div class="stat-label">University</div>
+            <div class="stat-val" id="statUni">RUET</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Department</div>
+            <div class="stat-val" id="statDept">MSE</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Year</div>
+            <div class="stat-val" id="statYear">Undergraduate</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section class="section section-alt" id="skills">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">Expertise</div>
+      <h2 class="section-title">Skills & <span class="grad">Knowledge</span></h2>
+      <p class="section-sub">A blend of engineering knowledge, research tools, and creative problem-solving.</p>
+    </div>
+    <div class="skills-grid reveal" id="skillsGrid"></div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section class="section" id="projects">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">Portfolio</div>
+      <h2 class="section-title">Featured <span class="grad">Projects</span></h2>
+      <p class="section-sub">Exploring the intersection of materials science, engineering, and innovation.</p>
+    </div>
+    <div class="projects-grid reveal" id="projectsGrid"></div>
+  </div>
+</section>
+
+<!-- Research -->
+<section class="section section-alt" id="research">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">Academic</div>
+      <h2 class="section-title">Research & <span class="grad">Publications</span></h2>
+    </div>
+    <div class="research-grid reveal">
+      <div>
+        <h3 class="research-subtitle">Research Interests</h3>
+        <div id="researchList" class="timeline"></div>
+      </div>
+      <div>
+        <h3 class="research-subtitle">Publications</h3>
+        <div id="pubList" class="pub-list"></div>
+        <div class="coming-soon" id="pubComingSoon" style="display:none">
+          <span>📄</span> Publications coming soon
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">Get in Touch</div>
+      <h2 class="section-title">Let's <span class="grad">Connect</span></h2>
+      <p class="section-sub" id="contactMsg">Have a research idea, collaboration opportunity, or just want to talk materials science? I'd love to hear from you.</p>
+    </div>
+    <div class="contact-grid reveal">
+      <div class="contact-info">
+        <a href="#" class="contact-item" id="emailLink">
+          <div class="contact-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-val" id="emailVal">tanim@example.com</div>
+          </div>
+        </a>
+        <div class="social-row">
+          <a href="#" class="social-btn" id="githubLink" title="GitHub">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="#" class="social-btn" id="linkedinLink" title="LinkedIn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="#" class="social-btn" id="rgLink" title="ResearchGate">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.586 0c-.818 0-1.508.19-2.073.565-.563.377-.97.936-1.213 1.68a12.458 12.458 0 0 0-.35 2.797c0 1.078.138 2.047.412 2.907.274.86.68 1.525 1.218 2 .537.475 1.178.712 1.925.712.678 0 1.268-.19 1.77-.566.504-.378.882-.926 1.138-1.647.254-.72.382-1.56.382-2.518V5.4c0-.992-.13-1.856-.386-2.592C22.155.8 21.766.38 21.24.14 20.715-.1 20.162-.01 19.586 0zm-7.99.09c-.58 0-1.1.18-1.56.543-.46.362-.818.89-1.075 1.583-.256.693-.383 1.524-.383 2.493v.44c0 .966.128 1.798.384 2.497.257.698.616 1.228 1.078 1.59.462.362.985.543 1.573.543.584 0 1.105-.18 1.563-.543.458-.362.813-.892 1.067-1.59.254-.7.38-1.531.38-2.497v-.44c0-.97-.127-1.8-.38-2.493-.254-.693-.61-1.22-1.067-1.583-.46-.362-.98-.543-1.58-.543zm-8.07.018c-.485 0-.916.128-1.29.385C1.86.75 1.558 1.12 1.33 1.6c-.228.48-.34 1.04-.34 1.68v.386c0 .64.113 1.197.34 1.672.228.475.53.842.907 1.1.378.258.81.387 1.295.387.489 0 .923-.13 1.3-.387.377-.258.673-.625.89-1.1.218-.475.326-1.033.326-1.672V3.28c0-.64-.108-1.2-.325-1.68-.218-.48-.513-.85-.89-1.11C3.458.23 3.024.1 2.527.1zm7.99 12.01c-1.18 0-2.2.256-3.06.768-.86.512-1.527 1.24-2 2.18-.472.94-.71 2.043-.71 3.31 0 1.272.238 2.384.713 3.338.475.953 1.14 1.685 1.997 2.194.856.51 1.867.766 3.033.766 1.17 0 2.184-.257 3.044-.77.86-.513 1.527-1.243 2-2.19.472-.945.71-2.058.71-3.338 0-1.27-.237-2.37-.71-3.31-.472-.94-1.14-1.67-2-2.18-.86-.512-1.875-.768-3.017-.768z"/></svg>
+          </a>
+        </div>
+      </div>
+      <form class="contact-form" id="contactForm" onsubmit="handleFormSubmit(event)">
+        <div class="form-group">
+          <input type="text" class="form-input" placeholder="Your Name" required>
+        </div>
+        <div class="form-group">
+          <input type="email" class="form-input" placeholder="Your Email" required>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-input" placeholder="Subject">
+        </div>
+        <div class="form-group">
+          <textarea class="form-textarea" placeholder="Your Message" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">
+          Send Message
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <a href="#home" class="footer-logo">TI</a>
+      <p class="footer-tagline" id="footerTagline">Tanim · Materials Science & Engineering · RUET</p>
+    </div>
+    <div class="footer-divider"></div>
+    <p class="footer-copy">© <span id="footerYear"></span> Tanim. Built with passion & code.</p>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<button class="back-top" id="backTop" aria-label="Back to top">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="data.js"></script>
+<script>
+/* ── Canvas Background Animation ── */
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [], connections = [], animFrame;
+const COLORS = ['rgba(124,58,237,', 'rgba(37,99,235,', 'rgba(6,182,212,', 'rgba(16,185,129,'];
+
+function resizeCanvas() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+
+function Particle() {
+  this.x = Math.random() * W;
+  this.y = Math.random() * H;
+  this.vx = (Math.random() - 0.5) * 0.4;
+  this.vy = (Math.random() - 0.5) * 0.4;
+  this.r = Math.random() * 2 + 0.5;
+  this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+  this.alpha = Math.random() * 0.5 + 0.2;
+  this.pulse = Math.random() * Math.PI * 2;
+  this.pulseSpeed = Math.random() * 0.02 + 0.005;
+}
+
+Particle.prototype.update = function() {
+  this.x += this.vx;
+  this.y += this.vy;
+  this.pulse += this.pulseSpeed;
+  if (this.x < 0 || this.x > W) this.vx *= -1;
+  if (this.y < 0 || this.y > H) this.vy *= -1;
+};
+
+Particle.prototype.draw = function() {
+  const a = this.alpha + Math.sin(this.pulse) * 0.1;
+  ctx.beginPath();
+  ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+  ctx.fillStyle = this.color + a + ')';
+  ctx.fill();
+};
+
+function initParticles() {
+  const count = Math.floor((W * H) / 12000);
+  particles = Array.from({ length: Math.min(count, 120) }, () => new Particle());
+}
+
+function drawConnections() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 130) {
+        const alpha = (1 - dist / 130) * 0.15;
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(124,58,237,${alpha})`;
+        ctx.lineWidth = 0.6;
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+/* Aurora layer */
+let auroraT = 0;
+function drawAurora() {
+  auroraT += 0.003;
+  const grad1 = ctx.createRadialGradient(
+    W * (0.3 + Math.sin(auroraT) * 0.1), H * 0.3, 0,
+    W * (0.3 + Math.sin(auroraT) * 0.1), H * 0.3, W * 0.5
+  );
+  grad1.addColorStop(0, 'rgba(124,58,237,0.05)');
+  grad1.addColorStop(1, 'transparent');
+  ctx.fillStyle = grad1;
+  ctx.fillRect(0, 0, W, H);
+
+  const grad2 = ctx.createRadialGradient(
+    W * (0.7 + Math.cos(auroraT * 0.7) * 0.1), H * 0.6, 0,
+    W * (0.7 + Math.cos(auroraT * 0.7) * 0.1), H * 0.6, W * 0.4
+  );
+  grad2.addColorStop(0, 'rgba(6,182,212,0.04)');
+  grad2.addColorStop(1, 'transparent');
+  ctx.fillStyle = grad2;
+  ctx.fillRect(0, 0, W, H);
+}
+
+function animate() {
+  ctx.clearRect(0, 0, W, H);
+  drawAurora();
+  particles.forEach(p => { p.update(); p.draw(); });
+  drawConnections();
+  animFrame = requestAnimationFrame(animate);
+}
+
+resizeCanvas();
+initParticles();
+animate();
+window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
+
+/* ── Mouse parallax ── */
+let mouseX = 0, mouseY = 0;
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  particles.forEach((p, i) => {
+    if (i % 4 === 0) {
+      const dx = e.clientX - p.x;
+      const dy = e.clientY - p.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 100) {
+        p.vx -= dx * 0.0003;
+        p.vy -= dy * 0.0003;
+      }
+    }
+  });
+});
+
+/* ── Typewriter ── */
+let twWords = [], twIdx = 0, twChar = 0, twDeleting = false, twTimer;
+function typewrite() {
+  if (!twWords.length) return;
+  const word = twWords[twIdx];
+  const el = document.getElementById('twText');
+  if (!el) return;
+  if (!twDeleting) {
+    el.textContent = word.slice(0, ++twChar);
+    if (twChar === word.length) { twDeleting = true; twTimer = setTimeout(typewrite, 1800); return; }
+  } else {
+    el.textContent = word.slice(0, --twChar);
+    if (twChar === 0) { twDeleting = false; twIdx = (twIdx + 1) % twWords.length; }
+  }
+  twTimer = setTimeout(typewrite, twDeleting ? 60 : 100);
+}
+
+/* ── Scroll reveal ── */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.08 });
+
+function observeReveal() {
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => revealObs.observe(el));
+}
+observeReveal();
+
+/* ── Navbar scroll ── */
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+  document.getElementById('backTop').classList.toggle('show', window.scrollY > 400);
+  // Active nav
+  const sections = ['home','about','skills','projects','research','contact'];
+  let current = 'home';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 120) current = id;
+  });
+  document.querySelectorAll('.nav-link').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+
+/* ── Mobile menu ── */
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.add('open');
+  document.getElementById('mobileOverlay').classList.add('open');
+});
+function closeMobile() {
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('mobileOverlay').classList.remove('open');
+}
+document.getElementById('mobileClose').addEventListener('click', closeMobile);
+document.getElementById('mobileOverlay').addEventListener('click', closeMobile);
+document.querySelectorAll('.mobile-link').forEach(a => a.addEventListener('click', closeMobile));
+
+/* ── Back to top ── */
+document.getElementById('backTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+/* ── Form submit ── */
+function handleFormSubmit(e) {
+  e.preventDefault();
+  showToast('Message sent! I\'ll get back to you soon.');
+  e.target.reset();
+}
+
+/* ── Toast ── */
+function showToast(msg, duration = 3000) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duration);
+}
+
+/* ── Render from DATA ── */
+function render() {
+  const D = getData();
+
+  // Hero
+  document.getElementById('heroName').textContent = D.name;
+  document.getElementById('heroSub').textContent = D.subtitle;
+  document.getElementById('heroLabel').textContent = D.heroLabel;
+  const cvBtn = document.getElementById('cvBtn');
+  if (D.cvLink) cvBtn.href = D.cvLink;
+
+  // Typewriter
+  twWords = D.typewriterWords || ['Materials Engineer', 'Researcher', 'Innovator'];
+  clearTimeout(twTimer);
+  twIdx = 0; twChar = 0; twDeleting = false;
+  typewrite();
+
+  // About
+  document.getElementById('aboutBio').textContent = D.bio;
+  document.getElementById('statUni').textContent = D.university;
+  document.getElementById('statDept').textContent = D.department;
+  document.getElementById('statYear').textContent = D.year;
+  if (D.photoURL) document.getElementById('avatarImg').src = D.photoURL;
+
+  // Skills
+  const sg = document.getElementById('skillsGrid');
+  sg.innerHTML = D.skills.map((cat, i) => `
+    <div class="skill-card glass" style="animation-delay:${i * 0.1}s">
+      <div class="skill-icon" style="--ic:${['var(--violet)','var(--blue)','var(--cyan)','var(--emerald)'][i % 4]}">
+        ${['⚗️','💻','🔬','📊'][i % 4]}
+      </div>
+      <h3 class="skill-title">${cat.title}</h3>
+      <div class="chip-row">${cat.items.map(s => `<span class="chip chip-${i % 4}">${s}</span>`).join('')}</div>
+    </div>
+  `).join('');
+
+  // Projects
+  const pg = document.getElementById('projectsGrid');
+  pg.innerHTML = D.projects.map((p, i) => `
+    <div class="project-card glass" style="animation-delay:${i * 0.1}s">
+      <div class="project-num">0${i + 1}</div>
+      <h3 class="project-title">${p.title}</h3>
+      <p class="project-desc">${p.desc}</p>
+      <div class="chip-row" style="margin-bottom:20px">${p.tags.split(',').map(t => `<span class="chip chip-0">${t.trim()}</span>`).join('')}</div>
+      ${p.link && p.link !== '#' ? `<a href="${p.link}" class="project-link" target="_blank">View Project <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>` : ''}
+    </div>
+  `).join('');
+
+  // Research
+  const rl = document.getElementById('researchList');
+  rl.innerHTML = D.researchInterests.map(r => `
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p>${r}</p>
+    </div>
+  `).join('');
+
+  const pl = document.getElementById('pubList');
+  const cs = document.getElementById('pubComingSoon');
+  if (D.publications.length === 0) {
+    pl.innerHTML = '';
+    cs.style.display = 'flex';
+  } else {
+    cs.style.display = 'none';
+    pl.innerHTML = D.publications.map((p, i) => `
+      <div class="pub-item">
+        <span class="pub-num">${i + 1}</span>
+        <p>${p}</p>
+      </div>
+    `).join('');
+  }
+
+  // Contact
+  document.getElementById('contactMsg').textContent = D.contactMessage;
+  document.getElementById('emailVal').textContent = D.email;
+  document.getElementById('emailLink').href = 'mailto:' + D.email;
+  document.getElementById('githubLink').href = D.github || '#';
+  document.getElementById('linkedinLink').href = D.linkedin || '#';
+  document.getElementById('rgLink').href = D.researchgate || '#';
+
+  // Footer
+  document.getElementById('footerTagline').textContent = `${D.name} · ${D.department} · ${D.university}`;
+  document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+  // Apply appearance
+  if (D.appearance) {
+    if (D.appearance.accentColor) {
+      document.documentElement.style.setProperty('--violet', D.appearance.accentColor);
+    }
+    if (D.appearance.fontSize) {
+      document.documentElement.style.fontSize = D.appearance.fontSize;
+    }
+  }
+
+  // Re-observe all newly injected .reveal elements
+  setTimeout(observeReveal, 50);
+}
+
+render();
+</script>
+</body>
+</html>

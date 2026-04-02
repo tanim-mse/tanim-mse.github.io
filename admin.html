@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel — Tanim Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<!-- ══ LOGIN SCREEN ══ -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-bg">
+    <div class="login-orb login-orb-1"></div>
+    <div class="login-orb login-orb-2"></div>
+    <div class="login-orb login-orb-3"></div>
+  </div>
+  <div class="login-card">
+    <div class="login-logo">TI</div>
+    <h1 class="login-title">Admin Panel</h1>
+    <p class="login-sub">Enter your password to access the dashboard</p>
+    <div class="login-form">
+      <div class="login-field">
+        <svg class="login-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <input type="password" id="pwInput" placeholder="Password" autocomplete="current-password">
+        <button class="pw-toggle" id="pwToggle" type="button" onclick="togglePw()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+      <p class="login-error" id="loginError"></p>
+      <button class="login-btn" onclick="attemptLogin()">
+        Unlock Dashboard
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </div>
+    <a href="index.html" class="login-back">← Back to Portfolio</a>
+  </div>
+</div>
+
+<!-- ══ DASHBOARD ══ -->
+<div class="dashboard" id="dashboard" style="display:none">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+      <div class="sidebar-logo">TI</div>
+      <div class="sidebar-title-wrap">
+        <span class="sidebar-title">Admin Panel</span>
+        <span class="sidebar-sub">Portfolio CMS</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-group-label">Content</div>
+      <button class="tab-btn active" data-tab="profile" onclick="switchTab('profile', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Profile
+      </button>
+      <button class="tab-btn" data-tab="about" onclick="switchTab('about', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        About
+      </button>
+      <button class="tab-btn" data-tab="skills" onclick="switchTab('skills', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Skills
+      </button>
+      <button class="tab-btn" data-tab="projects" onclick="switchTab('projects', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Projects
+      </button>
+      <button class="tab-btn" data-tab="research" onclick="switchTab('research', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Research
+      </button>
+      <button class="tab-btn" data-tab="contact" onclick="switchTab('contact', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Contact
+      </button>
+      <div class="nav-group-label" style="margin-top:16px">Settings</div>
+      <button class="tab-btn" data-tab="appearance" onclick="switchTab('appearance', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        Appearance
+      </button>
+      <button class="tab-btn" data-tab="security" onclick="switchTab('security', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Security
+      </button>
+      <button class="tab-btn" data-tab="preview" onclick="switchTab('preview', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Preview
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">TI</div>
+        <div>
+          <div class="sidebar-uname">Tanim</div>
+          <div class="sidebar-urole">Administrator</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main-area">
+    <!-- Top bar -->
+    <header class="topbar">
+      <button class="topbar-toggle" id="sidebarToggle" onclick="toggleSidebar()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="topbar-breadcrumb">
+        <span class="topbar-section" id="topbarSection">Profile</span>
+      </div>
+      <div class="topbar-actions">
+        <div class="unsaved-badge" id="unsavedBadge" style="display:none">Unsaved changes</div>
+        <button class="topbar-btn btn-save" onclick="saveAndPublish()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Save & Publish
+        </button>
+        <button class="topbar-btn btn-reset" onclick="confirmReset()">Reset</button>
+        <a href="index.html" class="topbar-btn btn-exit">Exit Admin</a>
+      </div>
+    </header>
+
+    <!-- Tab panes -->
+    <div class="content-area" id="contentArea">
+
+      <!-- PROFILE TAB -->
+      <div class="tab-pane active" id="tab-profile">
+        <div class="pane-header">
+          <h2 class="pane-title">Profile</h2>
+          <p class="pane-desc">Edit your name, hero section, and CV link.</p>
+        </div>
+        <div class="fields-grid">
+          <div class="field-group full">
+            <label class="field-label">Display Name</label>
+            <input type="text" class="field-input" id="f_name" placeholder="Your full name" oninput="markUnsaved()">
+          </div>
+          <div class="field-group full">
+            <label class="field-label">Hero Label (above name)</label>
+            <input type="text" class="field-input" id="f_heroLabel" placeholder="e.g. Materials Science & Engineering" oninput="markUnsaved()">
+          </div>
+          <div class="field-group full">
+            <label class="field-label">Subtitle (below typewriter)</label>
+            <textarea class="field-textarea" id="f_subtitle" rows="2" oninput="markUnsaved()"></textarea>
+          </div>
+          <div class="field-group full">
+            <label class="field-label">Typewriter Words <span class="field-hint">one per line</span></label>
+            <textarea class="field-textarea" id="f_twWords" rows="5" oninput="markUnsaved()"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Photo URL</label>
+            <input type="url" class="field-input" id="f_photoURL" placeholder="https://..." oninput="markUnsaved()">
+            <p class="field-note">Link to your profile photo (JPG, PNG, WebP)</p>
+          </div>
+          <div class="field-group">
+            <label class="field-label">CV / Resume Link</label>
+            <input type="url" class="field-input" id="f_cvLink" placeholder="https://..." oninput="markUnsaved()">
+            <p class="field-note">Direct download link or Google Drive link</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABOUT TAB -->
+      <div class="tab-pane" id="tab-about">
+        <div class="pane-header">
+          <h2 class="pane-title">About</h2>
+          <p class="pane-desc">Edit your bio and academic information.</p>
+        </div>
+        <div class="fields-grid">
+          <div class="field-group full">
+            <label class="field-label">Bio / Introduction</label>
+            <textarea class="field-textarea" id="f_bio" rows="5" oninput="markUnsaved()"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label">University</label>
+            <input type="text" class="field-input" id="f_uni" oninput="markUnsaved()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Department</label>
+            <input type="text" class="field-input" id="f_dept" oninput="markUnsaved()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Year / Level</label>
+            <input type="text" class="field-input" id="f_year" oninput="markUnsaved()">
+          </div>
+        </div>
+      </div>
+
+      <!-- SKILLS TAB -->
+      <div class="tab-pane" id="tab-skills">
+        <div class="pane-header">
+          <h2 class="pane-title">Skills</h2>
+          <p class="pane-desc">Manage skill categories and individual skills.</p>
+        </div>
+        <button class="add-card-btn" onclick="addSkillCategory()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Category
+        </button>
+        <div id="skillsEditor"></div>
+      </div>
+
+      <!-- PROJECTS TAB -->
+      <div class="tab-pane" id="tab-projects">
+        <div class="pane-header">
+          <h2 class="pane-title">Projects</h2>
+          <p class="pane-desc">Add, edit, and remove portfolio projects.</p>
+        </div>
+        <button class="add-card-btn" onclick="addProject()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Project
+        </button>
+        <div id="projectsEditor"></div>
+      </div>
+
+      <!-- RESEARCH TAB -->
+      <div class="tab-pane" id="tab-research">
+        <div class="pane-header">
+          <h2 class="pane-title">Research</h2>
+          <p class="pane-desc">Manage research interests and publications.</p>
+        </div>
+        <div class="two-col-editor">
+          <div>
+            <div class="editor-section-title">Research Interests</div>
+            <button class="add-card-btn mini" onclick="addResearchInterest()">+ Add Interest</button>
+            <div id="researchEditor"></div>
+          </div>
+          <div>
+            <div class="editor-section-title">Publications</div>
+            <button class="add-card-btn mini" onclick="addPublication()">+ Add Publication</button>
+            <div id="pubEditor"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACT TAB -->
+      <div class="tab-pane" id="tab-contact">
+        <div class="pane-header">
+          <h2 class="pane-title">Contact</h2>
+          <p class="pane-desc">Update contact info and social links.</p>
+        </div>
+        <div class="fields-grid">
+          <div class="field-group full">
+            <label class="field-label">Contact Section Message</label>
+            <textarea class="field-textarea" id="f_contactMsg" rows="3" oninput="markUnsaved()"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Email Address</label>
+            <input type="email" class="field-input" id="f_email" oninput="markUnsaved()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">GitHub URL</label>
+            <input type="url" class="field-input" id="f_github" placeholder="https://github.com/username" oninput="markUnsaved()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">LinkedIn URL</label>
+            <input type="url" class="field-input" id="f_linkedin" placeholder="https://linkedin.com/in/username" oninput="markUnsaved()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">ResearchGate URL</label>
+            <input type="url" class="field-input" id="f_rg" placeholder="https://researchgate.net/profile/..." oninput="markUnsaved()">
+          </div>
+        </div>
+      </div>
+
+      <!-- APPEARANCE TAB -->
+      <div class="tab-pane" id="tab-appearance">
+        <div class="pane-header">
+          <h2 class="pane-title">Appearance</h2>
+          <p class="pane-desc">Customize the visual style of your portfolio.</p>
+        </div>
+        <div class="fields-grid">
+          <div class="field-group">
+            <label class="field-label">Accent / Primary Color</label>
+            <div class="color-picker-wrap">
+              <input type="color" class="color-input" id="f_accentColor" value="#7c3aed" oninput="markUnsaved(); previewColor(this.value)">
+              <input type="text" class="field-input color-text" id="f_accentColorHex" value="#7c3aed" oninput="syncColorFromText()" placeholder="#7c3aed">
+            </div>
+            <p class="field-note">Main brand color used throughout the portfolio</p>
+            <div class="color-presets">
+              <span class="preset-label">Presets:</span>
+              <button class="color-preset" style="background:#7c3aed" onclick="setColor('#7c3aed')" title="Violet"></button>
+              <button class="color-preset" style="background:#2563eb" onclick="setColor('#2563eb')" title="Blue"></button>
+              <button class="color-preset" style="background:#06b6d4" onclick="setColor('#06b6d4')" title="Cyan"></button>
+              <button class="color-preset" style="background:#10b981" onclick="setColor('#10b981')" title="Emerald"></button>
+              <button class="color-preset" style="background:#f59e0b" onclick="setColor('#f59e0b')" title="Amber"></button>
+              <button class="color-preset" style="background:#ef4444" onclick="setColor('#ef4444')" title="Red"></button>
+              <button class="color-preset" style="background:#ec4899" onclick="setColor('#ec4899')" title="Pink"></button>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Base Font Size</label>
+            <select class="field-select" id="f_fontSize" onchange="markUnsaved()">
+              <option value="15px">Small (15px)</option>
+              <option value="16px">Medium (16px)</option>
+              <option value="17px" selected>Default (17px)</option>
+              <option value="18px">Large (18px)</option>
+              <option value="19px">Extra Large (19px)</option>
+            </select>
+            <p class="field-note">Controls all text sizing proportionally</p>
+          </div>
+        </div>
+        <div class="appearance-preview-box">
+          <div class="ap-label">Live Color Preview</div>
+          <div class="ap-demo" id="apDemo">
+            <span class="ap-grad" id="apGrad">Tanim</span>
+            <div class="ap-btn" id="apBtn">Sample Button</div>
+            <div class="ap-chip" id="apChip">Tag</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECURITY TAB -->
+      <div class="tab-pane" id="tab-security">
+        <div class="pane-header">
+          <h2 class="pane-title">Security</h2>
+          <p class="pane-desc">Change your admin panel password.</p>
+        </div>
+        <div class="fields-grid" style="max-width:480px">
+          <div class="field-group full">
+            <label class="field-label">Current Password</label>
+            <input type="password" class="field-input" id="f_curPw" placeholder="Enter current password">
+          </div>
+          <div class="field-group full">
+            <label class="field-label">New Password</label>
+            <input type="password" class="field-input" id="f_newPw" placeholder="Enter new password">
+          </div>
+          <div class="field-group full">
+            <label class="field-label">Confirm New Password</label>
+            <input type="password" class="field-input" id="f_newPw2" placeholder="Confirm new password">
+          </div>
+          <div class="field-group full">
+            <button class="change-pw-btn" onclick="changePassword()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Update Password
+            </button>
+          </div>
+          <div class="security-note full">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Password is stored locally in your browser. If you clear browser data, the password resets to <code>tanim2024</code>.
+          </div>
+        </div>
+      </div>
+
+      <!-- PREVIEW TAB -->
+      <div class="tab-pane" id="tab-preview">
+        <div class="pane-header">
+          <h2 class="pane-title">Preview</h2>
+          <p class="pane-desc">Live preview of your portfolio. Save changes first for them to appear here.</p>
+        </div>
+        <div class="preview-toolbar">
+          <button class="preview-size-btn active" onclick="setPreviewSize('full', this)">Full Width</button>
+          <button class="preview-size-btn" onclick="setPreviewSize('tablet', this)">Tablet (768px)</button>
+          <button class="preview-size-btn" onclick="setPreviewSize('mobile', this)">Mobile (375px)</button>
+          <a href="index.html" target="_blank" class="preview-open-btn">Open in New Tab ↗</a>
+        </div>
+        <div class="preview-frame-wrap" id="previewWrap">
+          <iframe id="previewFrame" src="index.html" class="preview-frame"></iframe>
+        </div>
+      </div>
+
+    </div><!-- /content-area -->
+  </main>
+</div><!-- /dashboard -->
+
+<!-- Toast -->
+<div class="admin-toast" id="adminToast"></div>
+
+<!-- Confirm Modal -->
+<div class="modal-overlay" id="modalOverlay" style="display:none">
+  <div class="modal-box">
+    <h3 class="modal-title" id="modalTitle">Confirm Action</h3>
+    <p class="modal-desc" id="modalDesc">Are you sure?</p>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+      <button class="modal-confirm" id="modalConfirm">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+/* ═══════════════════════════════════════════
+   Admin Dashboard JavaScript
+   ═══════════════════════════════════════════ */
+
+let adminData = {};
+let currentTab = 'profile';
+let hasUnsaved = false;
+let sidebarOpen = true;
+
+/* ── Login ── */
+function attemptLogin() {
+  const pw = document.getElementById('pwInput').value;
+  const data = getData();
+  if (pw === data.adminPassword) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'flex';
+    initDashboard();
+  } else {
+    const err = document.getElementById('loginError');
+    err.textContent = 'Incorrect password. Try again.';
+    document.getElementById('pwInput').classList.add('shake');
+    setTimeout(() => { document.getElementById('pwInput').classList.remove('shake'); err.textContent = ''; }, 1500);
+  }
+}
+
+document.getElementById('pwInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') attemptLogin();
+});
+
+function togglePw() {
+  const inp = document.getElementById('pwInput');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+}
+
+/* ── Init dashboard ── */
+function initDashboard() {
+  adminData = getData();
+  loadProfile();
+  loadAbout();
+  loadSkills();
+  loadProjects();
+  loadResearch();
+  loadContact();
+  loadAppearance();
+}
+
+/* ── Tab switching ── */
+function switchTab(tab, btn) {
+  // Collect current tab data before switching
+  collectCurrentTab();
+
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.getElementById('topbarSection').textContent = btn.querySelector('svg').nextSibling.textContent.trim();
+  currentTab = tab;
+
+  if (tab === 'preview') {
+    document.getElementById('previewFrame').src = 'index.html?' + Date.now();
+  }
+}
+
+/* ── Sidebar toggle ── */
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  sidebarOpen = !sidebarOpen;
+  sidebar.classList.toggle('collapsed', !sidebarOpen);
+}
+
+/* ── Unsaved state ── */
+function markUnsaved() {
+  hasUnsaved = true;
+  document.getElementById('unsavedBadge').style.display = 'flex';
+}
+
+/* ══ LOADERS ══ */
+
+function loadProfile() {
+  const D = adminData;
+  document.getElementById('f_name').value = D.name || '';
+  document.getElementById('f_heroLabel').value = D.heroLabel || '';
+  document.getElementById('f_subtitle').value = D.subtitle || '';
+  document.getElementById('f_twWords').value = (D.typewriterWords || []).join('\n');
+  document.getElementById('f_photoURL').value = D.photoURL || '';
+  document.getElementById('f_cvLink').value = D.cvLink || '';
+}
+
+function loadAbout() {
+  const D = adminData;
+  document.getElementById('f_bio').value = D.bio || '';
+  document.getElementById('f_uni').value = D.university || '';
+  document.getElementById('f_dept').value = D.department || '';
+  document.getElementById('f_year').value = D.year || '';
+}
+
+function loadSkills() {
+  const se = document.getElementById('skillsEditor');
+  se.innerHTML = '';
+  (adminData.skills || []).forEach((cat, i) => {
+    se.appendChild(buildSkillCard(cat, i));
+  });
+}
+
+function buildSkillCard(cat, i) {
+  const card = document.createElement('div');
+  card.className = 'editor-card';
+  card.dataset.index = i;
+  card.innerHTML = `
+    <div class="editor-card-header">
+      <input type="text" class="card-title-input" value="${esc(cat.title)}" placeholder="Category title" oninput="markUnsaved()">
+      <button class="card-delete-btn" onclick="deleteSkillCategory(${i})" title="Delete category">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+      </button>
+    </div>
+    <div class="chip-editor" id="chipEditor_${i}">
+      ${cat.items.map((s, j) => `
+        <span class="admin-chip">
+          ${esc(s)}
+          <button onclick="removeSkill(${i},${j})" class="chip-remove">×</button>
+        </span>
+      `).join('')}
+    </div>
+    <div class="chip-add-row">
+      <input type="text" class="chip-add-input" id="chipInput_${i}" placeholder="Add skill…" onkeydown="if(event.key==='Enter') addSkill(${i})">
+      <button class="chip-add-btn" onclick="addSkill(${i})">Add</button>
+    </div>
+  `;
+  return card;
+}
+
+function addSkillCategory() {
+  collectCurrentTab();
+  adminData.skills.push({ title: 'New Category', items: [] });
+  loadSkills();
+  markUnsaved();
+}
+
+function deleteSkillCategory(i) {
+  showModal('Delete Category', 'Remove this skill category and all its skills?', () => {
+    adminData.skills.splice(i, 1);
+    loadSkills();
+    markUnsaved();
+  });
+}
+
+function addSkill(catIdx) {
+  const inp = document.getElementById('chipInput_' + catIdx);
+  const val = inp.value.trim();
+  if (!val) return;
+  collectCurrentTab();
+  adminData.skills[catIdx].items.push(val);
+  inp.value = '';
+  loadSkills();
+  markUnsaved();
+}
+
+function removeSkill(catIdx, skillIdx) {
+  adminData.skills[catIdx].items.splice(skillIdx, 1);
+  loadSkills();
+  markUnsaved();
+}
+
+function loadProjects() {
+  const pe = document.getElementById('projectsEditor');
+  pe.innerHTML = '';
+  (adminData.projects || []).forEach((p, i) => {
+    pe.appendChild(buildProjectCard(p, i));
+  });
+}
+
+function buildProjectCard(p, i) {
+  const card = document.createElement('div');
+  card.className = 'editor-card';
+  card.dataset.index = i;
+  card.innerHTML = `
+    <div class="editor-card-header">
+      <span class="card-index">Project ${i + 1}</span>
+      <button class="card-delete-btn" onclick="deleteProject(${i})" title="Delete project">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+      </button>
+    </div>
+    <div class="fields-grid" style="padding:0;gap:12px">
+      <div class="field-group full">
+        <label class="field-label">Title</label>
+        <input type="text" class="field-input" id="pt_${i}" value="${esc(p.title)}" oninput="markUnsaved()">
+      </div>
+      <div class="field-group full">
+        <label class="field-label">Description</label>
+        <textarea class="field-textarea" id="pd_${i}" rows="2" oninput="markUnsaved()">${esc(p.desc)}</textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Tags <span class="field-hint">comma-separated</span></label>
+        <input type="text" class="field-input" id="pg_${i}" value="${esc(p.tags)}" oninput="markUnsaved()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Project Link</label>
+        <input type="url" class="field-input" id="pl_${i}" value="${esc(p.link)}" oninput="markUnsaved()">
+      </div>
+    </div>
+  `;
+  return card;
+}
+
+function addProject() {
+  collectCurrentTab();
+  adminData.projects.push({ title: 'New Project', desc: 'Project description.', tags: 'Tag1, Tag2', link: '#' });
+  loadProjects();
+  markUnsaved();
+  setTimeout(() => document.getElementById('projectsEditor').lastElementChild.scrollIntoView({ behavior: 'smooth' }), 100);
+}
+
+function deleteProject(i) {
+  showModal('Delete Project', `Delete "${adminData.projects[i].title}"? This cannot be undone.`, () => {
+    collectCurrentTab();
+    adminData.projects.splice(i, 1);
+    loadProjects();
+    markUnsaved();
+  });
+}
+
+function loadResearch() {
+  const re = document.getElementById('researchEditor');
+  re.innerHTML = '';
+  (adminData.researchInterests || []).forEach((r, i) => {
+    const row = document.createElement('div');
+    row.className = 'list-row';
+    row.innerHTML = `
+      <input type="text" class="field-input" id="ri_${i}" value="${esc(r)}" oninput="markUnsaved()" style="flex:1">
+      <button class="row-delete-btn" onclick="deleteResearch(${i})">×</button>
+    `;
+    re.appendChild(row);
+  });
+
+  const pe = document.getElementById('pubEditor');
+  pe.innerHTML = '';
+  (adminData.publications || []).forEach((p, i) => {
+    const row = document.createElement('div');
+    row.className = 'list-row';
+    row.innerHTML = `
+      <textarea class="field-textarea" id="pub_${i}" rows="2" oninput="markUnsaved()" style="flex:1">${esc(p)}</textarea>
+      <button class="row-delete-btn" onclick="deletePublication(${i})">×</button>
+    `;
+    pe.appendChild(row);
+  });
+}
+
+function addResearchInterest() {
+  collectCurrentTab();
+  adminData.researchInterests.push('New Research Interest');
+  loadResearch();
+  markUnsaved();
+}
+
+function deleteResearch(i) {
+  collectCurrentTab();
+  adminData.researchInterests.splice(i, 1);
+  loadResearch();
+  markUnsaved();
+}
+
+function addPublication() {
+  collectCurrentTab();
+  adminData.publications.push('Publication title, Journal, Year.');
+  loadResearch();
+  markUnsaved();
+}
+
+function deletePublication(i) {
+  collectCurrentTab();
+  adminData.publications.splice(i, 1);
+  loadResearch();
+  markUnsaved();
+}
+
+function loadContact() {
+  const D = adminData;
+  document.getElementById('f_contactMsg').value = D.contactMessage || '';
+  document.getElementById('f_email').value = D.email || '';
+  document.getElementById('f_github').value = D.github || '';
+  document.getElementById('f_linkedin').value = D.linkedin || '';
+  document.getElementById('f_rg').value = D.researchgate || '';
+}
+
+function loadAppearance() {
+  const A = adminData.appearance || {};
+  document.getElementById('f_accentColor').value = A.accentColor || '#7c3aed';
+  document.getElementById('f_accentColorHex').value = A.accentColor || '#7c3aed';
+  document.getElementById('f_fontSize').value = A.fontSize || '17px';
+  previewColor(A.accentColor || '#7c3aed');
+}
+
+/* ── Color picker helpers ── */
+function previewColor(hex) {
+  document.getElementById('f_accentColorHex').value = hex;
+  document.getElementById('apGrad').style.background = `linear-gradient(135deg, ${hex}, #60a5fa)`;
+  document.getElementById('apGrad').style.webkitBackgroundClip = 'text';
+  document.getElementById('apGrad').style.webkitTextFillColor = 'transparent';
+  document.getElementById('apGrad').style.backgroundClip = 'text';
+  document.getElementById('apBtn').style.background = `linear-gradient(135deg, ${hex}, #2563eb)`;
+  document.getElementById('apChip').style.background = hex + '22';
+  document.getElementById('apChip').style.borderColor = hex + '44';
+  document.getElementById('apChip').style.color = hex;
+}
+function syncColorFromText() {
+  const val = document.getElementById('f_accentColorHex').value;
+  if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+    document.getElementById('f_accentColor').value = val;
+    previewColor(val);
+  }
+  markUnsaved();
+}
+function setColor(hex) {
+  document.getElementById('f_accentColor').value = hex;
+  document.getElementById('f_accentColorHex').value = hex;
+  previewColor(hex);
+  markUnsaved();
+}
+
+/* ── Collect current tab data into adminData ── */
+function collectCurrentTab() {
+  const g = id => { const el = document.getElementById(id); return el ? el.value : null; };
+
+  if (currentTab === 'profile') {
+    if (g('f_name') !== null) {
+      adminData.name = g('f_name');
+      adminData.heroLabel = g('f_heroLabel');
+      adminData.subtitle = g('f_subtitle');
+      adminData.typewriterWords = (g('f_twWords') || '').split('\n').map(s => s.trim()).filter(Boolean);
+      adminData.photoURL = g('f_photoURL');
+      adminData.cvLink = g('f_cvLink');
+    }
+  } else if (currentTab === 'about') {
+    if (g('f_bio') !== null) {
+      adminData.bio = g('f_bio');
+      adminData.university = g('f_uni');
+      adminData.department = g('f_dept');
+      adminData.year = g('f_year');
+    }
+  } else if (currentTab === 'skills') {
+    // Collect from rendered cards
+    document.querySelectorAll('#skillsEditor .editor-card').forEach((card, i) => {
+      const titleEl = card.querySelector('.card-title-input');
+      if (titleEl && adminData.skills[i]) adminData.skills[i].title = titleEl.value;
+    });
+  } else if (currentTab === 'projects') {
+    (adminData.projects || []).forEach((p, i) => {
+      if (g('pt_' + i) !== null) {
+        p.title = g('pt_' + i);
+        p.desc = g('pd_' + i);
+        p.tags = g('pg_' + i);
+        p.link = g('pl_' + i);
+      }
+    });
+  } else if (currentTab === 'research') {
+    adminData.researchInterests = adminData.researchInterests.map((_, i) => g('ri_' + i) ?? _);
+    adminData.publications = adminData.publications.map((_, i) => g('pub_' + i) ?? _);
+  } else if (currentTab === 'contact') {
+    if (g('f_email') !== null) {
+      adminData.contactMessage = g('f_contactMsg');
+      adminData.email = g('f_email');
+      adminData.github = g('f_github');
+      adminData.linkedin = g('f_linkedin');
+      adminData.researchgate = g('f_rg');
+    }
+  } else if (currentTab === 'appearance') {
+    adminData.appearance = adminData.appearance || {};
+    adminData.appearance.accentColor = g('f_accentColor');
+    adminData.appearance.fontSize = g('f_fontSize');
+  }
+}
+
+/* ── Save ── */
+function saveAndPublish() {
+  collectCurrentTab();
+  if (saveData(adminData)) {
+    hasUnsaved = false;
+    document.getElementById('unsavedBadge').style.display = 'none';
+    showToast('✓ Changes saved & published!', 'success');
+  } else {
+    showToast('⚠ Failed to save. Check browser storage.', 'error');
+  }
+}
+
+/* ── Reset ── */
+function confirmReset() {
+  showModal('Reset All Data', 'This will remove all customizations and restore defaults. This cannot be undone.', () => {
+    resetData();
+    adminData = getData();
+    initDashboard();
+    showToast('Data reset to defaults.', 'warning');
+  }, 'danger');
+}
+
+/* ── Password change ── */
+function changePassword() {
+  const cur = document.getElementById('f_curPw').value;
+  const nw = document.getElementById('f_newPw').value;
+  const nw2 = document.getElementById('f_newPw2').value;
+  const D = getData();
+  if (cur !== D.adminPassword) { showToast('Current password is incorrect.', 'error'); return; }
+  if (!nw) { showToast('Please enter a new password.', 'error'); return; }
+  if (nw.length < 4) { showToast('Password must be at least 4 characters.', 'error'); return; }
+  if (nw !== nw2) { showToast('Passwords do not match.', 'error'); return; }
+  adminData.adminPassword = nw;
+  saveData(adminData);
+  document.getElementById('f_curPw').value = '';
+  document.getElementById('f_newPw').value = '';
+  document.getElementById('f_newPw2').value = '';
+  showToast('✓ Password updated successfully!', 'success');
+}
+
+/* ── Preview size ── */
+function setPreviewSize(size, btn) {
+  document.querySelectorAll('.preview-size-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const frame = document.getElementById('previewFrame');
+  const wrap = document.getElementById('previewWrap');
+  if (size === 'full') { frame.style.width = '100%'; wrap.style.display = 'block'; }
+  else if (size === 'tablet') { frame.style.width = '768px'; wrap.style.display = 'flex'; wrap.style.justifyContent = 'center'; }
+  else if (size === 'mobile') { frame.style.width = '375px'; wrap.style.display = 'flex'; wrap.style.justifyContent = 'center'; }
+}
+
+/* ── Modal ── */
+let modalCallback = null;
+function showModal(title, desc, cb, type = 'normal') {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalDesc').textContent = desc;
+  document.getElementById('modalOverlay').style.display = 'flex';
+  const confirmBtn = document.getElementById('modalConfirm');
+  confirmBtn.textContent = type === 'danger' ? 'Yes, Reset' : 'Confirm';
+  confirmBtn.className = type === 'danger' ? 'modal-confirm danger' : 'modal-confirm';
+  modalCallback = cb;
+}
+function closeModal() {
+  document.getElementById('modalOverlay').style.display = 'none';
+  modalCallback = null;
+}
+document.getElementById('modalConfirm').addEventListener('click', () => {
+  if (modalCallback) modalCallback();
+  closeModal();
+});
+document.getElementById('modalOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+});
+
+/* ── Toast ── */
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('adminToast');
+  t.textContent = msg;
+  t.className = 'admin-toast show ' + type;
+  setTimeout(() => t.className = 'admin-toast', 3500);
+}
+
+/* ── Helpers ── */
+function esc(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ── Warn on unload ── */
+window.addEventListener('beforeunload', e => {
+  if (hasUnsaved) { e.preventDefault(); e.returnValue = ''; }
+});
+</script>
+</body>
+</html>
