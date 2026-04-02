@@ -20,19 +20,38 @@ const DEFAULT_DATA = {
   "skills": [
     {
       "title": "Materials Science",
-      "items": ["Crystallography", "Phase Diagrams"]
+      "items": [
+        "Crystallography",
+        "Phase Diagrams"
+      ]
     },
     {
       "title": "Research & Analysis",
-      "items": ["Literature Review", "Data Analysis", "Lab Techniques"]
+      "items": [
+        "Literature Review",
+        "Data Analysis",
+        "Lab Techniques"
+      ]
     },
     {
       "title": "Software & Tools",
-      "items": ["MATLAB", "Origin Pro", "AutoCAD", "Python", "LaTeX", "MS Office"]
+      "items": [
+        "MATLAB",
+        "Origin Pro",
+        "AutoCAD",
+        "MS Office",
+        "Davinci Resolve"
+      ]
     },
     {
       "title": "Engineering Skills",
-      "items": ["Problem Solving", "Technical Writing", "Teamwork", "Project Management", "Critical Thinking"]
+      "items": [
+        "Problem Solving",
+        "Technical Writing",
+        "Teamwork",
+        "Project Management",
+        "Critical Thinking"
+      ]
     }
   ],
   "projects": [
