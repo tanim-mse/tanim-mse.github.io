@@ -56,35 +56,20 @@ const DEFAULT_DATA = {
   ],
   "projects": [
     {
-      "title": "Corrosion Inhibition Study",
-      "desc": "Investigation of natural extract-based corrosion inhibitors for mild steel in acidic environments using electrochemical techniques.",
-      "tags": "Corrosion, Electrochemistry, Materials",
-      "link": "#"
-    },
-    {
-      "title": "Nanocomposite Synthesis",
-      "desc": "Synthesis and characterization of polymer nanocomposites reinforced with graphene oxide for enhanced mechanical properties.",
-      "tags": "Nanomaterials, Composites, XRD",
-      "link": "#"
-    },
-    {
-      "title": "Biomaterial Scaffold Design",
-      "desc": "Design and evaluation of hydroxyapatite-based scaffolds for bone tissue engineering applications.",
-      "tags": "Biomaterials, Tissue Engineering, SEM",
+      "title": "Coming Soon...",
+      "desc": "",
+      "tags": "",
       "link": "#"
     }
   ],
   "researchInterests": [
     "Nanomaterials and Nanotechnology",
     "Sustainable and Green Materials",
-    "Corrosion Science and Protection",
-    "Biomaterials and Tissue Engineering",
-    "Energy Storage Materials",
-    "Polymer Matrix Composites"
+    "Energy Storage Materials"
   ],
   "publications": [],
-  "email": "tanim@example.com",
-  "github": "https://github.com/",
+  "email": "tanim97@proton.me",
+  "github": "https://github.com/tanim-mse",
   "linkedin": "https://linkedin.com/in/",
   "researchgate": "https://researchgate.net/",
   "contactMessage": "Have a research idea, collaboration opportunity, or just want to talk materials science? I'd love to hear from you.",
