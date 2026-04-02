@@ -1,0 +1,115 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "portfolio"
+    label: "Portfolio"
+    files:
+
+      - label: "Profile & Hero"
+        name: "profile"
+        file: "_data/profile.json"
+        fields:
+          - { label: "Your Name", name: "name", widget: "string" }
+          - { label: "Hero Label", name: "heroLabel", widget: "string" }
+          - { label: "Subtitle", name: "subtitle", widget: "text" }
+          - label: "Typewriter Words"
+            name: "typewriterWords"
+            widget: "list"
+            field: { label: "Role", name: "word", widget: "string" }
+          - { label: "CV / Resume Link", name: "cvLink", widget: "string" }
+          - { label: "Photo URL", name: "photoURL", widget: "string" }
+
+      - label: "About"
+        name: "about"
+        file: "_data/about.json"
+        fields:
+          - { label: "Bio", name: "bio", widget: "text" }
+          - { label: "University", name: "university", widget: "string" }
+          - { label: "Department", name: "department", widget: "string" }
+          - { label: "Year", name: "year", widget: "string" }
+
+      - label: "Contact"
+        name: "contact"
+        file: "_data/contact.json"
+        fields:
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "GitHub URL", name: "github", widget: "string" }
+          - { label: "LinkedIn URL", name: "linkedin", widget: "string" }
+          - { label: "ResearchGate URL", name: "researchgate", widget: "string" }
+          - { label: "Contact Message", name: "contactMessage", widget: "text" }
+
+  - name: "projects"
+    label: "Projects"
+    folder: "_data/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "body", widget: "text" }
+      - { label: "Tags (comma separated)", name: "tags", widget: "string" }
+      - { label: "Project Link", name: "link", widget: "string", required: false }
+
+  - name: "skills"
+    label: "Skills"
+    folder: "_data/skills"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Category Title", name: "title", widget: "string" }
+      - label: "Skills"
+        name: "items"
+        widget: "list"
+        field: { label: "Skill", name: "skill", widget: "string" }
+
+  - name: "research"
+    label: "Research"
+    folder: "_data/research"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Research Interest", name: "title", widget: "string" }
+
+  - name: "publications"
+    label: "Publications"
+    folder: "_data/publications"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Publication", name: "title", widget: "string" }
+      - { label: "Journal / Details", name: "details", widget: "text", required: false }
+```
+
+Commit it.
+
+---
+
+## Step 4 — Enable Git Gateway on Netlify
+
+This is what allows the admin panel to actually write back to your GitHub.
+
+1. Netlify dashboard → left sidebar → **Identity**
+2. Scroll down to **Services**
+3. Click **"Enable Git Gateway"**
+
+---
+
+## Step 5 — Re-send yourself the invite
+
+Since the first invite link didn't work (widget wasn't there yet), go to:
+
+Netlify → **Identity tab** → find your email → click the **three dots** → **"Send invite"** again.
+
+This time when you click the email link, your site will show a **"Complete your signup"** popup where you set your password. That becomes your permanent admin login.
+
+---
+
+## Step 6 — Access your admin panel
+
+Go to:
+```
+https://tanim-portfolio.netlify.app/admin/
