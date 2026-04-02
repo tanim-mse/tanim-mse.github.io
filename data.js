@@ -2,6 +2,7 @@
 
 const DEFAULT_DATA = {
   "name": "Tanim",
+  adminPassword: "Ua9@gQavJQfWeSEGUz92PP2c4aHNXqvvazSaHvqau"
   "heroLabel": "Materials Science & Engineering",
   "typewriterWords": [
     "Materials Engineer",
