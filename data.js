@@ -2,7 +2,6 @@
 
 const DEFAULT_DATA = {
   "name": "Tanim",
- adminPassword: "7b7ac8fd9c8d4ed2d778c81de40f164bd6663bdfd5d44288d89cdd0dad0ab12c"
   "heroLabel": "Materials Science & Engineering",
   "typewriterWords": [
     "Materials Engineer",
@@ -21,39 +20,19 @@ const DEFAULT_DATA = {
   "skills": [
     {
       "title": "Materials Science",
-      "items": [
-        "Crystallography",
-        "Phase Diagrams"
-      ]
+      "items": ["Crystallography", "Phase Diagrams"]
     },
     {
       "title": "Research & Analysis",
-      "items": [
-        "Literature Review",
-        "Data Analysis",
-        "Lab Techniques"
-      ]
+      "items": ["Literature Review", "Data Analysis", "Lab Techniques"]
     },
     {
       "title": "Software & Tools",
-      "items": [
-        "MATLAB",
-        "Origin Pro",
-        "AutoCAD",
-        "Python",
-        "LaTeX",
-        "MS Office"
-      ]
+      "items": ["MATLAB", "Origin Pro", "AutoCAD", "Python", "LaTeX", "MS Office"]
     },
     {
       "title": "Engineering Skills",
-      "items": [
-        "Problem Solving",
-        "Technical Writing",
-        "Teamwork",
-        "Project Management",
-        "Critical Thinking"
-      ]
+      "items": ["Problem Solving", "Technical Writing", "Teamwork", "Project Management", "Critical Thinking"]
     }
   ],
   "projects": [
@@ -94,7 +73,7 @@ const DEFAULT_DATA = {
     "accentColor": "#7c3aed",
     "fontSize": "17px"
   },
-  "adminPassword": "tanim2024"
+  "adminPassword": "275056c26a6b4fb1f5e49cd8a8e0f69f5c29b84055a6d3875be68edc820c6c75"
 };
 
 function getData() {
