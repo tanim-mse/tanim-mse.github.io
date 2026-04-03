@@ -9,7 +9,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 
@@ -90,7 +89,7 @@
         <img id="avatarImg" class="avatar-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect width='300' height='300' fill='%230f0f1a'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='sans-serif' font-size='80' fill='%237c3aed'%3ETI%3C/text%3E%3C/svg%3E" alt="Tanim">
       </div>
       <div class="about-text">
-        <p id="aboutBio">I am Tanim, a Materials Science and Engineering student at RUET with a deep passion for exploring the intersection of advanced materials, nanotechnology, and sustainable engineering solutions. I thrive at the boundary of science and innovation, driven by curiosity and a commitment to meaningful research.</p>
+        <p id="aboutBio">I am Tanim, a Materials Science and Engineering student at RUET with a deep passion for exploring the intersection of advanced materials, nanotechnology, and sustainable engineering solutions.</p>
         <div class="about-stats">
           <div class="stat-card">
             <div class="stat-label">University</div>
@@ -118,7 +117,7 @@
       <h2 class="section-title">Skills & <span class="grad">Knowledge</span></h2>
       <p class="section-sub">A blend of engineering knowledge, research tools, and creative problem-solving.</p>
     </div>
-    <div class="skills-grid reveal" id="skillsGrid"></div>
+    <div class="skills-grid" id="skillsGrid"></div>
   </div>
 </section>
 
@@ -130,7 +129,7 @@
       <h2 class="section-title">Featured <span class="grad">Projects</span></h2>
       <p class="section-sub">Exploring the intersection of materials science, engineering, and innovation.</p>
     </div>
-    <div class="projects-grid reveal" id="projectsGrid"></div>
+    <div class="projects-grid" id="projectsGrid"></div>
   </div>
 </section>
 
@@ -173,7 +172,7 @@
           </div>
           <div>
             <div class="contact-label">Email</div>
-            <div class="contact-val" id="emailVal"><span class="__cf_email__" data-cfemail="3a4e5b5453577a5f425b574a565f14595557">[email&#160;protected]</span></div>
+            <div class="contact-val" id="emailVal">tanim97@proton.me</div>
           </div>
         </a>
         <div class="social-row">
@@ -190,16 +189,16 @@
       </div>
       <form class="contact-form" id="contactForm" action="https://formspree.io/f/xlgowqby" method="POST" onsubmit="handleFormSubmit(event)">
         <div class="form-group">
-          <input type="text" class="form-input" placeholder="Your Name" required>
+          <input type="text" class="form-input" name="name" placeholder="Your Name" required>
         </div>
         <div class="form-group">
-          <input type="email" class="form-input" placeholder="Your Email" required>
+          <input type="email" class="form-input" name="email" placeholder="Your Email" required>
         </div>
         <div class="form-group">
-          <input type="text" class="form-input" placeholder="Subject">
+          <input type="text" class="form-input" name="subject" placeholder="Subject">
         </div>
         <div class="form-group">
-          <textarea class="form-textarea" placeholder="Your Message" rows="5" required></textarea>
+          <textarea class="form-textarea" name="message" placeholder="Your Message" rows="5" required></textarea>
         </div>
         <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">
           Send Message
@@ -230,12 +229,12 @@
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="data.js"></script>
+<script src="data.js"></script>
 <script>
 /* ── Canvas Background Animation ── */
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
-let W, H, particles = [], connections = [], animFrame;
+let W, H, particles = [], animFrame;
 const COLORS = ['rgba(124,58,237,', 'rgba(37,99,235,', 'rgba(6,182,212,', 'rgba(16,185,129,'];
 
 function resizeCanvas() {
@@ -295,7 +294,6 @@ function drawConnections() {
   }
 }
 
-/* Aurora layer */
 let auroraT = 0;
 function drawAurora() {
   auroraT += 0.003;
@@ -307,7 +305,6 @@ function drawAurora() {
   grad1.addColorStop(1, 'transparent');
   ctx.fillStyle = grad1;
   ctx.fillRect(0, 0, W, H);
-
   const grad2 = ctx.createRadialGradient(
     W * (0.7 + Math.cos(auroraT * 0.7) * 0.1), H * 0.6, 0,
     W * (0.7 + Math.cos(auroraT * 0.7) * 0.1), H * 0.6, W * 0.4
@@ -332,19 +329,13 @@ animate();
 window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
 
 /* ── Mouse parallax ── */
-let mouseX = 0, mouseY = 0;
 document.addEventListener('mousemove', e => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
   particles.forEach((p, i) => {
     if (i % 4 === 0) {
       const dx = e.clientX - p.x;
       const dy = e.clientY - p.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 100) {
-        p.vx -= dx * 0.0003;
-        p.vy -= dy * 0.0003;
-      }
+      if (dist < 100) { p.vx -= dx * 0.0003; p.vy -= dy * 0.0003; }
     }
   });
 });
@@ -378,10 +369,8 @@ observeReveal();
 
 /* ── Navbar scroll ── */
 window.addEventListener('scroll', () => {
-  const navbar = document.getElementById('navbar');
-  navbar.classList.toggle('scrolled', window.scrollY > 60);
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
   document.getElementById('backTop').classList.toggle('show', window.scrollY > 400);
-  // Active nav
   const sections = ['home','about','skills','projects','research','contact'];
   let current = 'home';
   sections.forEach(id => {
@@ -412,12 +401,31 @@ document.getElementById('backTop').addEventListener('click', () => window.scroll
 /* ── Form submit ── */
 function handleFormSubmit(e) {
   e.preventDefault();
-  showToast('Message sent! I\'ll get back to you soon.');
-  e.target.reset();
+  const form = e.target;
+  const btn = form.querySelector('button[type="submit"]');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+  fetch(form.action, {
+    method: 'POST',
+    body: new FormData(form),
+    headers: { 'Accept': 'application/json' }
+  }).then(res => {
+    if (res.ok) {
+      showToast('Message sent! I\'ll get back to you soon.');
+      form.reset();
+    } else {
+      showToast('Something went wrong. Email me directly.');
+    }
+  }).catch(() => {
+    showToast('Something went wrong. Email me directly.');
+  }).finally(() => {
+    btn.innerHTML = 'Send Message <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
+    btn.disabled = false;
+  });
 }
 
 /* ── Toast ── */
-function showToast(msg, duration = 3000) {
+function showToast(msg, duration = 3500) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
@@ -428,20 +436,17 @@ function showToast(msg, duration = 3000) {
 function render() {
   const D = getData();
 
-  // Hero
   document.getElementById('heroName').textContent = D.name;
   document.getElementById('heroSub').textContent = D.subtitle;
   document.getElementById('heroLabel').textContent = D.heroLabel;
   const cvBtn = document.getElementById('cvBtn');
   if (D.cvLink) cvBtn.href = D.cvLink;
 
-  // Typewriter
   twWords = D.typewriterWords || ['Materials Engineer', 'Researcher', 'Innovator'];
   clearTimeout(twTimer);
   twIdx = 0; twChar = 0; twDeleting = false;
   typewrite();
 
-  // About
   document.getElementById('aboutBio').textContent = D.bio;
   document.getElementById('statUni').textContent = D.university;
   document.getElementById('statDept').textContent = D.department;
@@ -451,10 +456,8 @@ function render() {
   // Skills
   const sg = document.getElementById('skillsGrid');
   sg.innerHTML = D.skills.map((cat, i) => `
-    <div class="skill-card glass" style="animation-delay:${i * 0.1}s">
-      <div class="skill-icon" style="--ic:${['var(--violet)','var(--blue)','var(--cyan)','var(--emerald)'][i % 4]}">
-        ${['⚗️','💻','🔬','📊'][i % 4]}
-      </div>
+    <div class="skill-card glass dyn-card" style="animation-delay:${i * 0.12}s">
+      <div class="skill-icon">${['⚗️','💻','🔬','📊'][i % 4]}</div>
       <h3 class="skill-title">${cat.title}</h3>
       <div class="chip-row">${cat.items.map(s => `<span class="chip chip-${i % 4}">${s}</span>`).join('')}</div>
     </div>
@@ -463,36 +466,28 @@ function render() {
   // Projects
   const pg = document.getElementById('projectsGrid');
   pg.innerHTML = D.projects.map((p, i) => `
-    <div class="project-card glass" style="animation-delay:${i * 0.1}s">
+    <div class="project-card glass dyn-card" style="animation-delay:${i * 0.12}s">
       <div class="project-num">0${i + 1}</div>
       <h3 class="project-title">${p.title}</h3>
       <p class="project-desc">${p.desc}</p>
-      <div class="chip-row" style="margin-bottom:20px">${p.tags.split(',').map(t => `<span class="chip chip-0">${t.trim()}</span>`).join('')}</div>
+      <div class="chip-row" style="margin-bottom:20px">${p.tags ? p.tags.split(',').map(t => `<span class="chip chip-0">${t.trim()}</span>`).join('') : ''}</div>
       ${p.link && p.link !== '#' ? `<a href="${p.link}" class="project-link" target="_blank">View Project <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>` : ''}
     </div>
   `).join('');
 
   // Research
-  const rl = document.getElementById('researchList');
-  rl.innerHTML = D.researchInterests.map(r => `
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <p>${r}</p>
-    </div>
+  document.getElementById('researchList').innerHTML = D.researchInterests.map(r => `
+    <div class="timeline-item"><div class="timeline-dot"></div><p>${r}</p></div>
   `).join('');
 
   const pl = document.getElementById('pubList');
   const cs = document.getElementById('pubComingSoon');
-  if (D.publications.length === 0) {
-    pl.innerHTML = '';
-    cs.style.display = 'flex';
+  if (!D.publications || D.publications.length === 0) {
+    pl.innerHTML = ''; cs.style.display = 'flex';
   } else {
     cs.style.display = 'none';
     pl.innerHTML = D.publications.map((p, i) => `
-      <div class="pub-item">
-        <span class="pub-num">${i + 1}</span>
-        <p>${p}</p>
-      </div>
+      <div class="pub-item"><span class="pub-num">${i + 1}</span><p>${p}</p></div>
     `).join('');
   }
 
@@ -508,19 +503,15 @@ function render() {
   document.getElementById('footerTagline').textContent = `${D.name} · ${D.department} · ${D.university}`;
   document.getElementById('footerYear').textContent = new Date().getFullYear();
 
-  // Apply appearance
   if (D.appearance) {
-    if (D.appearance.accentColor) {
-      document.documentElement.style.setProperty('--violet', D.appearance.accentColor);
-    }
-    if (D.appearance.fontSize) {
-      document.documentElement.style.fontSize = D.appearance.fontSize;
-    }
+    if (D.appearance.accentColor) document.documentElement.style.setProperty('--violet', D.appearance.accentColor);
+    if (D.appearance.fontSize) document.documentElement.style.fontSize = D.appearance.fontSize;
   }
 
-  // Re-observe all newly injected .reveal elements
   setTimeout(observeReveal, 50);
 }
 
 render();
 </script>
+</body>
+</html>
