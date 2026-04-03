@@ -52,14 +52,7 @@ const DEFAULT_DATA = {
       ]
     }
   ],
-  "projects": [
-    {
-      "title": "Coming Soon...",
-      "desc": "",
-      "tags": "",
-      "link": "#"
-    }
-  ],
+  "projects": [],
   "researchInterests": [
     "Nanomaterials and Nanotechnology",
     "Sustainable and Green Materials",
