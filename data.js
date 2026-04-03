@@ -20,7 +20,8 @@ const DEFAULT_DATA = {
       "title": "Materials Science",
       "items": [
         "Crystallography",
-        "Phase Diagrams"
+        "Phase Diagrams",
+        "Fracture"
       ]
     },
     {
@@ -37,8 +38,8 @@ const DEFAULT_DATA = {
         "MATLAB",
         "Origin Pro",
         "AutoCAD",
-        "MS Office",
-        "Davinci Resolve"
+        "Davinci Resolve",
+        "MS Office"
       ]
     },
     {
