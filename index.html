@@ -173,7 +173,7 @@
           </div>
           <div>
             <div class="contact-label">Email</div>
-            <div class="contact-val" id="emailVal">tanim@example.com</div>
+            <div class="contact-val" id="emailVal"><span class="__cf_email__" data-cfemail="3a4e5b5453577a5f425b574a565f14595557">[email&#160;protected]</span></div>
           </div>
         </a>
         <div class="social-row">
@@ -230,7 +230,7 @@
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<script src="data.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="data.js"></script>
 <script>
 /* ── Canvas Background Animation ── */
 const canvas = document.getElementById('bgCanvas');
@@ -524,29 +524,3 @@ function render() {
 
 render();
 </script>
-  <script>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-      if (!user) {
-        window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
-        });
-      }
-    });
-  }
-</script>
-```
-
-Commit this change. **This fixes the invite link problem** — now when you click that email link, it'll show the password popup properly.
-
----
-
-## Step 2 — Create the Admin folder
-
-In your GitHub repo, create a new file. Click **"Add file" → "Create new file"**.
-
-Type the filename as:
-```
-admin/index.html
-</body>
-</html>
