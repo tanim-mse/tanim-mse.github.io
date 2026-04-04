@@ -55,18 +55,28 @@ const DEFAULT_DATA = {
   ],
   "projects": [
     {
-      "title": "Projects coming soon...",
+      "title": "Modified Structural Design of Pit Furnace for Foundry: Mathematical Optimization for enhanced Performance",
       "excerpt": "Exciting projects are on the way. Check back soon!",
       "featuredImage": "",
-      "tags": "Materials Science",
+      "tags": "Pit Furnace, Modified Design",
       "link": "#",
-      "date": "",
+      "date": "Apr 2026",
       "status": "Ongoing",
       "blocks": [
         {
+          "type": "heading1",
+          "id": "a8tq7sgsuo",
+          "content": "Introduction"
+        },
+        {
           "type": "paragraph",
-          "content": "Exciting projects are on the way. Check back soon!",
+          "content": "Introduction:\nPit furnaces are vertical crucible furnaces commonly used in foundries for melting non-ferrous metals such as aluminum. A typical design features a combustion chamber lined with refractory material, a cast-iron crucible with refractory material, a top lid with side or bottom burner(s), and a top lid with an exhaust flue. The goal of this modification is to improve thermal performance, fuel-related variables, heat transfer, operational parameters, and environmental sustainability.\nThe proposed design retains the core cylindrical geometry for uniform heat distribution but introduces multi-layer insulation, a reconfigurable refractory, and a reconfigurable refractory for waste-heat recovery, improving performance.\nscaling, and optimized dimensions. These changes are evaluated through heat balance equations and optimization to demonstrate quantifiable gains without excessive complexity.",
           "id": "u2u58ukuifj"
+        },
+        {
+          "type": "paragraph",
+          "id": "1qh77mqfbnq",
+          "content": "Standard vs. Proposed Design:\nStandard pit furnace (e.g., square/rectangular or basic cylindrical) often uses single-layer firebrick lining (A150mm), minimal insulation (for gas only), no heat recovery, and simple burner placement. This leads to too high a wall and exhaust losses (~90-97% of input energy)."
         }
       ]
     }
