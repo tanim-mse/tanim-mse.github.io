@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -31,9 +32,7 @@
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         Admin
       </a>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </div>
 </nav>
@@ -70,10 +69,7 @@
       <a href="#projects" class="btn btn-ghost">View My Work</a>
     </div>
   </div>
-  <div class="scroll-hint">
-    <div class="scroll-line"></div>
-    <span>scroll</span>
-  </div>
+  <div class="scroll-hint"><div class="scroll-line"></div><span>scroll</span></div>
 </section>
 
 <!-- About -->
@@ -89,20 +85,11 @@
         <img id="avatarImg" class="avatar-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect width='300' height='300' fill='%230f0f1a'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='sans-serif' font-size='80' fill='%237c3aed'%3ETI%3C/text%3E%3C/svg%3E" alt="Tanim">
       </div>
       <div class="about-text">
-        <p id="aboutBio">I am Tanim, a Materials Science and Engineering student at RUET with a deep passion for exploring the intersection of advanced materials, nanotechnology, and sustainable engineering solutions.</p>
+        <p id="aboutBio">I am Tanim, a Materials Science and Engineering student at RUET.</p>
         <div class="about-stats">
-          <div class="stat-card">
-            <div class="stat-label">University</div>
-            <div class="stat-val" id="statUni">RUET</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Department</div>
-            <div class="stat-val" id="statDept">MSE</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Year</div>
-            <div class="stat-val" id="statYear">Undergraduate</div>
-          </div>
+          <div class="stat-card"><div class="stat-label">University</div><div class="stat-val" id="statUni">RUET</div></div>
+          <div class="stat-card"><div class="stat-label">Department</div><div class="stat-val" id="statDept">MSE</div></div>
+          <div class="stat-card"><div class="stat-label">Year</div><div class="stat-val" id="statYear">Undergraduate</div></div>
         </div>
       </div>
     </div>
@@ -130,6 +117,14 @@
       <p class="section-sub">Exploring the intersection of materials science, engineering, and innovation.</p>
     </div>
     <div class="projects-grid" id="projectsGrid"></div>
+    <!-- View All Drawer Trigger -->
+    <div class="show-all-wrap" id="showAllWrap" style="display:none">
+      <button class="show-all-btn" id="showAllBtn" onclick="openProjectsDrawer()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
+        <span id="showAllLabel">View All Projects</span>
+        <span id="showAllCount" class="show-all-count"></span>
+      </button>
+    </div>
   </div>
 </section>
 
@@ -148,9 +143,7 @@
       <div>
         <h3 class="research-subtitle">Publications</h3>
         <div id="pubList" class="pub-list"></div>
-        <div class="coming-soon" id="pubComingSoon" style="display:none">
-          <span>📄</span> Publications coming soon
-        </div>
+        <div class="coming-soon" id="pubComingSoon" style="display:none"><span>📄</span> Publications coming soon</div>
       </div>
     </div>
   </div>
@@ -167,74 +160,25 @@
     <div class="contact-grid reveal">
       <div class="contact-info">
         <a href="#" class="contact-item" id="emailLink">
-          <div class="contact-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <div>
-            <div class="contact-label">Email</div>
-            <div class="contact-val" id="emailVal"><span class="__cf_email__" data-cfemail="d5a1b4bbbcb8ece295a5a7baa1babbfbb8b0">[email&#160;protected]</span></div>
-          </div>
+          <div class="contact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><div class="contact-label">Email</div><div class="contact-val" id="emailVal">tanim97@proton.me</div></div>
         </a>
         <div class="social-row">
-          <a href="#" class="social-btn" id="githubLink" title="GitHub">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-          </a>
-          <a href="#" class="social-btn" id="linkedinLink" title="LinkedIn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          </a>
-          <a href="#" class="social-btn" id="rgLink" title="ResearchGate">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.586 0c-.818 0-1.508.19-2.073.565-.563.377-.97.936-1.213 1.68a12.458 12.458 0 0 0-.35 2.797c0 1.078.138 2.047.412 2.907.274.86.68 1.525 1.218 2 .537.475 1.178.712 1.925.712.678 0 1.268-.19 1.77-.566.504-.378.882-.926 1.138-1.647.254-.72.382-1.56.382-2.518V5.4c0-.992-.13-1.856-.386-2.592C22.155.8 21.766.38 21.24.14 20.715-.1 20.162-.01 19.586 0zm-7.99.09c-.58 0-1.1.18-1.56.543-.46.362-.818.89-1.075 1.583-.256.693-.383 1.524-.383 2.493v.44c0 .966.128 1.798.384 2.497.257.698.616 1.228 1.078 1.59.462.362.985.543 1.573.543.584 0 1.105-.18 1.563-.543.458-.362.813-.892 1.067-1.59.254-.7.38-1.531.38-2.497v-.44c0-.97-.127-1.8-.38-2.493-.254-.693-.61-1.22-1.067-1.583-.46-.362-.98-.543-1.58-.543zm-8.07.018c-.485 0-.916.128-1.29.385C1.86.75 1.558 1.12 1.33 1.6c-.228.48-.34 1.04-.34 1.68v.386c0 .64.113 1.197.34 1.672.228.475.53.842.907 1.1.378.258.81.387 1.295.387.489 0 .923-.13 1.3-.387.377-.258.673-.625.89-1.1.218-.475.326-1.033.326-1.672V3.28c0-.64-.108-1.2-.325-1.68-.218-.48-.513-.85-.89-1.11C3.458.23 3.024.1 2.527.1zm7.99 12.01c-1.18 0-2.2.256-3.06.768-.86.512-1.527 1.24-2 2.18-.472.94-.71 2.043-.71 3.31 0 1.272.238 2.384.713 3.338.475.953 1.14 1.685 1.997 2.194.856.51 1.867.766 3.033.766 1.17 0 2.184-.257 3.044-.77.86-.513 1.527-1.243 2-2.19.472-.945.71-2.058.71-3.338 0-1.27-.237-2.37-.71-3.31-.472-.94-1.14-1.67-2-2.18-.86-.512-1.875-.768-3.017-.768z"/></svg>
-          </a>
+          <a href="#" class="social-btn" id="githubLink" title="GitHub"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></a>
+          <a href="#" class="social-btn" id="linkedinLink" title="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a href="#" class="social-btn" id="rgLink" title="ResearchGate"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.586 0c-.818 0-1.508.19-2.073.565-.563.377-.97.936-1.213 1.68a12.458 12.458 0 0 0-.35 2.797c0 1.078.138 2.047.412 2.907.274.86.68 1.525 1.218 2 .537.475 1.178.712 1.925.712.678 0 1.268-.19 1.77-.566.504-.378.882-.926 1.138-1.647.254-.72.382-1.56.382-2.518V5.4c0-.992-.13-1.856-.386-2.592C22.155.8 21.766.38 21.24.14 20.715-.1 20.162-.01 19.586 0z"/></svg></a>
         </div>
       </div>
       <form class="contact-form" id="contactForm" action="https://formspree.io/f/xlgowqby" method="POST" onsubmit="handleFormSubmit(event)">
-        <div class="form-group">
-          <input type="text" class="form-input" name="name" placeholder="Your Name" required>
-        </div>
-        <div class="form-group">
-          <input type="email" class="form-input" name="email" placeholder="Your Email" required>
-        </div>
-        <div class="form-group">
-          <input type="text" class="form-input" name="subject" placeholder="Subject">
-        </div>
-        <div class="form-group">
-          <textarea class="form-textarea" name="message" placeholder="Your Message" rows="5" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">
-          Send Message
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        </button>
+        <div class="form-group"><input type="text" class="form-input" name="name" placeholder="Your Name" required></div>
+        <div class="form-group"><input type="email" class="form-input" name="email" placeholder="Your Email" required></div>
+        <div class="form-group"><input type="text" class="form-input" name="subject" placeholder="Subject"></div>
+        <div class="form-group"><textarea class="form-textarea" name="message" placeholder="Your Message" rows="5" required></textarea></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Send Message <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
       </form>
     </div>
   </div>
 </section>
-
-<!-- Project Detail Modal -->
-<div class="project-modal-overlay" id="projectModalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalProjectTitle">
-  <div class="project-modal" id="projectModal">
-    <div class="project-modal-header">
-      <div class="project-modal-header-left">
-        <div class="project-modal-badges" id="modalBadges"></div>
-        <h2 class="project-modal-title" id="modalProjectTitle"></h2>
-        <div class="project-modal-tags" id="modalTags"></div>
-      </div>
-      <button class="project-modal-close" onclick="closeProjectModal()" aria-label="Close">✕</button>
-    </div>
-    <div class="project-modal-body">
-      <div class="project-rich-content" id="modalRichContent"></div>
-    </div>
-    <div class="project-modal-footer">
-      <button class="modal-close-btn" onclick="closeProjectModal()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-        Back to Projects
-      </button>
-      <a href="#" class="modal-ext-link" id="modalExtLink" target="_blank" rel="noopener" style="display:none">
-        View Full Project
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-      </a>
-    </div>
-  </div>
-</div>
 
 <!-- Footer -->
 <footer class="footer">
@@ -256,251 +200,184 @@
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="data.js"></script>
+<!-- Project Detail Modal -->
+<div class="project-modal-overlay" id="projectModalOverlay" role="dialog" aria-modal="true">
+  <div class="project-modal" id="projectModal">
+    <div class="project-modal-header">
+      <div class="project-modal-header-left">
+        <div class="project-modal-badges" id="modalBadges"></div>
+        <h2 class="project-modal-title" id="modalProjectTitle"></h2>
+        <div class="project-modal-tags" id="modalTags"></div>
+      </div>
+      <button class="project-modal-close" onclick="closeProjectModal()" aria-label="Close">✕</button>
+    </div>
+    <div class="project-modal-body">
+      <div id="modalFeaturedImage"></div>
+      <div class="project-rich-content" id="modalRichContent"></div>
+    </div>
+    <div class="project-modal-footer">
+      <button class="modal-close-btn" onclick="closeProjectModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to Projects
+      </button>
+      <a href="#" class="modal-ext-link" id="modalExtLink" target="_blank" rel="noopener" style="display:none">
+        View Full Project
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- All Projects Drawer -->
+<div class="projects-drawer-overlay" id="projectsDrawerOverlay" onclick="closeProjectsDrawer()"></div>
+<div class="projects-drawer" id="projectsDrawer">
+  <div class="projects-drawer-header">
+    <div>
+      <h2 class="projects-drawer-title">All Projects</h2>
+      <p class="projects-drawer-sub" id="drawerCount"></p>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <input type="text" class="drawer-search" id="drawerSearch" placeholder="Search projects…" oninput="filterDrawerProjects(this.value)">
+      <button class="projects-drawer-close" onclick="closeProjectsDrawer()">✕</button>
+    </div>
+  </div>
+  <div class="drawer-tags-filter" id="drawerTagsFilter"></div>
+  <div class="projects-drawer-list" id="projectsDrawerList"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="data.js"></script>
 <script>
-/* ── Canvas Background Animation ── */
+/* ── Canvas Background ── */
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
 let W, H, particles = [], animFrame;
-const COLORS = ['rgba(124,58,237,', 'rgba(37,99,235,', 'rgba(6,182,212,', 'rgba(16,185,129,'];
-
-function resizeCanvas() {
-  W = canvas.width = window.innerWidth;
-  H = canvas.height = window.innerHeight;
-}
-
-function Particle() {
-  this.x = Math.random() * W;
-  this.y = Math.random() * H;
-  this.vx = (Math.random() - 0.5) * 0.4;
-  this.vy = (Math.random() - 0.5) * 0.4;
-  this.r = Math.random() * 2 + 0.5;
-  this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
-  this.alpha = Math.random() * 0.5 + 0.2;
-  this.pulse = Math.random() * Math.PI * 2;
-  this.pulseSpeed = Math.random() * 0.02 + 0.005;
-}
-
-Particle.prototype.update = function() {
-  this.x += this.vx;
-  this.y += this.vy;
-  this.pulse += this.pulseSpeed;
-  if (this.x < 0 || this.x > W) this.vx *= -1;
-  if (this.y < 0 || this.y > H) this.vy *= -1;
-};
-
-Particle.prototype.draw = function() {
-  const a = this.alpha + Math.sin(this.pulse) * 0.1;
-  ctx.beginPath();
-  ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-  ctx.fillStyle = this.color + a + ')';
-  ctx.fill();
-};
-
-function initParticles() {
-  const count = Math.floor((W * H) / 12000);
-  particles = Array.from({ length: Math.min(count, 120) }, () => new Particle());
-}
-
-function drawConnections() {
-  for (let i = 0; i < particles.length; i++) {
-    for (let j = i + 1; j < particles.length; j++) {
-      const dx = particles[i].x - particles[j].x;
-      const dy = particles[i].y - particles[j].y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 130) {
-        const alpha = (1 - dist / 130) * 0.15;
-        ctx.beginPath();
-        ctx.moveTo(particles[i].x, particles[i].y);
-        ctx.lineTo(particles[j].x, particles[j].y);
-        ctx.strokeStyle = `rgba(124,58,237,${alpha})`;
-        ctx.lineWidth = 0.6;
-        ctx.stroke();
-      }
-    }
-  }
-}
-
-let auroraT = 0;
-function drawAurora() {
-  auroraT += 0.003;
-  const grad1 = ctx.createRadialGradient(
-    W * (0.3 + Math.sin(auroraT) * 0.1), H * 0.3, 0,
-    W * (0.3 + Math.sin(auroraT) * 0.1), H * 0.3, W * 0.5
-  );
-  grad1.addColorStop(0, 'rgba(124,58,237,0.05)');
-  grad1.addColorStop(1, 'transparent');
-  ctx.fillStyle = grad1;
-  ctx.fillRect(0, 0, W, H);
-  const grad2 = ctx.createRadialGradient(
-    W * (0.7 + Math.cos(auroraT * 0.7) * 0.1), H * 0.6, 0,
-    W * (0.7 + Math.cos(auroraT * 0.7) * 0.1), H * 0.6, W * 0.4
-  );
-  grad2.addColorStop(0, 'rgba(6,182,212,0.04)');
-  grad2.addColorStop(1, 'transparent');
-  ctx.fillStyle = grad2;
-  ctx.fillRect(0, 0, W, H);
-}
-
-function animate() {
-  ctx.clearRect(0, 0, W, H);
-  drawAurora();
-  particles.forEach(p => { p.update(); p.draw(); });
-  drawConnections();
-  animFrame = requestAnimationFrame(animate);
-}
-
-resizeCanvas();
-initParticles();
-animate();
-window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
-
-/* ── Mouse parallax ── */
-document.addEventListener('mousemove', e => {
-  particles.forEach((p, i) => {
-    if (i % 4 === 0) {
-      const dx = e.clientX - p.x;
-      const dy = e.clientY - p.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 100) { p.vx -= dx * 0.0003; p.vy -= dy * 0.0003; }
-    }
-  });
-});
+const COLORS = ['rgba(124,58,237,','rgba(37,99,235,','rgba(6,182,212,','rgba(16,185,129,'];
+function resizeCanvas() { W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
+function Particle() { this.x=Math.random()*W; this.y=Math.random()*H; this.vx=(Math.random()-.5)*.4; this.vy=(Math.random()-.5)*.4; this.r=Math.random()*2+.5; this.color=COLORS[Math.floor(Math.random()*COLORS.length)]; this.alpha=Math.random()*.5+.2; this.pulse=Math.random()*Math.PI*2; this.pulseSpeed=Math.random()*.02+.005; }
+Particle.prototype.update=function(){this.x+=this.vx;this.y+=this.vy;this.pulse+=this.pulseSpeed;if(this.x<0||this.x>W)this.vx*=-1;if(this.y<0||this.y>H)this.vy*=-1;};
+Particle.prototype.draw=function(){const a=this.alpha+Math.sin(this.pulse)*.1;ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=this.color+a+')';ctx.fill();};
+function initParticles(){const count=Math.floor((W*H)/12000);particles=Array.from({length:Math.min(count,120)},()=>new Particle());}
+function drawConnections(){for(let i=0;i<particles.length;i++){for(let j=i+1;j<particles.length;j++){const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<130){const alpha=(1-dist/130)*.15;ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=`rgba(124,58,237,${alpha})`;ctx.lineWidth=.6;ctx.stroke();}}}}
+let auroraT=0;
+function drawAurora(){auroraT+=.003;const g1=ctx.createRadialGradient(W*(.3+Math.sin(auroraT)*.1),H*.3,0,W*(.3+Math.sin(auroraT)*.1),H*.3,W*.5);g1.addColorStop(0,'rgba(124,58,237,0.05)');g1.addColorStop(1,'transparent');ctx.fillStyle=g1;ctx.fillRect(0,0,W,H);const g2=ctx.createRadialGradient(W*(.7+Math.cos(auroraT*.7)*.1),H*.6,0,W*(.7+Math.cos(auroraT*.7)*.1),H*.6,W*.4);g2.addColorStop(0,'rgba(6,182,212,0.04)');g2.addColorStop(1,'transparent');ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);}
+function animate(){ctx.clearRect(0,0,W,H);drawAurora();particles.forEach(p=>{p.update();p.draw();});drawConnections();animFrame=requestAnimationFrame(animate);}
+resizeCanvas();initParticles();animate();
+window.addEventListener('resize',()=>{resizeCanvas();initParticles();});
+document.addEventListener('mousemove',e=>{particles.forEach((p,i)=>{if(i%4===0){const dx=e.clientX-p.x,dy=e.clientY-p.y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<100){p.vx-=dx*.0003;p.vy-=dy*.0003;}}});});
 
 /* ── Typewriter ── */
-let twWords = [], twIdx = 0, twChar = 0, twDeleting = false, twTimer;
-function typewrite() {
-  if (!twWords.length) return;
-  const word = twWords[twIdx];
-  const el = document.getElementById('twText');
-  if (!el) return;
-  if (!twDeleting) {
-    el.textContent = word.slice(0, ++twChar);
-    if (twChar === word.length) { twDeleting = true; twTimer = setTimeout(typewrite, 1800); return; }
-  } else {
-    el.textContent = word.slice(0, --twChar);
-    if (twChar === 0) { twDeleting = false; twIdx = (twIdx + 1) % twWords.length; }
-  }
-  twTimer = setTimeout(typewrite, twDeleting ? 60 : 100);
-}
+let twWords=[],twIdx=0,twChar=0,twDeleting=false,twTimer;
+function typewrite(){if(!twWords.length)return;const word=twWords[twIdx];const el=document.getElementById('twText');if(!el)return;if(!twDeleting){el.textContent=word.slice(0,++twChar);if(twChar===word.length){twDeleting=true;twTimer=setTimeout(typewrite,1800);return;}}else{el.textContent=word.slice(0,--twChar);if(twChar===0){twDeleting=false;twIdx=(twIdx+1)%twWords.length;}}twTimer=setTimeout(typewrite,twDeleting?60:100);}
 
 /* ── Scroll reveal ── */
-const revealObs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
-}, { threshold: 0.08 });
-
-function observeReveal() {
-  document.querySelectorAll('.reveal:not(.visible)').forEach(el => revealObs.observe(el));
-}
+const revealObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});},{threshold:.08});
+function observeReveal(){document.querySelectorAll('.reveal:not(.visible)').forEach(el=>revealObs.observe(el));}
 observeReveal();
 
 /* ── Navbar scroll ── */
-window.addEventListener('scroll', () => {
-  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
-  document.getElementById('backTop').classList.toggle('show', window.scrollY > 400);
-  const sections = ['home','about','skills','projects','research','contact'];
-  let current = 'home';
-  sections.forEach(id => {
-    const el = document.getElementById(id);
-    if (el && window.scrollY >= el.offsetTop - 120) current = id;
-  });
-  document.querySelectorAll('.nav-link').forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-  });
-});
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);document.getElementById('backTop').classList.toggle('show',window.scrollY>400);const sections=['home','about','skills','projects','research','contact'];let current='home';sections.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-120)current=id;});document.querySelectorAll('.nav-link').forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+current);});});
 
 /* ── Mobile menu ── */
-document.getElementById('hamburger').addEventListener('click', () => {
-  document.getElementById('mobileMenu').classList.add('open');
-  document.getElementById('mobileOverlay').classList.add('open');
-});
-function closeMobile() {
-  document.getElementById('mobileMenu').classList.remove('open');
-  document.getElementById('mobileOverlay').classList.remove('open');
-}
-document.getElementById('mobileClose').addEventListener('click', closeMobile);
-document.getElementById('mobileOverlay').addEventListener('click', closeMobile);
-document.querySelectorAll('.mobile-link').forEach(a => a.addEventListener('click', closeMobile));
+document.getElementById('hamburger').addEventListener('click',()=>{document.getElementById('mobileMenu').classList.add('open');document.getElementById('mobileOverlay').classList.add('open');});
+function closeMobile(){document.getElementById('mobileMenu').classList.remove('open');document.getElementById('mobileOverlay').classList.remove('open');}
+document.getElementById('mobileClose').addEventListener('click',closeMobile);
+document.getElementById('mobileOverlay').addEventListener('click',closeMobile);
+document.querySelectorAll('.mobile-link').forEach(a=>a.addEventListener('click',closeMobile));
+document.getElementById('backTop').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 
-/* ── Back to top ── */
-document.getElementById('backTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-/* ── Form submit ── */
-function handleFormSubmit(e) {
-  e.preventDefault();
-  const form = e.target;
-  const btn = form.querySelector('button[type="submit"]');
-  btn.textContent = 'Sending…';
-  btn.disabled = true;
-  fetch(form.action, {
-    method: 'POST',
-    body: new FormData(form),
-    headers: { 'Accept': 'application/json' }
-  }).then(res => {
-    if (res.ok) {
-      showToast('Message sent! I\'ll get back to you soon.');
-      form.reset();
-    } else {
-      showToast('Something went wrong. Email me directly.');
-    }
-  }).catch(() => {
-    showToast('Something went wrong. Email me directly.');
-  }).finally(() => {
-    btn.innerHTML = 'Send Message <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
-    btn.disabled = false;
-  });
-}
+/* ── Form ── */
+function handleFormSubmit(e){e.preventDefault();const form=e.target;const btn=form.querySelector('button[type="submit"]');btn.textContent='Sending…';btn.disabled=true;fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}}).then(res=>{if(res.ok){showToast("Message sent! I'll get back to you soon.");form.reset();}else{showToast('Something went wrong. Email me directly.');}}).catch(()=>showToast('Something went wrong. Email me directly.')).finally(()=>{btn.innerHTML='Send Message <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';btn.disabled=false;});}
+function showToast(msg,duration=3500){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),duration);}
 
 /* ── Strip HTML helper ── */
-function stripHtml(html) {
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  return div.textContent || div.innerText || '';
+function stripHtml(html){const d=document.createElement('div');d.innerHTML=html;return d.textContent||d.innerText||'';}
+
+/* ═══════════════════════════════════════════
+   BLOCKS RENDERER — render blocks[] to HTML
+═══════════════════════════════════════════ */
+function renderBlocksToHTML(blocks) {
+  if (!blocks || !blocks.length) return '<p style="color:#475569">No content yet.</p>';
+  return blocks.map(b => {
+    if (b.type === 'paragraph') return `<p>${escapeHTML(b.content||'')}</p>`;
+    if (b.type === 'heading1') return `<h1>${escapeHTML(b.content||'')}</h1>`;
+    if (b.type === 'heading2') return `<h2>${escapeHTML(b.content||'')}</h2>`;
+    if (b.type === 'heading3') return `<h3>${escapeHTML(b.content||'')}</h3>`;
+    if (b.type === 'image' && b.src) {
+      const w = b.size==='small'?'40%':b.size==='full'?'100%':'70%';
+      return `<div style="text-align:center;margin:20px 0">
+        <img src="${b.src}" style="max-width:${w};border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.4);display:inline-block">
+        ${b.caption?`<p style="font-size:0.8rem;color:#64748b;font-style:italic;margin-top:8px">${escapeHTML(b.caption)}</p>`:''}
+      </div>`;
+    }
+    if (b.type === 'formula') {
+      try {
+        const rendered = window.katex ? window.katex.renderToString(b.latex||'', {throwOnError:false,displayMode:true}) : `<code>${escapeHTML(b.latex||'')}</code>`;
+        return `<div class="formula-block">${rendered}</div>`;
+      } catch(e) { return `<div class="formula-block"><code>${escapeHTML(b.latex||'')}</code></div>`; }
+    }
+    if (b.type === 'code') return `<div class="code-block-wrap">${b.language?`<div class="code-lang-label">${escapeHTML(b.language)}</div>`:''}<pre><code>${escapeHTML(b.content||'')}</code></pre></div>`;
+    if (b.type === 'divider') return `<hr class="content-divider">`;
+    if (b.type === 'callout') return `<div class="callout-block">${b.icon||'💡'} ${escapeHTML(b.content||'')}</div>`;
+    if (b.type === 'table' && b.data) {
+      const rows = b.data;
+      return `<div class="table-wrap"><table>${rows.map((r,ri)=>`<tr>${r.map(c=>ri===0?`<th>${escapeHTML(c)}</th>`:`<td>${escapeHTML(c)}</td>`).join('')}</tr>`).join('')}</table></div>`;
+    }
+    // Fallback: legacy HTML desc
+    if (b.type === 'legacy_html') return b.content || '';
+    return '';
+  }).join('\n');
 }
 
-/* ── Project Modal ── */
-let _projectsCache = [];
+function escapeHTML(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ═══════════════════════════════════════════
+   PROJECT MODAL
+═══════════════════════════════════════════ */
+let _allProjects = [];
 
 function openProjectModal(idx) {
-  const D = getData();
-  _projectsCache = D.projects || [];
-  const p = _projectsCache[idx];
+  const p = _allProjects[idx];
   if (!p) return;
 
-  // Badges
-  const badgesEl = document.getElementById('modalBadges');
-  const statusClass = { 'Ongoing': 'status-ongoing', 'Completed': 'status-completed', 'Paused': 'status-paused' }[p.status] || 'status-ongoing';
-  badgesEl.innerHTML = [
+  const statusClass = {Ongoing:'status-ongoing',Completed:'status-completed',Paused:'status-paused'}[p.status]||'status-ongoing';
+  document.getElementById('modalBadges').innerHTML = [
     p.status ? `<span class="project-status-badge ${statusClass}">${p.status}</span>` : '',
     p.date ? `<span class="project-date-badge">${p.date}</span>` : ''
   ].join('');
-
-  // Title
   document.getElementById('modalProjectTitle').textContent = p.title;
+  const tags = p.tags ? p.tags.split(',').map(t=>t.trim()).filter(Boolean) : [];
+  document.getElementById('modalTags').innerHTML = tags.map(t=>`<span class="project-tag">${t}</span>`).join('');
 
-  // Tags
-  const tags = p.tags ? p.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
-  document.getElementById('modalTags').innerHTML = tags.map(t => `<span class="project-tag">${t}</span>`).join('');
+  // Featured image banner
+  const fi = document.getElementById('modalFeaturedImage');
+  if (p.featuredImage) {
+    fi.innerHTML = `<div style="width:100%;max-height:240px;overflow:hidden;border-radius:10px;margin-bottom:24px;position:relative">
+      <img src="${p.featuredImage}" style="width:100%;height:240px;object-fit:cover;border-radius:10px;display:block">
+      <div style="position:absolute;bottom:0;left:0;right:0;height:100px;background:linear-gradient(transparent,rgba(13,13,28,0.9))"></div>
+    </div>`;
+  } else { fi.innerHTML = ''; }
 
-  // Rich content — wrap tables for horizontal scroll on mobile
-  let html = p.desc || '<p>No description provided.</p>';
-  html = html.replace(/<table/g, '<div class="table-wrap"><table').replace(/<\/table>/g, '</table></div>');
-  document.getElementById('modalRichContent').innerHTML = html;
+  // Render blocks or legacy desc
+  let contentHTML = '';
+  if (p.blocks && p.blocks.length) {
+    contentHTML = renderBlocksToHTML(p.blocks);
+  } else if (p.desc) {
+    contentHTML = p.desc; // legacy HTML
+  } else {
+    contentHTML = '<p style="color:#475569">No content yet.</p>';
+  }
+  document.getElementById('modalRichContent').innerHTML = contentHTML;
 
   // External link
   const extLink = document.getElementById('modalExtLink');
-  if (p.link && p.link !== '#') {
-    extLink.href = p.link;
-    extLink.style.display = 'inline-flex';
-  } else {
-    extLink.style.display = 'none';
-  }
+  if (p.link && p.link !== '#') { extLink.href = p.link; extLink.style.display = 'inline-flex'; }
+  else { extLink.style.display = 'none'; }
 
-  // Open overlay
-  const overlay = document.getElementById('projectModalOverlay');
-  overlay.classList.add('open');
+  document.getElementById('projectModalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
-  // Scroll modal body to top
   document.getElementById('projectModal').querySelector('.project-modal-body').scrollTop = 0;
 }
 
@@ -508,26 +385,81 @@ function closeProjectModal() {
   document.getElementById('projectModalOverlay').classList.remove('open');
   document.body.style.overflow = '';
 }
+document.getElementById('projectModalOverlay').addEventListener('click', function(e) { if(e.target===this) closeProjectModal(); });
+document.addEventListener('keydown', e => { if(e.key==='Escape') { closeProjectModal(); closeProjectsDrawer(); } });
 
-// Close on backdrop click
-document.getElementById('projectModalOverlay').addEventListener('click', function(e) {
-  if (e.target === this) closeProjectModal();
-});
+/* ═══════════════════════════════════════════
+   PROJECTS DRAWER (View All)
+═══════════════════════════════════════════ */
+let _activeTagFilter = '';
 
-// Close on Escape key
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeProjectModal();
-});
-
-/* ── Toast ── */
-function showToast(msg, duration = 3500) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), duration);
+function openProjectsDrawer() {
+  buildDrawer(_allProjects);
+  document.getElementById('projectsDrawer').classList.add('open');
+  document.getElementById('projectsDrawerOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeProjectsDrawer() {
+  document.getElementById('projectsDrawer').classList.remove('open');
+  document.getElementById('projectsDrawerOverlay').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
-/* ── Render from DATA ── */
+function buildDrawer(projects) {
+  document.getElementById('drawerCount').textContent = `${projects.length} project${projects.length!==1?'s':''}`;
+  // Build tag filters
+  const allTags = new Set();
+  projects.forEach(p => { if(p.tags) p.tags.split(',').forEach(t => allTags.add(t.trim())); });
+  const tagsEl = document.getElementById('drawerTagsFilter');
+  tagsEl.innerHTML = ['All', ...[...allTags]].map(tag => `
+    <button class="drawer-tag-btn ${(tag==='All'&&!_activeTagFilter)||tag===_activeTagFilter?'active':''}" onclick="setTagFilter('${tag==='All'?'':tag}')">${tag}</button>
+  `).join('');
+  filterDrawerProjects(document.getElementById('drawerSearch').value);
+}
+
+function setTagFilter(tag) {
+  _activeTagFilter = tag;
+  buildDrawer(_allProjects);
+}
+
+function filterDrawerProjects(query) {
+  const q = query.toLowerCase();
+  const filtered = _allProjects.filter((p, i) => {
+    const matchesQuery = !q || p.title.toLowerCase().includes(q) || (p.tags||'').toLowerCase().includes(q) || (p.excerpt||'').toLowerCase().includes(q);
+    const matchesTag = !_activeTagFilter || (p.tags||'').split(',').map(t=>t.trim()).includes(_activeTagFilter);
+    return matchesQuery && matchesTag;
+  });
+  const list = document.getElementById('projectsDrawerList');
+  if (!filtered.length) { list.innerHTML = '<div style="text-align:center;padding:40px;color:#475569">No projects found</div>'; return; }
+  list.innerHTML = filtered.map((p) => {
+    const realIdx = _allProjects.indexOf(p);
+    const statusClass = {Ongoing:'status-ongoing',Completed:'status-completed',Paused:'status-paused'}[p.status]||'status-ongoing';
+    const tags = p.tags ? p.tags.split(',').map(t=>t.trim()).filter(Boolean) : [];
+    return `<div class="drawer-project-row" onclick="closeProjectsDrawer();setTimeout(()=>openProjectModal(${realIdx}),300)">
+      <div class="drawer-row-left">
+        ${p.featuredImage ? `<img src="${p.featuredImage}" class="drawer-thumb" alt="">` : '<div class="drawer-thumb-placeholder">📄</div>'}
+      </div>
+      <div class="drawer-row-body">
+        <div class="drawer-row-top">
+          <h3 class="drawer-row-title">${p.title}</h3>
+          <div style="display:flex;gap:6px;flex-shrink:0">
+            ${p.status?`<span class="project-status-badge ${statusClass}">${p.status}</span>`:''}
+            ${p.date?`<span class="project-date-badge">${p.date}</span>`:''}
+          </div>
+        </div>
+        ${p.excerpt?`<p class="drawer-row-excerpt">${p.excerpt}</p>`:''}
+        <div class="drawer-row-tags">${tags.slice(0,4).map(t=>`<span class="project-tag">${t}</span>`).join('')}</div>
+      </div>
+      <svg class="drawer-row-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </div>`;
+  }).join('');
+}
+
+/* ═══════════════════════════════════════════
+   MAIN RENDER
+═══════════════════════════════════════════ */
+const PROJECTS_INITIAL_SHOW = 6;
+
 function render() {
   const D = getData();
 
@@ -536,11 +468,8 @@ function render() {
   document.getElementById('heroLabel').textContent = D.heroLabel;
   const cvBtn = document.getElementById('cvBtn');
   if (D.cvLink) cvBtn.href = D.cvLink;
-
-  twWords = D.typewriterWords || ['Materials Engineer', 'Researcher', 'Innovator'];
-  clearTimeout(twTimer);
-  twIdx = 0; twChar = 0; twDeleting = false;
-  typewrite();
+  twWords = D.typewriterWords || ['Materials Engineer','Researcher','Innovator'];
+  clearTimeout(twTimer); twIdx=0; twChar=0; twDeleting=false; typewrite();
 
   document.getElementById('aboutBio').textContent = D.bio;
   document.getElementById('statUni').textContent = D.university;
@@ -550,69 +479,66 @@ function render() {
 
   // Skills
   const sg = document.getElementById('skillsGrid');
-  sg.innerHTML = D.skills.map((cat, i) => `
-    <div class="skill-card glass dyn-card" style="animation-delay:${i * 0.12}s">
-      <div class="skill-icon">${['⚗️','💻','🔬','📊'][i % 4]}</div>
+  sg.innerHTML = D.skills.map((cat,i)=>`
+    <div class="skill-card glass dyn-card" style="animation-delay:${i*.12}s">
+      <div class="skill-icon">${['⚗️','💻','🔬','📊'][i%4]}</div>
       <h3 class="skill-title">${cat.title}</h3>
-      <div class="chip-row">${cat.items.map(s => `<span class="chip chip-${i % 4}">${s}</span>`).join('')}</div>
-    </div>
-  `).join('');
+      <div class="chip-row">${cat.items.map(s=>`<span class="chip chip-${i%4}">${s}</span>`).join('')}</div>
+    </div>`).join('');
 
   // Projects
+  _allProjects = D.projects || [];
   const pg = document.getElementById('projectsGrid');
-  pg.innerHTML = D.projects.map((p, i) => {
-    const tags = p.tags ? p.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
-    const excerpt = p.excerpt || stripHtml(p.desc || '').slice(0, 130) + (stripHtml(p.desc || '').length > 130 ? '…' : '');
-    const statusClass = { 'Ongoing': 'status-ongoing', 'Completed': 'status-completed', 'Paused': 'status-paused' }[p.status] || 'status-ongoing';
-    return `
-    <div class="project-card dyn-card" style="animation-delay:${i * 0.12}s" onclick="openProjectModal(${i})" role="button" tabindex="0" onkeydown="if(event.key==='Enter')openProjectModal(${i})">
+  const shown = _allProjects.slice(0, PROJECTS_INITIAL_SHOW);
+
+  pg.innerHTML = shown.map((p, i) => {
+    const tags = p.tags ? p.tags.split(',').map(t=>t.trim()).filter(Boolean) : [];
+    const rawExcerpt = p.excerpt || (p.blocks && p.blocks.length ? (p.blocks.find(b=>b.type==='paragraph')||{content:''}).content : '') || stripHtml(p.desc||'');
+    const excerpt = rawExcerpt.slice(0,130)+(rawExcerpt.length>130?'…':'');
+    const statusClass = {Ongoing:'status-ongoing',Completed:'status-completed',Paused:'status-paused'}[p.status]||'status-ongoing';
+    return `<div class="project-card dyn-card" style="animation-delay:${i*.08}s;${p.featuredImage?'padding-top:0;overflow:hidden':''}" onclick="openProjectModal(${i})" role="button" tabindex="0" onkeydown="if(event.key==='Enter')openProjectModal(${i})">
+      ${p.featuredImage?`<div style="width:100%;height:140px;overflow:hidden;margin-bottom:16px;margin-left:-32px;margin-right:-32px;width:calc(100% + 64px);"><img src="${p.featuredImage}" style="width:100%;height:140px;object-fit:cover"></div>`:''}
       <div class="project-card-top">
-        <div class="project-num">0${i + 1}</div>
+        <div class="project-num">0${i+1}</div>
         <div class="project-meta-badges">
-          ${p.status ? `<span class="project-status-badge ${statusClass}">${p.status}</span>` : ''}
-          ${p.date ? `<span class="project-date-badge">${p.date}</span>` : ''}
+          ${p.status?`<span class="project-status-badge ${statusClass}">${p.status}</span>`:''}
+          ${p.date?`<span class="project-date-badge">${p.date}</span>`:''}
         </div>
       </div>
       <h3 class="project-title">${p.title}</h3>
       <p class="project-excerpt">${excerpt}</p>
-      <div class="project-tags">${tags.map(t => `<span class="project-tag">${t}</span>`).join('')}</div>
+      <div class="project-tags">${tags.map(t=>`<span class="project-tag">${t}</span>`).join('')}</div>
       <div class="project-card-footer">
-        <span class="project-view-btn">
-          Read More
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </span>
-        ${p.link && p.link !== '#' ? `<a href="${p.link}" class="project-ext-link" target="_blank" rel="noopener" onclick="event.stopPropagation()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-          External
-        </a>` : ''}
+        <span class="project-view-btn">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        ${p.link&&p.link!=='#'?`<a href="${p.link}" class="project-ext-link" target="_blank" rel="noopener" onclick="event.stopPropagation()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>External</a>`:''}
       </div>
     </div>`;
   }).join('');
-  observeReveal();
+
+  // Show All button
+  const showAllWrap = document.getElementById('showAllWrap');
+  if (_allProjects.length > PROJECTS_INITIAL_SHOW) {
+    showAllWrap.style.display = 'flex';
+    const hidden = _allProjects.length - PROJECTS_INITIAL_SHOW;
+    document.getElementById('showAllCount').textContent = `+${hidden} more`;
+    document.getElementById('showAllLabel').textContent = 'View All Projects';
+  } else {
+    showAllWrap.style.display = 'none';
+  }
 
   // Research
-  document.getElementById('researchList').innerHTML = D.researchInterests.map(r => `
-    <div class="timeline-item"><div class="timeline-dot"></div><p>${r}</p></div>
-  `).join('');
-
-  const pl = document.getElementById('pubList');
-  const cs = document.getElementById('pubComingSoon');
-  if (!D.publications || D.publications.length === 0) {
-    pl.innerHTML = ''; cs.style.display = 'flex';
-  } else {
-    cs.style.display = 'none';
-    pl.innerHTML = D.publications.map((p, i) => `
-      <div class="pub-item"><span class="pub-num">${i + 1}</span><p>${p}</p></div>
-    `).join('');
-  }
+  document.getElementById('researchList').innerHTML = D.researchInterests.map(r=>`<div class="timeline-item"><div class="timeline-dot"></div><p>${r}</p></div>`).join('');
+  const pl=document.getElementById('pubList'); const cs=document.getElementById('pubComingSoon');
+  if(!D.publications||D.publications.length===0){pl.innerHTML='';cs.style.display='flex';}
+  else{cs.style.display='none';pl.innerHTML=D.publications.map((p,i)=>`<div class="pub-item"><span class="pub-num">${i+1}</span><p>${p}</p></div>`).join('');}
 
   // Contact
   document.getElementById('contactMsg').textContent = D.contactMessage;
   document.getElementById('emailVal').textContent = D.email;
-  document.getElementById('emailLink').href = 'mailto:' + D.email;
-  document.getElementById('githubLink').href = D.github || '#';
-  document.getElementById('linkedinLink').href = D.linkedin || '#';
-  document.getElementById('rgLink').href = D.researchgate || '#';
+  document.getElementById('emailLink').href = 'mailto:'+D.email;
+  document.getElementById('githubLink').href = D.github||'#';
+  document.getElementById('linkedinLink').href = D.linkedin||'#';
+  document.getElementById('rgLink').href = D.researchgate||'#';
 
   // Footer
   document.getElementById('footerTagline').textContent = `${D.name} · ${D.department} · ${D.university}`;
@@ -623,17 +549,7 @@ function render() {
     if (D.appearance.fontSize) document.documentElement.style.fontSize = D.appearance.fontSize;
   }
 
-  // Dynamic card animation
-  document.querySelectorAll('.dyn-card').forEach((el, i) => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    setTimeout(() => {
-      el.style.transition = 'opacity .5s ease, transform .5s ease';
-      el.style.opacity = '1';
-      el.style.transform = 'translateY(0)';
-    }, 80 + i * 80);
-  });
-
+  document.querySelectorAll('.dyn-card').forEach((el,i)=>{el.style.opacity='0';el.style.transform='translateY(20px)';setTimeout(()=>{el.style.transition='opacity .5s ease, transform .5s ease';el.style.opacity='1';el.style.transform='translateY(0)';},80+i*80);});
   observeReveal();
 }
 
