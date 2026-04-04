@@ -60,7 +60,7 @@ const DEFAULT_DATA = {
       "tags": "Pit Furnace, Modified Design",
       "link": "#",
       "date": "Apr 2026",
-      "status": "Ongoing",
+      "status": "Completed",
       "excerpt": ""
     }
   ],
