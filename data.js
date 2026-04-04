@@ -55,18 +55,24 @@ const DEFAULT_DATA = {
   "projects": [
     {
       "title": "Coming Soon...",
-      "desc": "",
+      "desc": "<p><br></p>",
       "tags": "",
-      "link": "#"
+      "link": "#",
+      "date": "",
+      "status": "Ongoing",
+      "excerpt": ""
     }
   ],
   "researchInterests": [
     "Nanomaterials and Nanotechnology",
     "Sustainable and Green Materials",
-    "Energy Storage Materials"
+    "Energy Storage Materials",
+    "New Research Interest"
   ],
-  "publications": [],
-  "email": "",
+  "publications": [
+    "Publication title. Journal, Year."
+  ],
+  "email": "tanim97@proton.me",
   "github": "",
   "linkedin": "",
   "researchgate": "",
