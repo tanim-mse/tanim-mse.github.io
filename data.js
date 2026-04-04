@@ -3,219 +3,42 @@
 const DEFAULT_DATA = {
   "name": "Tanim",
   "heroLabel": "Materials Science & Engineering",
-  "typewriterWords": [
-    "Materials Engineer",
-    "RUET Student",
-    "Problem Solver"
-  ],
+  "typewriterWords": ["Materials Engineer","Problem Solver","RUET Student"],
   "subtitle": "B.Sc. Student at RUET · Passionate about advanced materials, nanotechnology & sustainable engineering",
-  "cvLink": "",
+  "cvLink": "#",
   "photoURL": "",
   "bio": "I am Tanim, a Materials Science and Engineering student at RUET with a deep passion for exploring the intersection of advanced materials, nanotechnology, and sustainable engineering solutions. I thrive at the boundary of science and innovation, driven by curiosity and a commitment to meaningful research.",
   "university": "RUET",
   "department": "Materials Science & Eng.",
   "year": "Undergraduate",
   "skills": [
-    {
-      "title": "Materials Science",
-      "items": [
-        "Crystallography",
-        "Phase Diagrams",
-        "Fracture"
-      ]
-    },
-    {
-      "title": "Research & Analysis",
-      "items": [
-        "Literature Review",
-        "Data Analysis",
-        "Lab Techniques"
-      ]
-    },
-    {
-      "title": "Software & Tools",
-      "items": [
-        "MATLAB",
-        "Origin Pro",
-        "AutoCAD",
-        "Davinci Resolve",
-        "MS Office"
-      ]
-    },
-    {
-      "title": "Engineering Skills",
-      "items": [
-        "Problem Solving",
-        "Technical Writing",
-        "Teamwork",
-        "Project Management",
-        "Critical Thinking"
-      ]
-    }
+    {"title":"Materials Science","items":["Crystallography","Phase Diagrams","Fracture"]},
+    {"title":"Research & Analysis","items":["Literature Review","Data Analysis","Lab Techniques"]},
+    {"title":"Software & Tools","items":["MATLAB","Origin Pro","AutoCAD","Davinci Resolve","MS Office"]},
+    {"title":"Engineering Skills","items":["Problem Solving","Technical Writing","Teamwork","Project Management","Critical Thinking"]}
   ],
   "projects": [
     {
-      "title": "sfsxcse",
-      "excerpt": "",
+      "title": "Projects coming soon...",
+      "excerpt": "Exciting projects are on the way. Check back soon!",
       "featuredImage": "",
-      "tags": "",
+      "tags": "Materials Science",
       "link": "#",
       "date": "",
       "status": "Ongoing",
       "blocks": [
-        {
-          "type": "paragraph",
-          "id": "m0",
-          "content": "Introduction:Pit furnaces are vertical crucible furnaces commonly used in foundries for melting non-ferrous metals such as aluminum. A typical design features a combustion chamber lined with refractory material, a cast-iron crucible with refractory material, a top lid with side or bottom burner(s), and a top lid with an exhaust flue. The goal of this modification is to improve thermal performance, fuel-related variables, heat transfer, operational parameters, and environmental sustainability.The proposed design retains the core cylindrical geometry for uniform heat distribution but introduces multi-layer insulation, a reconfigurable refractory, and a reconfigurable refractory for waste-heat recovery, improving performance.scaling, and optimized dimensions. These changes are evaluated through heat balance equations and optimization to demonstrate quantifiable gains without excessive complexity.Standard vs. Proposed Design:Standard pit furnace (e.g., square/rectangular or basic cylindrical) often uses single-layer firebrick lining (A150mm), minimal insulation (for gas only), no heat recovery, and simple burner placement. This leads to too high a wall and exhaust losses (~40-60% of input energy).Proposed Modified Design (Cylindrical Pit Furnace)Shape and Dimensions: Cylindrical (internal combustion chamber dia. ≈0.3 m, height ≈1.35 m) for reduced surface-to-volume ratio and uniform heating. Overall external diameter ≈0.4 m, total height ≈1.5 m (suitable for ~20% aluminum change, matching common foundry scales).Multi-layer Lining:- Inner refractory (firebrick, 100 mm, high K ≈ 1.2 Wm.K for durability)- Outer insulation (ceramic fiber 100 mm, low K ≈ 0.3 Wm.K for reduced conduction).- Thin steel shell (2 mm).Recuperator: Counter-flow gas-to-air heat exchanger on the flue (effectiveness ε ≈ 0.6-0.7) to preheat combustion air.Sealing and Burner: Improved lid seal (ceramic fiber gasket) to minimize leakage; optimized side burner inlet for better flame distribution and controlled excess air. Other: Bottom base reinforced; flue positioned for efficient exhaust flow.This cross-section illustrates the layered walls, crucible placement, sealed lid, burner inlet, recuperator, and integrated flue.Mathematical Modeling of Key Variables"
-        }
-      ]
-    },
-    {
-      "title": "ewefds",
-      "excerpt": "",
-      "featuredImage": "",
-      "tags": "",
-      "link": "#",
-      "date": "",
-      "status": "Ongoing",
-      "blocks": [
-        {
-          "type": "paragraph",
-          "id": "m0",
-          "content": "Introduction:Pit furnaces are vertical crucible furnaces commonly used in foundries for melting non-ferrous metals such as aluminum. A typical design features a combustion chamber lined with refractory material, a cast-iron crucible with refractory material, a top lid with side or bottom burner(s), and a top lid with an exhaust flue. The goal of this modification is to improve thermal performance, fuel-related variables, heat transfer, operational parameters, and environmental sustainability.The proposed design retains the core cylindrical geometry for uniform heat distribution but introduces multi-layer insulation, a reconfigurable refractory, and a reconfigurable refractory for waste-heat recovery, improving performance.scaling, and optimized dimensions. These changes are evaluated through heat balance equations and optimization to demonstrate quantifiable gains without excessive complexity.Standard vs. Proposed Design:Standard pit furnace (e.g., square/rectangular or basic cylindrical) often uses single-layer firebrick lining (A150mm), minimal insulation (for gas only), no heat recovery, and simple burner placement. This leads to too high a wall and exhaust losses (~40-60% of input energy).Proposed Modified Design (Cylindrical Pit Furnace)Shape and Dimensions: Cylindrical (internal combustion chamber dia. ≈0.3 m, height ≈1.35 m) for reduced surface-to-volume ratio and uniform heating. Overall external diameter ≈0.4 m, total height ≈1.5 m (suitable for ~20% aluminum change, matching common foundry scales).Multi-layer Lining:- Inner refractory (firebrick, 100 mm, high K ≈ 1.2 Wm.K for durability)- Outer insulation (ceramic fiber 100 mm, low K ≈ 0.3 Wm.K for reduced conduction).- Thin steel shell (2 mm).Recuperator: Counter-flow gas-to-air heat exchanger on the flue (effectiveness ε ≈ 0.6-0.7) to preheat combustion air.Sealing and Burner: Improved lid seal (ceramic fiber gasket) to minimize leakage; optimized side burner inlet for better flame distribution and controlled excess air. Other: Bottom base reinforced; flue positioned for efficient exhaust flow.This cross-section illustrates the layered walls, crucible placement, sealed lid, burner inlet, recuperator, and integrated flue.Mathematical Modeling of Key Variables"
-        }
-      ]
-    },
-    {
-      "title": "ewefsd",
-      "excerpt": "",
-      "featuredImage": "",
-      "tags": "",
-      "link": "#",
-      "date": "",
-      "status": "Ongoing",
-      "blocks": [
-        {
-          "type": "paragraph",
-          "id": "m0",
-          "content": "Introduction:Pit furnaces are vertical crucible furnaces commonly used in foundries for melting non-ferrous metals such as aluminum. A typical design features a combustion chamber lined with refractory material, a cast-iron crucible with refractory material, a top lid with side or bottom burner(s), and a top lid with an exhaust flue. The goal of this modification is to improve thermal performance, fuel-related variables, heat transfer, operational parameters, and environmental sustainability.The proposed design retains the core cylindrical geometry for uniform heat distribution but introduces multi-layer insulation, a reconfigurable refractory, and a reconfigurable refractory for waste-heat recovery, improving performance.scaling, and optimized dimensions. These changes are evaluated through heat balance equations and optimization to demonstrate quantifiable gains without excessive complexity.Standard vs. Proposed Design:Standard pit furnace (e.g., square/rectangular or basic cylindrical) often uses single-layer firebrick lining (A150mm), minimal insulation (for gas only), no heat recovery, and simple burner placement. This leads to too high a wall and exhaust losses (~40-60% of input energy).Proposed Modified Design (Cylindrical Pit Furnace)Shape and Dimensions: Cylindrical (internal combustion chamber dia. ≈0.3 m, height ≈1.35 m) for reduced surface-to-volume ratio and uniform heating. Overall external diameter ≈0.4 m, total height ≈1.5 m (suitable for ~20% aluminum change, matching common foundry scales).Multi-layer Lining:- Inner refractory (firebrick, 100 mm, high K ≈ 1.2 Wm.K for durability)- Outer insulation (ceramic fiber 100 mm, low K ≈ 0.3 Wm.K for reduced conduction).- Thin steel shell (2 mm).Recuperator: Counter-flow gas-to-air heat exchanger on the flue (effectiveness ε ≈ 0.6-0.7) to preheat combustion air.Sealing and Burner: Improved lid seal (ceramic fiber gasket) to minimize leakage; optimized side burner inlet for better flame distribution and controlled excess air. Other: Bottom base reinforced; flue positioned for efficient exhaust flow.This cross-section illustrates the layered walls, crucible placement, sealed lid, burner inlet, recuperator, and integrated flue.Mathematical Modeling of Key Variables"
-        }
-      ]
-    },
-    {
-      "title": "svcxccx",
-      "excerpt": "",
-      "featuredImage": "",
-      "tags": "",
-      "link": "#",
-      "date": "",
-      "status": "Ongoing",
-      "blocks": [
-        {
-          "type": "paragraph",
-          "id": "m0",
-          "content": "Introduction:Pit furnaces are vertical crucible furnaces commonly used in foundries for melting non-ferrous metals such as aluminum. A typical design features a combustion chamber lined with refractory material, a cast-iron crucible with refractory material, a top lid with side or bottom burner(s), and a top lid with an exhaust flue. The goal of this modification is to improve thermal performance, fuel-related variables, heat transfer, operational parameters, and environmental sustainability.The proposed design retains the core cylindrical geometry for uniform heat distribution but introduces multi-layer insulation, a reconfigurable refractory, and a reconfigurable refractory for waste-heat recovery, improving performance.scaling, and optimized dimensions. These changes are evaluated through heat balance equations and optimization to demonstrate quantifiable gains without excessive complexity.Standard vs. Proposed Design:Standard pit furnace (e.g., square/rectangular or basic cylindrical) often uses single-layer firebrick lining (A150mm), minimal insulation (for gas only), no heat recovery, and simple burner placement. This leads to too high a wall and exhaust losses (~40-60% of input energy).Proposed Modified Design (Cylindrical Pit Furnace)Shape and Dimensions: Cylindrical (internal combustion chamber dia. ≈0.3 m, height ≈1.35 m) for reduced surface-to-volume ratio and uniform heating. Overall external diameter ≈0.4 m, total height ≈1.5 m (suitable for ~20% aluminum change, matching common foundry scales).Multi-layer Lining:- Inner refractory (firebrick, 100 mm, high K ≈ 1.2 Wm.K for durability)- Outer insulation (ceramic fiber 100 mm, low K ≈ 0.3 Wm.K for reduced conduction).- Thin steel shell (2 mm).Recuperator: Counter-flow gas-to-air heat exchanger on the flue (effectiveness ε ≈ 0.6-0.7) to preheat combustion air.Sealing and Burner: Improved lid seal (ceramic fiber gasket) to minimize leakage; optimized side burner inlet for better flame distribution and controlled excess air. Other: Bottom base reinforced; flue positioned for efficient exhaust flow.This cross-section illustrates the layered walls, crucible placement, sealed lid, burner inlet, recuperator, and integrated flue.Mathematical Modeling of Key Variables"
-        }
-      ]
-    },
-    {
-      "title": "sfes",
-      "excerpt": "",
-      "featuredImage": "",
-      "tags": "",
-      "link": "#",
-      "date": "",
-      "status": "Ongoing",
-      "blocks": [
-        {
-          "type": "paragraph",
-          "id": "m0",
-          "content": "Introduction:Pit furnaces are vertical crucible furnaces commonly used in foundries for melting non-ferrous metals such as aluminum. A typical design features a combustion chamber lined with refractory material, a cast-iron crucible with refractory material, a top lid with side or bottom burner(s), and a top lid with an exhaust flue. The goal of this modification is to improve thermal performance, fuel-related variables, heat transfer, operational parameters, and environmental sustainability.The proposed design retains the core cylindrical geometry for uniform heat distribution but introduces multi-layer insulation, a reconfigurable refractory, and a reconfigurable refractory for waste-heat recovery, improving performance.scaling, and optimized dimensions. These changes are evaluated through heat balance equations and optimization to demonstrate quantifiable gains without excessive complexity.Standard vs. Proposed Design:Standard pit furnace (e.g., square/rectangular or basic cylindrical) often uses single-layer firebrick lining (A150mm), minimal insulation (for gas only), no heat recovery, and simple burner placement. This leads to too high a wall and exhaust losses (~40-60% of input energy).Proposed Modified Design (Cylindrical Pit Furnace)Shape and Dimensions: Cylindrical (internal combustion chamber dia. ≈0.3 m, height ≈1.35 m) for reduced surface-to-volume ratio and uniform heating. Overall external diameter ≈0.4 m, total height ≈1.5 m (suitable for ~20% aluminum change, matching common foundry scales).Multi-layer Lining:- Inner refractory (firebrick, 100 mm, high K ≈ 1.2 Wm.K for durability)- Outer insulation (ceramic fiber 100 mm, low K ≈ 0.3 Wm.K for reduced conduction).- Thin steel shell (2 mm).Recuperator: Counter-flow gas-to-air heat exchanger on the flue (effectiveness ε ≈ 0.6-0.7) to preheat combustion air.Sealing and Burner: Improved lid seal (ceramic fiber gasket) to minimize leakage; optimized side burner inlet for better flame distribution and controlled excess air. Other: Bottom base reinforced; flue positioned for efficient exhaust flow.This cross-section illustrates the layered walls, crucible placement, sealed lid, burner inlet, recuperator, and integrated flue.Mathematical Modeling of Key Variables"
-        }
-      ]
-    },
-    {
-      "title": "secsscvzevsvsvdsaefsfesds",
-      "excerpt": "",
-      "featuredImage": "",
-      "tags": "",
-      "link": "#",
-      "date": "",
-      "status": "Ongoing",
-      "blocks": [
-        {
-          "type": "paragraph",
-          "id": "m0",
-          "content": "Introduction:Pit furnaces are vertical crucible furnaces commonly used in foundries for melting non-ferrous metals such as aluminum. A typical design features a combustion chamber lined with refractory material, a cast-iron crucible with refractory material, a top lid with side or bottom burner(s), and a top lid with an exhaust flue. The goal of this modification is to improve thermal performance, fuel-related variables, heat transfer, operational parameters, and environmental sustainability.The proposed design retains the core cylindrical geometry for uniform heat distribution but introduces multi-layer insulation, a reconfigurable refractory, and a reconfigurable refractory for waste-heat recovery, improving performance.scaling, and optimized dimensions. These changes are evaluated through heat balance equations and optimization to demonstrate quantifiable gains without excessive complexity.Standard vs. Proposed Design:Standard pit furnace (e.g., square/rectangular or basic cylindrical) often uses single-layer firebrick lining (A150mm), minimal insulation (for gas only), no heat recovery, and simple burner placement. This leads to too high a wall and exhaust losses (~40-60% of input energy).Proposed Modified Design (Cylindrical Pit Furnace)Shape and Dimensions: Cylindrical (internal combustion chamber dia. ≈0.3 m, height ≈1.35 m) for reduced surface-to-volume ratio and uniform heating. Overall external diameter ≈0.4 m, total height ≈1.5 m (suitable for ~20% aluminum change, matching common foundry scales).Multi-layer Lining:- Inner refractory (firebrick, 100 mm, high K ≈ 1.2 Wm.K for durability)- Outer insulation (ceramic fiber 100 mm, low K ≈ 0.3 Wm.K for reduced conduction).- Thin steel shell (2 mm).Recuperator: Counter-flow gas-to-air heat exchanger on the flue (effectiveness ε ≈ 0.6-0.7) to preheat combustion air.Sealing and Burner: Improved lid seal (ceramic fiber gasket) to minimize leakage; optimized side burner inlet for better flame distribution and controlled excess air. Other: Bottom base reinforced; flue positioned for efficient exhaust flow.This cross-section illustrates the layered walls, crucible placement, sealed lid, burner inlet, recuperator, and integrated flue.Mathematical Modeling of Key Variables"
-        }
-      ]
-    },
-    {
-      "title": "sefsee",
-      "excerpt": "",
-      "featuredImage": "",
-      "tags": "",
-      "link": "#",
-      "date": "",
-      "status": "Ongoing",
-      "blocks": [
-        {
-          "type": "paragraph",
-          "id": "m0",
-          "content": "Introduction:Pit furnaces are vertical crucible furnaces commonly used in foundries for melting non-ferrous metals such as aluminum. A typical design features a combustion chamber lined with refractory material, a cast-iron crucible with refractory material, a top lid with side or bottom burner(s), and a top lid with an exhaust flue. The goal of this modification is to improve thermal performance, fuel-related variables, heat transfer, operational parameters, and environmental sustainability.The proposed design retains the core cylindrical geometry for uniform heat distribution but introduces multi-layer insulation, a reconfigurable refractory, and a reconfigurable refractory for waste-heat recovery, improving performance.scaling, and optimized dimensions. These changes are evaluated through heat balance equations and optimization to demonstrate quantifiable gains without excessive complexity.Standard vs. Proposed Design:Standard pit furnace (e.g., square/rectangular or basic cylindrical) often uses single-layer firebrick lining (A150mm), minimal insulation (for gas only), no heat recovery, and simple burner placement. This leads to too high a wall and exhaust losses (~40-60% of input energy).Proposed Modified Design (Cylindrical Pit Furnace)Shape and Dimensions: Cylindrical (internal combustion chamber dia. ≈0.3 m, height ≈1.35 m) for reduced surface-to-volume ratio and uniform heating. Overall external diameter ≈0.4 m, total height ≈1.5 m (suitable for ~20% aluminum change, matching common foundry scales).Multi-layer Lining:- Inner refractory (firebrick, 100 mm, high K ≈ 1.2 Wm.K for durability)- Outer insulation (ceramic fiber 100 mm, low K ≈ 0.3 Wm.K for reduced conduction).- Thin steel shell (2 mm).Recuperator: Counter-flow gas-to-air heat exchanger on the flue (effectiveness ε ≈ 0.6-0.7) to preheat combustion air.Sealing and Burner: Improved lid seal (ceramic fiber gasket) to minimize leakage; optimized side burner inlet for better flame distribution and controlled excess air. Other: Bottom base reinforced; flue positioned for efficient exhaust flow.This cross-section illustrates the layered walls, crucible placement, sealed lid, burner inlet, recuperator, and integrated flue.Mathematical Modeling of Key Variables"
-        }
-      ]
-    },
-    {
-      "title": "wedfef",
-      "excerpt": "",
-      "featuredImage": "",
-      "tags": "",
-      "link": "#",
-      "date": "",
-      "status": "Ongoing",
-      "blocks": [
-        {
-          "type": "paragraph",
-          "id": "m0",
-          "content": "Introduction:Pit furnaces are vertical crucible furnaces commonly used in foundries for melting non-ferrous metals such as aluminum. A typical design features a combustion chamber lined with refractory material, a cast-iron crucible with refractory material, a top lid with side or bottom burner(s), and a top lid with an exhaust flue. The goal of this modification is to improve thermal performance, fuel-related variables, heat transfer, operational parameters, and environmental sustainability.The proposed design retains the core cylindrical geometry for uniform heat distribution but introduces multi-layer insulation, a reconfigurable refractory, and a reconfigurable refractory for waste-heat recovery, improving performance.scaling, and optimized dimensions. These changes are evaluated through heat balance equations and optimization to demonstrate quantifiable gains without excessive complexity.Standard vs. Proposed Design:Standard pit furnace (e.g., square/rectangular or basic cylindrical) often uses single-layer firebrick lining (A150mm), minimal insulation (for gas only), no heat recovery, and simple burner placement. This leads to too high a wall and exhaust losses (~40-60% of input energy).Proposed Modified Design (Cylindrical Pit Furnace)Shape and Dimensions: Cylindrical (internal combustion chamber dia. ≈0.3 m, height ≈1.35 m) for reduced surface-to-volume ratio and uniform heating. Overall external diameter ≈0.4 m, total height ≈1.5 m (suitable for ~20% aluminum change, matching common foundry scales).Multi-layer Lining:- Inner refractory (firebrick, 100 mm, high K ≈ 1.2 Wm.K for durability)- Outer insulation (ceramic fiber 100 mm, low K ≈ 0.3 Wm.K for reduced conduction).- Thin steel shell (2 mm).Recuperator: Counter-flow gas-to-air heat exchanger on the flue (effectiveness ε ≈ 0.6-0.7) to preheat combustion air.Sealing and Burner: Improved lid seal (ceramic fiber gasket) to minimize leakage; optimized side burner inlet for better flame distribution and controlled excess air. Other: Bottom base reinforced; flue positioned for efficient exhaust flow.This cross-section illustrates the layered walls, crucible placement, sealed lid, burner inlet, recuperator, and integrated flue.Mathematical Modeling of Key Variables"
-        }
-      ]
-    },
-    {
-      "title": "Modified Structural Design of Pit Furnace for Foundry: Mathematical Optimization for Enhanced Performance",
-      "desc": "<h1>Introduction:</h1><p><br></p><p>Pit furnaces are vertical crucible furnaces commonly used in foundries for melting non-ferrous metals such as aluminum. A typical design features a combustion chamber lined with refractory material, a cast-iron crucible with refractory material, a top lid with side or bottom burner(s), and a top lid with an exhaust flue. The goal of this modification is to improve thermal performance, fuel-related variables, heat transfer, operational parameters, and environmental sustainability.</p><p><br></p><p>The proposed design retains the core cylindrical geometry for uniform heat distribution but introduces multi-layer insulation, a reconfigurable refractory, and a reconfigurable refractory for waste-heat recovery, improving performance.</p><p><br></p><p>scaling, and optimized dimensions. These changes are evaluated through heat balance equations and optimization to demonstrate quantifiable gains without excessive complexity.</p><p><br></p><h2>Standard vs. Proposed Design:</h2><p><br></p><p>Standard pit furnace (e.g., square/rectangular or basic cylindrical) often uses single-layer firebrick lining (A150mm), minimal insulation (for gas only), no heat recovery, and simple burner placement. This leads to too high a wall and exhaust losses (~40-60% of input energy).</p><p><br></p><h3>Proposed Modified Design (Cylindrical Pit Furnace)</h3><p><br></p><ul><li><strong>Shape and Dimensions:</strong> Cylindrical (internal combustion chamber dia. ≈0.3 m, height ≈1.35 m) for reduced surface-to-volume ratio and uniform heating. Overall external diameter ≈0.4 m, total height ≈1.5 m (suitable for ~20% aluminum change, matching common foundry scales).</li><li><strong>Multi-layer Lining:</strong></li></ul><p>- Inner refractory (firebrick, 100 mm, high K ≈ 1.2 Wm.K for durability)</p><p>- Outer insulation (ceramic fiber 100 mm, low K ≈ 0.3 Wm.K for reduced conduction).</p><p>- Thin steel shell (2 mm).</p><ul><li><strong>Recuperator:</strong> Counter-flow gas-to-air heat exchanger on the flue (effectiveness ε ≈ 0.6-0.7) to preheat combustion air.</li><li><strong>Sealing and Burner: </strong>Improved lid seal (ceramic fiber gasket) to minimize leakage; optimized side burner inlet for better flame distribution and controlled excess air.</li><li><strong> Other:</strong> Bottom base reinforced; flue positioned for efficient exhaust flow.</li></ul><p><br></p><p>This cross-section illustrates the layered walls, crucible placement, sealed lid, burner inlet, recuperator, and integrated flue.</p><p><br></p><h3>Mathematical Modeling of Key Variables</h3><p><br></p><p><br></p>",
-      "tags": "Pit Furnace, Modified Design",
-      "link": "#",
-      "date": "Apr 2026",
-      "status": "Completed",
-      "excerpt": "",
-      "blocks": [
-        {
-          "type": "paragraph",
-          "id": "m0",
-          "content": "Introduction:Pit furnaces are vertical crucible furnaces commonly used in foundries for melting non-ferrous metals such as aluminum. A typical design features a combustion chamber lined with refractory material, a cast-iron crucible with refractory material, a top lid with side or bottom burner(s), and a top lid with an exhaust flue. The goal of this modification is to improve thermal performance, fuel-related variables, heat transfer, operational parameters, and environmental sustainability.The proposed design retains the core cylindrical geometry for uniform heat distribution but introduces multi-layer insulation, a reconfigurable refractory, and a reconfigurable refractory for waste-heat recovery, improving performance.scaling, and optimized dimensions. These changes are evaluated through heat balance equations and optimization to demonstrate quantifiable gains without excessive complexity.Standard vs. Proposed Design:Standard pit furnace (e.g., square/rectangular or basic cylindrical) often uses single-layer firebrick lining (A150mm), minimal insulation (for gas only), no heat recovery, and simple burner placement. This leads to too high a wall and exhaust losses (~40-60% of input energy).Proposed Modified Design (Cylindrical Pit Furnace)Shape and Dimensions: Cylindrical (internal combustion chamber dia. ≈0.3 m, height ≈1.35 m) for reduced surface-to-volume ratio and uniform heating. Overall external diameter ≈0.4 m, total height ≈1.5 m (suitable for ~20% aluminum change, matching common foundry scales).Multi-layer Lining:- Inner refractory (firebrick, 100 mm, high K ≈ 1.2 Wm.K for durability)- Outer insulation (ceramic fiber 100 mm, low K ≈ 0.3 Wm.K for reduced conduction).- Thin steel shell (2 mm).Recuperator: Counter-flow gas-to-air heat exchanger on the flue (effectiveness ε ≈ 0.6-0.7) to preheat combustion air.Sealing and Burner: Improved lid seal (ceramic fiber gasket) to minimize leakage; optimized side burner inlet for better flame distribution and controlled excess air. Other: Bottom base reinforced; flue positioned for efficient exhaust flow.This cross-section illustrates the layered walls, crucible placement, sealed lid, burner inlet, recuperator, and integrated flue.Mathematical Modeling of Key Variables"
-        }
+        {"type":"paragraph","content":"Exciting projects are on the way. Check back soon!"}
       ]
     }
   ],
-  "researchInterests": [
-    "Nanomaterials and Nanotechnology",
-    "Sustainable and Green Materials",
-    "Energy Storage Materials"
-  ],
-  "publications": [
-    "Publication title. Journal, Year."
-  ],
+  "researchInterests": ["Nanomaterials and Nanotechnology","Sustainable and Green Materials","Energy Storage Materials"],
+  "publications": [],
   "email": "tanim97@proton.me",
   "github": "https://github.com/tanim-mse",
-  "linkedin": "",
-  "researchgate": "",
-  "contactMessage": "Have a research idea, a collaboration opportunity, or just want to talk materials science? I'd love to hear from you.",
-  "appearance": {
-    "accentColor": "#7c3aed",
-    "fontSize": "17px"
-  },
+  "linkedin": "https://linkedin.com/in/",
+  "researchgate": "https://researchgate.net/",
+  "contactMessage": "Have a research idea, collaboration opportunity, or just want to talk materials science? I'd love to hear from you.",
+  "appearance": {"accentColor":"#7c3aed","fontSize":"17px"},
   "adminPassword": "275056c26a6b4fb1f5e49cd8a8e0f69f5c29b84055a6d3875be68edc820c6c75"
 };
 
@@ -226,16 +49,13 @@ function getData() {
   } catch (e) {}
   return JSON.parse(JSON.stringify(DEFAULT_DATA));
 }
-
 function saveData(data) {
   try { localStorage.setItem('portfolioData', JSON.stringify(data)); return true; } catch(e) { return false; }
 }
-
 function resetData() {
   localStorage.removeItem('portfolioData');
   return JSON.parse(JSON.stringify(DEFAULT_DATA));
 }
-
 function deepMerge(target, source) {
   const result = Object.assign({}, target);
   for (const key of Object.keys(source)) {
