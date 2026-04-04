@@ -3,7 +3,11 @@
 const DEFAULT_DATA = {
   "name": "Tanim",
   "heroLabel": "Materials Science & Engineering",
-  "typewriterWords": ["Materials Engineer","Problem Solver","RUET Student"],
+  "typewriterWords": [
+    "Materials Engineer",
+    "Problem Solver",
+    "RUET Student"
+  ],
   "subtitle": "B.Sc. Student at RUET · Passionate about advanced materials, nanotechnology & sustainable engineering",
   "cvLink": "#",
   "photoURL": "",
@@ -12,10 +16,42 @@ const DEFAULT_DATA = {
   "department": "Materials Science & Eng.",
   "year": "Undergraduate",
   "skills": [
-    {"title":"Materials Science","items":["Crystallography","Phase Diagrams","Fracture"]},
-    {"title":"Research & Analysis","items":["Literature Review","Data Analysis","Lab Techniques"]},
-    {"title":"Software & Tools","items":["MATLAB","Origin Pro","AutoCAD","Davinci Resolve","MS Office"]},
-    {"title":"Engineering Skills","items":["Problem Solving","Technical Writing","Teamwork","Project Management","Critical Thinking"]}
+    {
+      "title": "Materials Science",
+      "items": [
+        "Crystallography",
+        "Phase Diagrams",
+        "Fracture"
+      ]
+    },
+    {
+      "title": "Research & Analysis",
+      "items": [
+        "Literature Review",
+        "Data Analysis",
+        "Lab Techniques"
+      ]
+    },
+    {
+      "title": "Software & Tools",
+      "items": [
+        "MATLAB",
+        "Origin Pro",
+        "AutoCAD",
+        "Davinci Resolve",
+        "MS Office"
+      ]
+    },
+    {
+      "title": "Engineering Skills",
+      "items": [
+        "Problem Solving",
+        "Technical Writing",
+        "Teamwork",
+        "Project Management",
+        "Critical Thinking"
+      ]
+    }
   ],
   "projects": [
     {
@@ -27,18 +63,29 @@ const DEFAULT_DATA = {
       "date": "",
       "status": "Ongoing",
       "blocks": [
-        {"type":"paragraph","content":"Exciting projects are on the way. Check back soon!"}
+        {
+          "type": "paragraph",
+          "content": "Exciting projects are on the way. Check back soon!",
+          "id": "u2u58ukuifj"
+        }
       ]
     }
   ],
-  "researchInterests": ["Nanomaterials and Nanotechnology","Sustainable and Green Materials","Energy Storage Materials"],
+  "researchInterests": [
+    "Nanomaterials and Nanotechnology",
+    "Sustainable and Green Materials",
+    "Energy Storage Materials"
+  ],
   "publications": [],
   "email": "tanim97@proton.me",
   "github": "https://github.com/tanim-mse",
   "linkedin": "https://linkedin.com/in/",
   "researchgate": "https://researchgate.net/",
   "contactMessage": "Have a research idea, collaboration opportunity, or just want to talk materials science? I'd love to hear from you.",
-  "appearance": {"accentColor":"#7c3aed","fontSize":"17px"},
+  "appearance": {
+    "accentColor": "#7c3aed",
+    "fontSize": "17px"
+  },
   "adminPassword": "275056c26a6b4fb1f5e49cd8a8e0f69f5c29b84055a6d3875be68edc820c6c75"
 };
 
@@ -49,13 +96,16 @@ function getData() {
   } catch (e) {}
   return JSON.parse(JSON.stringify(DEFAULT_DATA));
 }
+
 function saveData(data) {
   try { localStorage.setItem('portfolioData', JSON.stringify(data)); return true; } catch(e) { return false; }
 }
+
 function resetData() {
   localStorage.removeItem('portfolioData');
   return JSON.parse(JSON.stringify(DEFAULT_DATA));
 }
+
 function deepMerge(target, source) {
   const result = Object.assign({}, target);
   for (const key of Object.keys(source)) {
