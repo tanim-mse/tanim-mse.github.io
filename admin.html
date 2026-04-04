@@ -7,79 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
 <link rel="stylesheet" href="admin.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.snow.min.css">
 <style>
-/* ── Quill Dark Theme Override ── */
-.ql-toolbar.ql-snow {
-  background: #12121f;
-  border: 1px solid rgba(255,255,255,0.1) !important;
-  border-bottom: none !important;
-  border-radius: 10px 10px 0 0;
-  padding: 8px;
-  flex-wrap: wrap;
-}
-.ql-container.ql-snow {
-  background: #0d0d1a;
-  border: 1px solid rgba(255,255,255,0.1) !important;
-  border-radius: 0 0 10px 10px;
-  min-height: 260px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.95rem;
-  color: #e2e8f0;
-}
-.ql-editor { min-height: 240px; color: #e2e8f0; line-height: 1.75; }
-.ql-editor p, .ql-editor li { color: #cbd5e1; }
-.ql-editor h1, .ql-editor h2, .ql-editor h3 { color: #f8fafc; }
-.ql-editor a { color: #67e8f9; }
-.ql-editor blockquote { border-left: 3px solid #7c3aed; background: rgba(124,58,237,0.07); padding: 10px 16px; color: #94a3b8; }
-.ql-editor code, .ql-editor pre { background: rgba(0,0,0,0.4); color: #67e8f9; border-radius: 6px; }
-.ql-editor.ql-blank::before { color: #475569; font-style: normal; }
-.ql-toolbar .ql-stroke { stroke: #94a3b8 !important; }
-.ql-toolbar .ql-fill { fill: #94a3b8 !important; }
-.ql-toolbar .ql-picker { color: #94a3b8 !important; }
-.ql-toolbar button:hover .ql-stroke,
-.ql-toolbar button.ql-active .ql-stroke { stroke: #c4b5fd !important; }
-.ql-toolbar button:hover .ql-fill,
-.ql-toolbar button.ql-active .ql-fill { fill: #c4b5fd !important; }
-.ql-toolbar button:hover,
-.ql-toolbar button.ql-active { background: rgba(124,58,237,0.15) !important; border-radius: 5px; }
-.ql-toolbar .ql-picker-label:hover,
-.ql-toolbar .ql-picker-label.ql-active { color: #c4b5fd !important; }
-.ql-toolbar .ql-picker-options {
-  background: #12121f !important;
-  border: 1px solid rgba(255,255,255,0.1) !important;
-  border-radius: 8px;
-}
-.ql-toolbar .ql-picker-item:hover { color: #c4b5fd !important; }
-.ql-snow .ql-tooltip {
-  background: #12121f !important;
-  border: 1px solid rgba(124,58,237,0.3) !important;
-  color: #e2e8f0 !important;
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-}
-.ql-snow .ql-tooltip input[type=text] {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 6px;
-  color: #f8fafc;
-  padding: 4px 10px;
-}
-.ql-snow .ql-tooltip a { color: #67e8f9 !important; }
-.ql-editor table { border-collapse: collapse; width: 100%; }
-.ql-editor td, .ql-editor th { border: 1px solid rgba(255,255,255,0.1); padding: 8px 12px; }
-.ql-editor th { background: rgba(124,58,237,0.15); color: #f8fafc; }
-.quill-image-btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 6px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 600;
-  background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3);
-  color: #c4b5fd; cursor: pointer; transition: all .2s; margin-top: 8px;
-}
-.quill-image-btn:hover { background: rgba(124,58,237,0.25); }
-.quill-label { font-size: 0.8rem; color: #94a3b8; margin-bottom: 6px; font-weight: 500; }
-</style>
-<style>
+/* ── Setup / Login screens ── */
 .setup-screen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:#080810}
 .setup-card{background:rgba(12,12,24,.95);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:44px 40px;width:100%;max-width:460px;text-align:center}
 .setup-logo{width:58px;height:58px;border-radius:16px;background:linear-gradient(135deg,#7c3aed,#2563eb,#06b6d4);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:#fff;margin:0 auto 20px}
@@ -111,6 +42,163 @@
 .status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .connected .status-dot{background:#34d399}
 .disconnected .status-dot{background:#f87171}
+
+/* ── Block Editor ── */
+.block-editor {
+  background: #0a0a16;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  overflow: hidden;
+  min-height: 200px;
+}
+.block-list { padding: 12px; display: flex; flex-direction: column; gap: 4px; }
+.block-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  position: relative; group: true;
+  padding: 2px 0;
+}
+.block-drag-handle {
+  width: 20px; height: 28px; flex-shrink: 0; margin-top: 4px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: grab; color: rgba(255,255,255,0.15);
+  font-size: 14px; line-height: 1;
+  border-radius: 4px; transition: color .2s, background .2s;
+  user-select: none;
+}
+.block-drag-handle:hover { color: #7c3aed; background: rgba(124,58,237,0.1); }
+.block-drag-handle:active { cursor: grabbing; }
+.block-content-wrap { flex: 1; min-width: 0; }
+.block-delete-btn {
+  width: 24px; height: 24px; flex-shrink: 0; margin-top: 6px;
+  display: flex; align-items: center; justify-content: center;
+  background: none; border: none; cursor: pointer;
+  color: rgba(255,255,255,0.15); border-radius: 4px;
+  transition: color .2s, background .2s; font-size: 14px;
+}
+.block-delete-btn:hover { color: #f87171; background: rgba(239,68,68,0.1); }
+
+/* Block type inputs */
+.block-paragraph { width: 100%; background: transparent; border: none; outline: none; color: #cbd5e1; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; line-height: 1.75; resize: none; padding: 4px 8px; border-radius: 6px; min-height: 40px; transition: background .2s; }
+.block-paragraph:focus { background: rgba(255,255,255,0.03); }
+.block-paragraph::placeholder { color: #334155; }
+.block-h1 { width: 100%; background: transparent; border: none; outline: none; color: #f8fafc; font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 700; padding: 4px 8px; border-radius: 6px; transition: background .2s; }
+.block-h2 { width: 100%; background: transparent; border: none; outline: none; color: #f8fafc; font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700; padding: 4px 8px; border-radius: 6px; border-left: 3px solid #7c3aed; transition: background .2s; }
+.block-h3 { width: 100%; background: transparent; border: none; outline: none; color: #c4b5fd; font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; padding: 4px 8px; border-radius: 6px; transition: background .2s; }
+.block-h1:focus,.block-h2:focus,.block-h3:focus,.block-h1::placeholder,.block-h2::placeholder,.block-h3::placeholder { opacity: 0.5; }
+.block-h1:focus,.block-h2:focus,.block-h3:focus { background: rgba(255,255,255,0.02); }
+.block-code-wrap { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; }
+.block-code-lang { width: 100%; background: rgba(124,58,237,0.08); border: none; outline: none; color: #94a3b8; font-family: 'DM Sans', sans-serif; font-size: 0.75rem; padding: 6px 12px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.block-code { width: 100%; background: transparent; border: none; outline: none; color: #67e8f9; font-family: 'Courier New', monospace; font-size: 0.88rem; line-height: 1.6; padding: 12px; resize: none; min-height: 80px; }
+.block-divider-el { height: 1px; background: rgba(255,255,255,0.1); margin: 8px 0; border-radius: 1px; }
+.block-callout-wrap { background: rgba(6,182,212,0.08); border-left: 3px solid #06b6d4; border-radius: 0 10px 10px 0; padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start; }
+.block-callout-icon { font-size: 1.2rem; cursor: pointer; flex-shrink: 0; padding: 2px; border-radius: 4px; transition: background .2s; }
+.block-callout-icon:hover { background: rgba(255,255,255,0.1); }
+.block-callout-text { flex: 1; background: transparent; border: none; outline: none; color: #94a3b8; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; line-height: 1.6; resize: none; min-height: 36px; }
+
+/* Formula block */
+.block-formula-wrap { background: rgba(124,58,237,0.06); border: 1px solid rgba(124,58,237,0.15); border-radius: 10px; overflow: hidden; }
+.block-formula-input-row { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid rgba(124,58,237,0.1); }
+.block-formula-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #7c3aed; flex-shrink: 0; }
+.block-formula-input { flex: 1; background: transparent; border: none; outline: none; color: #e2e8f0; font-family: 'Courier New', monospace; font-size: 0.9rem; }
+.block-formula-input::placeholder { color: #334155; }
+.block-formula-preview { padding: 16px; text-align: center; min-height: 60px; display: flex; align-items: center; justify-content: center; }
+.block-formula-preview .katex { color: #f8fafc; font-size: 1.1em; }
+.block-formula-error { color: #64748b; font-size: 0.82rem; font-style: italic; }
+
+/* Image block */
+.block-image-wrap { border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; background: rgba(0,0,0,0.2); }
+.block-image-upload-zone { padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.block-image-preview-el { width: 100%; border-radius: 8px; object-fit: cover; display: block; }
+.block-image-controls { display: flex; gap: 8px; padding: 8px 12px; background: rgba(0,0,0,0.2); align-items: center; flex-wrap: wrap; }
+.block-image-url-input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #e2e8f0; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; padding: 6px 10px; outline: none; min-width: 0; }
+.block-image-url-input:focus { border-color: #7c3aed; }
+.block-img-upload-btn { display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 600; background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); color: #c4b5fd; cursor: pointer; transition: all .2s; flex-shrink: 0; }
+.block-img-upload-btn:hover { background: rgba(124,58,237,0.25); }
+.block-image-caption { width: 100%; background: transparent; border: none; outline: none; border-top: 1px solid rgba(255,255,255,0.06); color: #64748b; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-style: italic; padding: 8px 12px; }
+.block-image-caption::placeholder { color: #1e293b; }
+.img-size-btns { display: flex; gap: 4px; }
+.img-size-btn { padding: 4px 10px; border-radius: 6px; font-size: 0.72rem; font-weight: 600; border: 1px solid rgba(255,255,255,0.1); color: #64748b; cursor: pointer; transition: all .2s; background: none; }
+.img-size-btn.active,.img-size-btn:hover { background: rgba(124,58,237,0.15); border-color: rgba(124,58,237,0.3); color: #c4b5fd; }
+
+/* Table block */
+.block-table-wrap { border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; }
+.block-table-toolbar { display: flex; gap: 8px; padding: 8px 12px; background: rgba(0,0,0,0.2); align-items: center; flex-wrap: wrap; font-size: 0.78rem; color: #64748b; }
+.block-table-toolbar button { padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #94a3b8; cursor: pointer; transition: all .2s; }
+.block-table-toolbar button:hover { background: rgba(124,58,237,0.1); color: #c4b5fd; }
+.block-table-scroll { overflow-x: auto; }
+.block-table-el { border-collapse: collapse; width: 100%; min-width: 300px; }
+.block-table-el th { background: rgba(124,58,237,0.12); color: #f8fafc; font-weight: 600; }
+.block-table-el td, .block-table-el th { border: 1px solid rgba(255,255,255,0.08); }
+.block-table-el td input, .block-table-el th input { width: 100%; background: transparent; border: none; outline: none; color: inherit; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; padding: 8px 10px; }
+
+/* Add block button */
+.add-block-row { display: flex; align-items: center; gap: 10px; padding: 6px 12px; position: relative; }
+.add-block-line { flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
+.add-block-btn {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.25);
+  color: #7c3aed; cursor: pointer; font-size: 16px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s; flex-shrink: 0;
+}
+.add-block-btn:hover { background: rgba(124,58,237,0.25); transform: scale(1.15); }
+
+/* Block picker popup */
+.block-picker {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  bottom: calc(100% + 8px);
+  background: #0f0f1e; border: 1px solid rgba(124,58,237,0.25);
+  border-radius: 14px; padding: 12px; z-index: 500;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+  width: 320px; display: none;
+}
+.block-picker.open { display: block; animation: pickerIn .18s ease; }
+@keyframes pickerIn { from { opacity:0; transform: translateX(-50%) translateY(6px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
+.block-picker-group { margin-bottom: 10px; }
+.block-picker-group:last-child { margin-bottom: 0; }
+.block-picker-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #475569; padding: 0 4px; margin-bottom: 6px; }
+.block-picker-items { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.block-picker-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; border-radius: 8px; cursor: pointer;
+  transition: background .15s; font-size: 0.82rem; color: #94a3b8;
+  border: 1px solid transparent;
+}
+.block-picker-item:hover { background: rgba(124,58,237,0.12); color: #c4b5fd; border-color: rgba(124,58,237,0.2); }
+.block-picker-item-icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
+.block-picker-item-label { font-weight: 500; }
+.block-picker-item-desc { font-size: 0.7rem; color: #334155; }
+
+/* Project card header with live title */
+.proj-card-title-live { font-family: 'Syne', sans-serif; font-size: 0.88rem; color: #94a3b8; }
+.proj-card-title-live.has-title { color: #c4b5fd; }
+
+/* Featured image section */
+.feat-img-zone { border: 2px dashed rgba(255,255,255,0.1); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; transition: border-color .2s; cursor: pointer; }
+.feat-img-zone:hover { border-color: rgba(124,58,237,0.4); }
+.feat-img-preview { width: 100%; max-height: 160px; object-fit: cover; border-radius: 8px; display: block; }
+.feat-img-btns { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.feat-img-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); color: #c4b5fd; cursor: pointer; transition: all .2s; }
+.feat-img-btn:hover { background: rgba(124,58,237,0.25); }
+.feat-img-url { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #e2e8f0; font-family: 'DM Sans',sans-serif; font-size: 0.82rem; padding: 7px 12px; outline: none; }
+.feat-img-url:focus { border-color: #7c3aed; }
+
+/* Preview drawer */
+.preview-drawer { position: fixed; top: 0; right: -100%; width: min(680px,100vw); height: 100vh; background: #09091a; border-left: 1px solid rgba(124,58,237,0.2); z-index: 8000; transition: right .4s cubic-bezier(.4,0,.2,1); overflow-y: auto; box-shadow: -20px 0 60px rgba(0,0,0,0.5); }
+.preview-drawer.open { right: 0; }
+.preview-drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 7999; display: none; backdrop-filter: blur(4px); }
+.preview-drawer-overlay.open { display: block; }
+.preview-drawer-header { position: sticky; top: 0; background: rgba(9,9,26,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; z-index: 1; }
+.preview-drawer-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; color: #f8fafc; font-weight: 700; }
+.preview-drawer-close { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all .2s; }
+.preview-drawer-close:hover { background: rgba(239,68,68,0.15); color: #f87171; }
+.preview-drawer-body { padding: 28px; }
+.preview-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 0.78rem; font-weight: 600; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; cursor: pointer; transition: all .2s; }
+.preview-btn:hover { background: rgba(124,58,237,0.15); color: #c4b5fd; border-color: rgba(124,58,237,0.3); }
+
+/* Drag state */
+.block-item.dragging { opacity: 0.4; }
+.block-item.drag-over { border-top: 2px solid #7c3aed; }
 </style>
 </head>
 <body>
@@ -120,16 +208,14 @@
   <div class="setup-card">
     <div class="setup-logo">TI</div>
     <h1 class="setup-title">Connect to GitHub</h1>
-    <p class="setup-sub">One-time setup. Your token is saved privately in your browser only — never in your code or visible to anyone.</p>
+    <p class="setup-sub">One-time setup. Your token is saved privately in your browser only.</p>
     <div class="setup-steps">
       <div class="setup-step"><span class="setup-step-num">1</span><span>Go to <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a></span></div>
       <div class="setup-step"><span class="setup-step-num">2</span><span>Click <strong style="color:#e2e8f0">Generate new token (classic)</strong></span></div>
       <div class="setup-step"><span class="setup-step-num">3</span><span>Set expiration: <strong style="color:#e2e8f0">No expiration</strong> — check the <strong style="color:#e2e8f0">repo</strong> checkbox</span></div>
-      <div class="setup-step"><span class="setup-step-num">4</span><span>Click Generate, copy the token (starts with <strong style="color:#c4b5fd">ghp_</strong>), paste below</span></div>
+      <div class="setup-step"><span class="setup-step-num">4</span><span>Copy the token (starts with <strong style="color:#c4b5fd">ghp_</strong>), paste below</span></div>
     </div>
-    <div class="setup-field">
-      <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
-    </div>
+    <div class="setup-field"><input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"></div>
     <p class="setup-error" id="setupError"></p>
     <button class="setup-btn" onclick="saveToken()">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
@@ -159,10 +245,7 @@
         </button>
       </div>
       <p class="login-error" id="loginError"></p>
-      <button class="login-btn" onclick="attemptLogin()">
-        Unlock Dashboard
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </button>
+      <button class="login-btn" onclick="attemptLogin()">Unlock Dashboard <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
     </div>
     <a href="index.html" class="login-back">← Back to Portfolio</a>
   </div>
@@ -180,69 +263,32 @@
     </div>
     <nav class="sidebar-nav">
       <div class="nav-group-label">Content</div>
-      <button class="tab-btn active" data-tab="profile" onclick="switchTab('profile',this)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <span>Profile</span>
-      </button>
-      <button class="tab-btn" data-tab="about" onclick="switchTab('about',this)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <span>About</span>
-      </button>
-      <button class="tab-btn" data-tab="skills" onclick="switchTab('skills',this)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        <span>Skills</span>
-      </button>
-      <button class="tab-btn" data-tab="projects" onclick="switchTab('projects',this)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        <span>Projects</span>
-      </button>
-      <button class="tab-btn" data-tab="research" onclick="switchTab('research',this)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-        <span>Research</span>
-      </button>
-      <button class="tab-btn" data-tab="contact" onclick="switchTab('contact',this)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        <span>Contact</span>
-      </button>
+      <button class="tab-btn active" data-tab="profile" onclick="switchTab('profile',this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></button>
+      <button class="tab-btn" data-tab="about" onclick="switchTab('about',this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>About</span></button>
+      <button class="tab-btn" data-tab="skills" onclick="switchTab('skills',this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Skills</span></button>
+      <button class="tab-btn" data-tab="projects" onclick="switchTab('projects',this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Projects</span></button>
+      <button class="tab-btn" data-tab="research" onclick="switchTab('research',this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Research</span></button>
+      <button class="tab-btn" data-tab="contact" onclick="switchTab('contact',this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Contact</span></button>
       <div class="nav-group-label" style="margin-top:16px">Settings</div>
-      <button class="tab-btn" data-tab="appearance" onclick="switchTab('appearance',this)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
-        <span>Appearance</span>
-      </button>
-      <button class="tab-btn" data-tab="security" onclick="switchTab('security',this)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <span>Security</span>
-      </button>
+      <button class="tab-btn" data-tab="appearance" onclick="switchTab('appearance',this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg><span>Appearance</span></button>
+      <button class="tab-btn" data-tab="security" onclick="switchTab('security',this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Security</span></button>
     </nav>
     <div class="sidebar-footer">
       <div class="sidebar-user">
         <div class="sidebar-avatar">TI</div>
-        <div>
-          <div class="sidebar-uname">Tanim</div>
-          <div class="sidebar-urole">Administrator</div>
-        </div>
+        <div><div class="sidebar-uname">Tanim</div><div class="sidebar-urole">Administrator</div></div>
       </div>
     </div>
   </aside>
 
   <main class="main-area">
     <header class="topbar">
-      <button class="topbar-toggle" onclick="toggleSidebar()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-      <div class="topbar-breadcrumb">
-        <span class="topbar-section" id="topbarSection">Profile</span>
-      </div>
+      <button class="topbar-toggle" onclick="toggleSidebar()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <div class="topbar-breadcrumb"><span class="topbar-section" id="topbarSection">Profile</span></div>
       <div class="topbar-actions">
         <div class="unsaved-badge" id="unsavedBadge" style="display:none">Unsaved changes</div>
-        <button class="github-status connected" id="githubStatusBtn" onclick="showTokenSetup()" title="Click to update GitHub token">
-          <div class="status-dot"></div>
-          <span id="githubStatusText">GitHub Connected</span>
-        </button>
-        <button class="topbar-btn btn-save" onclick="saveAndPublish()">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-          Save & Publish Live
-        </button>
+        <button class="github-status connected" id="githubStatusBtn" onclick="showTokenSetup()" title="Click to update GitHub token"><div class="status-dot"></div><span id="githubStatusText">GitHub Connected</span></button>
+        <button class="topbar-btn btn-save" onclick="saveAndPublish()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save & Publish Live</button>
         <button class="topbar-btn btn-reset" onclick="confirmReset()">Reset</button>
         <a href="index.html" class="topbar-btn btn-exit">Exit</a>
       </div>
@@ -271,11 +317,7 @@
                   <p class="field-note" style="margin:0">JPG, PNG, WebP — max 2MB recommended</p>
                 </div>
               </div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <div style="flex:1;height:1px;background:rgba(255,255,255,0.08)"></div>
-                <span style="font-size:0.75rem;color:#475569">or paste URL</span>
-                <div style="flex:1;height:1px;background:rgba(255,255,255,0.08)"></div>
-              </div>
+              <div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:1px;background:rgba(255,255,255,0.08)"></div><span style="font-size:0.75rem;color:#475569">or paste URL</span><div style="flex:1;height:1px;background:rgba(255,255,255,0.08)"></div></div>
               <input type="url" class="field-input" id="f_photoURL" placeholder="https://i.ibb.co/…" oninput="markUnsaved();updatePhotoPreview(this.value)">
             </div>
           </div>
@@ -297,20 +339,22 @@
       <!-- SKILLS -->
       <div class="tab-pane" id="tab-skills">
         <div class="pane-header"><h2 class="pane-title">Skills</h2><p class="pane-desc">Manage skill categories and individual skills.</p></div>
-        <button class="add-card-btn" onclick="addSkillCategory()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Add Category
-        </button>
+        <button class="add-card-btn" onclick="addSkillCategory()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Category</button>
         <div id="skillsEditor"></div>
       </div>
 
       <!-- PROJECTS -->
       <div class="tab-pane" id="tab-projects">
-        <div class="pane-header"><h2 class="pane-title">Projects</h2><p class="pane-desc">Add, edit, and remove portfolio projects.</p></div>
-        <button class="add-card-btn" onclick="addProject()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Add Project
-        </button>
+        <div class="pane-header">
+          <h2 class="pane-title">Projects</h2>
+          <p class="pane-desc">Add, edit, and remove portfolio projects. Newest projects appear first on the site.</p>
+        </div>
+        <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+          <button class="add-card-btn" onclick="addProject()" id="addProjectBtn" style="margin-bottom:0">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add New Project
+          </button>
+        </div>
         <div id="projectsEditor"></div>
       </div>
 
@@ -393,10 +437,7 @@
           <div class="field-group full"><label class="field-label">New Password</label><input type="password" class="field-input" id="f_newPw"></div>
           <div class="field-group full"><label class="field-label">Confirm Password</label><input type="password" class="field-input" id="f_newPw2"></div>
           <div class="field-group full"><button class="change-pw-btn" onclick="changePassword()">Update Password</button></div>
-          <div class="security-note full">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            Password changes go live after clicking Save &amp; Publish. To update your GitHub token, click the green "GitHub Connected" button in the top bar.
-          </div>
+          <div class="security-note full"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Password changes go live after clicking Save &amp; Publish.</div>
         </div>
       </div>
 
@@ -408,13 +449,13 @@
 <div class="publish-overlay" id="publishOverlay">
   <div class="publish-spinner"></div>
   <div class="publish-msg" id="publishMsg">Publishing to GitHub…</div>
-  <div class="publish-sub">Netlify will rebuild your site in ~30 seconds</div>
+  <div class="publish-sub">Changes go live in ~30 seconds</div>
 </div>
 
 <!-- Toast -->
 <div class="admin-toast" id="adminToast"></div>
 
-<!-- Modal -->
+<!-- Confirm Modal -->
 <div class="modal-overlay" id="modalOverlay" style="display:none">
   <div class="modal-box">
     <h3 class="modal-title" id="modalTitle">Confirm</h3>
@@ -426,10 +467,22 @@
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.min.js"></script>
+<!-- Preview Drawer -->
+<div class="preview-drawer-overlay" id="previewOverlay" onclick="closePreview()"></div>
+<div class="preview-drawer" id="previewDrawer">
+  <div class="preview-drawer-header">
+    <span class="preview-drawer-title">👁 Project Preview</span>
+    <button class="preview-drawer-close" onclick="closePreview()">✕</button>
+  </div>
+  <div class="preview-drawer-body" id="previewBody"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
 <script src="data.js"></script>
 <script>
-/* ── GitHub config ── */
+/* ══════════════════════════════════════════════
+   GITHUB CONFIG
+══════════════════════════════════════════════ */
 const GITHUB_OWNER  = 'tanim-mse';
 const GITHUB_REPO   = 'portfolio_tanim';
 const GITHUB_FILE   = 'data.js';
@@ -437,14 +490,12 @@ const GITHUB_BRANCH = 'main';
 
 let adminData = {}, currentTab = 'profile', hasUnsaved = false;
 
-/* ── Startup ── */
+/* ══ Startup ══ */
 function startup() {
-  const token = localStorage.getItem('gh_token');
-  if (!token) {
+  if (!localStorage.getItem('gh_token')) {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('setupScreen').style.display = 'flex';
   }
-  // login screen already visible by default
 }
 startup();
 
@@ -458,15 +509,11 @@ async function saveToken() {
   const token = document.getElementById('tokenInput').value.trim();
   const err = document.getElementById('setupError');
   if (!token) { err.textContent = 'Please paste your token.'; return; }
-  if (!token.startsWith('ghp_') && !token.startsWith('github_pat_')) {
-    err.textContent = 'Token should start with ghp_ — check and try again.'; return;
-  }
+  if (!token.startsWith('ghp_') && !token.startsWith('github_pat_')) { err.textContent = 'Token should start with ghp_ — check and try again.'; return; }
   err.textContent = 'Verifying…';
   try {
-    const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`, {
-      headers: { Authorization: `token ${token}`, 'User-Agent': 'PortfolioAdmin' }
-    });
-    if (!res.ok) { err.textContent = 'Token invalid or repo not found. Check and retry.'; return; }
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`, { headers: { Authorization: `token ${token}`, 'User-Agent': 'PortfolioAdmin' } });
+    if (!res.ok) { err.textContent = 'Token invalid or repo not found.'; return; }
     localStorage.setItem('gh_token', token);
     err.textContent = '';
     document.getElementById('setupScreen').style.display = 'none';
@@ -477,7 +524,7 @@ async function saveToken() {
 }
 document.getElementById('tokenInput').addEventListener('keydown', e => { if(e.key==='Enter') saveToken(); });
 
-/* ── Login ── */
+/* ══ Login ══ */
 async function attemptLogin() {
   const pw = document.getElementById('pwInput').value;
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
@@ -505,12 +552,9 @@ function updateGithubStatus(ok) {
   txt.textContent = ok ? 'GitHub Connected' : 'GitHub Not Connected';
 }
 
-/* ── Init ── */
+/* ══ Init — fetch live data from GitHub ══ */
 async function initDashboard() {
-  // Always load from GitHub (the source of truth) so admin shows live data
   const token = localStorage.getItem('gh_token');
-  document.getElementById('publishMsg') && (document.getElementById('publishMsg').textContent = 'Loading live data…');
-
   if (token) {
     try {
       const res = await fetch(
@@ -520,27 +564,19 @@ async function initDashboard() {
       if (res.ok) {
         const fileData = await res.json();
         const raw = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,''))));
-        // Extract DEFAULT_DATA from the JS file
         const match = raw.match(/const DEFAULT_DATA\s*=\s*(\{[\s\S]*?\});\s*\n/);
-        if (match) {
-          try {
-            adminData = JSON.parse(match[1]);
-            // Also sync localStorage so getData() is consistent
-            saveData(adminData);
-          } catch(e) { adminData = getData(); }
-        } else { adminData = getData(); }
+        if (match) { try { adminData = JSON.parse(match[1]); saveData(adminData); } catch(e) { adminData = getData(); } }
+        else { adminData = getData(); }
       } else { adminData = getData(); }
     } catch(e) { adminData = getData(); }
-  } else {
-    adminData = getData();
-  }
+  } else { adminData = getData(); }
 
   updateGithubStatus(!!token);
   loadProfile(); loadAbout(); loadSkills();
   loadProjects(); loadResearch(); loadContact(); loadAppearance();
 }
 
-/* ── Tabs ── */
+/* ══ Tabs ══ */
 function switchTab(tab, btn) {
   collectCurrentTab();
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -553,7 +589,7 @@ function switchTab(tab, btn) {
 function toggleSidebar() { document.getElementById('sidebar').classList.toggle('collapsed'); }
 function markUnsaved() { hasUnsaved=true; document.getElementById('unsavedBadge').style.display='flex'; }
 
-/* ── Loaders ── */
+/* ══ Loaders ══ */
 function loadProfile() {
   const D=adminData;
   document.getElementById('f_name').value=D.name||'';
@@ -585,38 +621,83 @@ function deleteSkillCategory(i){showModal('Delete Category','Remove this categor
 function addSkill(ci){const inp=document.getElementById('chipInput_'+ci);if(!inp.value.trim())return;collectCurrentTab();adminData.skills[ci].items.push(inp.value.trim());inp.value='';loadSkills();markUnsaved();}
 function removeSkill(ci,si){adminData.skills[ci].items.splice(si,1);loadSkills();markUnsaved();}
 
-/* ── Quill instances registry ── */
-const quillInstances = {};
+/* ══════════════════════════════════════════════
+   BLOCK EDITOR ENGINE
+══════════════════════════════════════════════ */
+// projectBlocks[i] = array of block objects for project i
+const projectBlocks = {};
+let activePickerBtn = null;
+
+const BLOCK_TYPES = [
+  { group:'Text', type:'paragraph', icon:'¶', label:'Paragraph', desc:'Body text' },
+  { group:'Text', type:'heading1', icon:'H1', label:'Heading 1', desc:'Large title' },
+  { group:'Text', type:'heading2', icon:'H2', label:'Heading 2', desc:'Section title' },
+  { group:'Text', type:'heading3', icon:'H3', label:'Heading 3', desc:'Subsection' },
+  { group:'Media', type:'image', icon:'🖼', label:'Image', desc:'Upload or URL' },
+  { group:'Science', type:'formula', icon:'∑', label:'Formula', desc:'LaTeX math' },
+  { group:'Science', type:'code', icon:'<>', label:'Code', desc:'Code block' },
+  { group:'Structure', type:'divider', icon:'—', label:'Divider', desc:'Horizontal line' },
+  { group:'Structure', type:'callout', icon:'💡', label:'Note', desc:'Highlighted box' },
+  { group:'Structure', type:'table', icon:'⊞', label:'Table', desc:'Rows & columns' },
+];
+
+function newBlock(type) {
+  const b = { type, id: Math.random().toString(36).slice(2) };
+  if (type === 'paragraph') b.content = '';
+  else if (type.startsWith('heading')) b.content = '';
+  else if (type === 'image') { b.src = ''; b.caption = ''; b.size = 'medium'; }
+  else if (type === 'formula') { b.latex = ''; }
+  else if (type === 'code') { b.language = ''; b.content = ''; }
+  else if (type === 'divider') {}
+  else if (type === 'callout') { b.icon = '💡'; b.content = ''; }
+  else if (type === 'table') { b.rows = 3; b.cols = 3; b.data = Array.from({length:3},()=>Array(3).fill('')); }
+  return b;
+}
 
 function loadProjects() {
-  // Save any existing Quill content before destroying
-  collectProjectsFromQuill();
-  // Destroy old Quill instances
-  Object.keys(quillInstances).forEach(k => { delete quillInstances[k]; });
+  collectAllProjectBlocks();
   const pe = document.getElementById('projectsEditor');
   pe.innerHTML = '';
-  (adminData.projects || []).forEach((p, i) => pe.appendChild(buildProjectCard(p, i)));
-  // Init Quill for each card after DOM is ready
-  (adminData.projects || []).forEach((p, i) => initQuill(i, p.desc || ''));
+  (adminData.projects || []).forEach((p, i) => {
+    // Migrate old desc-based projects to blocks
+    if (!p.blocks || !p.blocks.length) {
+      if (p.desc) {
+        p.blocks = [{ type:'paragraph', id:'m'+i, content: p.desc.replace(/<[^>]+>/g,'') }];
+      } else {
+        p.blocks = [newBlock('paragraph')];
+      }
+    }
+    projectBlocks[i] = p.blocks.map(b => ({ ...b, id: b.id || Math.random().toString(36).slice(2) }));
+    pe.appendChild(buildProjectCard(p, i));
+  });
 }
 
 function buildProjectCard(p, i) {
   const card = document.createElement('div');
   card.className = 'editor-card';
-  const trashIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>`;
+  card.id = `pcard_${i}`;
+  const trashSVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>`;
+  const eyeSVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+
   card.innerHTML = `
     <div class="editor-card-header">
-      <span class="card-index">Project ${i + 1}</span>
-      <button class="card-delete-btn" onclick="deleteProject(${i})">${trashIcon}</button>
+      <span class="card-index">
+        <span id="pcard_title_${i}" class="proj-card-title-live">${p.title && p.title !== 'New Project' ? p.title : 'Project ' + (i+1)}</span>
+      </span>
+      <div style="display:flex;gap:6px">
+        <button class="preview-btn" onclick="openPreview(${i})" title="Preview this project">${eyeSVG} Preview</button>
+        <button class="card-delete-btn" onclick="deleteProject(${i})" title="Delete project">${trashSVG}</button>
+      </div>
     </div>
+
     <div class="fields-grid" style="padding:0;gap:14px">
       <div class="field-group full">
         <label class="field-label">Title</label>
-        <input type="text" class="field-input" id="pt_${i}" value="${esc(p.title || '')}" oninput="markUnsaved()">
+        <input type="text" class="field-input" id="pt_${i}" value="${esc(p.title||'')}" oninput="markUnsaved();updateCardTitle(${i},this.value)">
       </div>
       <div class="field-group">
         <label class="field-label">Date <span class="field-hint">e.g. Jan 2025</span></label>
-        <input type="text" class="field-input" id="pdate_${i}" value="${esc(p.date || '')}" placeholder="Jan 2025" oninput="markUnsaved()">
+        <input type="text" class="field-input" id="pdate_${i}" value="${esc(p.date||'')}" placeholder="Jan 2025" oninput="markUnsaved()">
       </div>
       <div class="field-group">
         <label class="field-label">Status</label>
@@ -628,109 +709,650 @@ function buildProjectCard(p, i) {
       </div>
       <div class="field-group full">
         <label class="field-label">Short Excerpt <span class="field-hint">shown on card — leave blank to auto-generate</span></label>
-        <input type="text" class="field-input" id="pexcerpt_${i}" value="${esc(p.excerpt || '')}" placeholder="One sentence summary of this project…" oninput="markUnsaved()">
+        <input type="text" class="field-input" id="pexcerpt_${i}" value="${esc(p.excerpt||'')}" placeholder="One sentence summary…" oninput="markUnsaved()">
       </div>
       <div class="field-group">
         <label class="field-label">Tags <span class="field-hint">comma-separated</span></label>
-        <input type="text" class="field-input" id="pg_${i}" value="${esc(p.tags || '')}" placeholder="Materials, MATLAB, Research" oninput="markUnsaved()">
+        <input type="text" class="field-input" id="pg_${i}" value="${esc(p.tags||'')}" placeholder="Materials, MATLAB, Research" oninput="markUnsaved()">
       </div>
       <div class="field-group">
         <label class="field-label">External Link <span class="field-hint">optional</span></label>
-        <input type="url" class="field-input" id="pl_${i}" value="${esc(p.link || '')}" placeholder="https://…" oninput="markUnsaved()">
+        <input type="url" class="field-input" id="pl_${i}" value="${esc(p.link||'')}" placeholder="https://…" oninput="markUnsaved()">
       </div>
       <div class="field-group full">
-        <label class="field-label">Full Description <span class="field-hint">rich text — supports images, tables, headings, code</span></label>
-        <div class="quill-label">Use the toolbar to format. Paste an image URL via the image button (🖼).</div>
-        <div id="quill_${i}"></div>
-        <button class="quill-image-btn" onclick="insertImageByURL(${i})">
-          🖼 Insert Image by URL
-        </button>
+        <label class="field-label">Featured Image <span class="field-hint">banner shown at top of project</span></label>
+        <div id="feat_img_zone_${i}" class="feat-img-zone" onclick="document.getElementById('feat_img_file_${i}').click()">
+          ${p.featuredImage ? `<img src="${p.featuredImage}" class="feat-img-preview" id="feat_img_preview_${i}">` : `<div style="font-size:2rem;color:rgba(255,255,255,0.1)">🖼</div><span style="font-size:0.82rem;color:#475569">Click to upload featured image</span>`}
+        </div>
+        <div class="feat-img-btns" style="margin-top:8px">
+          <label class="feat-img-btn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Upload
+            <input type="file" accept="image/*" id="feat_img_file_${i}" style="display:none" onchange="handleFeaturedImage(${i},this)">
+          </label>
+          <span style="font-size:0.75rem;color:#334155;align-self:center">or</span>
+          <input type="url" class="feat-img-url" id="feat_img_url_${i}" placeholder="Paste image URL…" value="${esc(p.featuredImage&&!p.featuredImage.startsWith('data:')?p.featuredImage:'')}" oninput="handleFeaturedImageURL(${i},this.value)">
+          ${p.featuredImage ? `<button class="feat-img-btn" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:#f87171" onclick="clearFeaturedImage(${i})">✕ Clear</button>` : ''}
+        </div>
+      </div>
+      <div class="field-group full">
+        <label class="field-label">Content</label>
+        <p class="field-note" style="margin-bottom:10px">Click <strong style="color:#7c3aed">+</strong> between blocks to add text, headings, images, formulas, tables and more.</p>
+        <div class="block-editor">
+          <div class="block-list" id="block_list_${i}"></div>
+        </div>
       </div>
     </div>`;
+
+  // Render blocks after appending to DOM (need IDs)
+  setTimeout(() => renderBlockList(i), 0);
   return card;
 }
 
-function initQuill(i, htmlContent) {
-  const toolbarOptions = [
-    [{ 'header': [1, 2, 3, false] }],
-    ['bold', 'italic', 'underline', 'strike'],
-    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-    ['blockquote', 'code-block'],
-    ['link'],
-    [{ 'color': [] }, { 'background': [] }],
-    [{ 'align': [] }],
-    ['clean']
-  ];
-  const quill = new Quill(`#quill_${i}`, {
-    theme: 'snow',
-    placeholder: 'Write a detailed project description here. Add headings, bullet points, images, tables…',
-    modules: { toolbar: toolbarOptions }
-  });
-  // Load existing HTML content
-  if (htmlContent) {
-    quill.root.innerHTML = htmlContent;
-  }
-  quill.on('text-change', () => markUnsaved());
-  quillInstances[i] = quill;
+function updateCardTitle(i, val) {
+  const el = document.getElementById(`pcard_title_${i}`);
+  if (!el) return;
+  el.textContent = val.trim() || `Project ${i+1}`;
+  el.className = 'proj-card-title-live' + (val.trim() ? ' has-title' : '');
 }
 
-function insertImageByURL(i) {
-  const url = prompt('Paste the image URL:');
-  if (!url) return;
-  const quill = quillInstances[i];
-  if (!quill) return;
-  const range = quill.getSelection(true);
-  quill.insertEmbed(range ? range.index : 0, 'image', url);
+/* ── Render block list for project i ── */
+function renderBlockList(i) {
+  const container = document.getElementById(`block_list_${i}`);
+  if (!container) return;
+  const blocks = projectBlocks[i] || [];
+  container.innerHTML = '';
+  // Add-block row at top
+  container.appendChild(makeAddBlockRow(i, 0));
+  blocks.forEach((block, bi) => {
+    container.appendChild(makeBlockItem(i, bi, block));
+    container.appendChild(makeAddBlockRow(i, bi + 1));
+  });
+}
+
+function makeAddBlockRow(pi, insertAt) {
+  const row = document.createElement('div');
+  row.className = 'add-block-row';
+  row.dataset.insertAt = insertAt;
+  row.innerHTML = `<div class="add-block-line"></div><button class="add-block-btn" title="Add block" onclick="togglePicker(${pi}, ${insertAt}, this)">+</button><div class="add-block-line"></div><div class="block-picker" id="picker_${pi}_${insertAt}"></div>`;
+  return row;
+}
+
+function togglePicker(pi, insertAt, btn) {
+  // Close all other pickers
+  document.querySelectorAll('.block-picker.open').forEach(p => {
+    if (p.id !== `picker_${pi}_${insertAt}`) p.classList.remove('open');
+  });
+  const picker = document.getElementById(`picker_${pi}_${insertAt}`);
+  if (!picker) return;
+  if (picker.classList.contains('open')) { picker.classList.remove('open'); return; }
+  // Build picker content
+  const groups = {};
+  BLOCK_TYPES.forEach(bt => { if (!groups[bt.group]) groups[bt.group] = []; groups[bt.group].push(bt); });
+  picker.innerHTML = Object.entries(groups).map(([grp, items]) => `
+    <div class="block-picker-group">
+      <div class="block-picker-label">${grp}</div>
+      <div class="block-picker-items">
+        ${items.map(bt => `
+          <div class="block-picker-item" onclick="insertBlock(${pi}, ${insertAt}, '${bt.type}')">
+            <span class="block-picker-item-icon">${bt.icon}</span>
+            <div><div class="block-picker-item-label">${bt.label}</div><div class="block-picker-item-desc">${bt.desc}</div></div>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+  picker.classList.add('open');
+  activePickerBtn = btn;
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.add-block-btn') && !e.target.closest('.block-picker')) {
+    document.querySelectorAll('.block-picker.open').forEach(p => p.classList.remove('open'));
+  }
+});
+
+function insertBlock(pi, insertAt, type) {
+  // Close picker
+  document.querySelectorAll('.block-picker.open').forEach(p => p.classList.remove('open'));
+  // Save current state
+  collectBlocksFromDOM(pi);
+  const blocks = projectBlocks[pi];
+  blocks.splice(insertAt, 0, newBlock(type));
+  renderBlockList(pi);
+  markUnsaved();
+  // Focus the new block
+  setTimeout(() => {
+    const newBi = insertAt;
+    const input = document.querySelector(`#block_item_${pi}_${newBi} .block-paragraph, #block_item_${pi}_${newBi} .block-h1, #block_item_${pi}_${newBi} .block-h2, #block_item_${pi}_${newBi} .block-h3, #block_item_${pi}_${newBi} .block-formula-input, #block_item_${pi}_${newBi} .block-code`);
+    if (input) input.focus();
+  }, 60);
+}
+
+function makeBlockItem(pi, bi, block) {
+  const item = document.createElement('div');
+  item.className = 'block-item';
+  item.id = `block_item_${pi}_${bi}`;
+  item.draggable = true;
+
+  // Drag handle
+  const handle = document.createElement('div');
+  handle.className = 'block-drag-handle';
+  handle.title = 'Drag to reorder';
+  handle.innerHTML = '⠿';
+  handle.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', `${pi}:${bi}`); item.classList.add('dragging'); });
+  handle.addEventListener('dragend', () => item.classList.remove('dragging'));
+
+  // Delete button
+  const delBtn = document.createElement('button');
+  delBtn.className = 'block-delete-btn';
+  delBtn.title = 'Delete block';
+  delBtn.innerHTML = '✕';
+  delBtn.onclick = () => {
+    collectBlocksFromDOM(pi);
+    projectBlocks[pi].splice(bi, 1);
+    renderBlockList(pi);
+    markUnsaved();
+  };
+
+  // Content
+  const wrap = document.createElement('div');
+  wrap.className = 'block-content-wrap';
+  wrap.appendChild(buildBlockContent(pi, bi, block));
+
+  item.appendChild(handle);
+  item.appendChild(wrap);
+  item.appendChild(delBtn);
+
+  // Drop target
+  item.addEventListener('dragover', e => { e.preventDefault(); item.classList.add('drag-over'); });
+  item.addEventListener('dragleave', () => item.classList.remove('drag-over'));
+  item.addEventListener('drop', e => {
+    e.preventDefault();
+    item.classList.remove('drag-over');
+    const [fromPi, fromBi] = e.dataTransfer.getData('text/plain').split(':').map(Number);
+    if (fromPi !== pi) return;
+    collectBlocksFromDOM(pi);
+    const blocks = projectBlocks[pi];
+    const [moved] = blocks.splice(fromBi, 1);
+    blocks.splice(bi, 0, moved);
+    renderBlockList(pi);
+    markUnsaved();
+  });
+
+  return item;
+}
+
+function buildBlockContent(pi, bi, block) {
+  const wrap = document.createElement('div');
+
+  if (block.type === 'paragraph') {
+    const ta = document.createElement('textarea');
+    ta.className = 'block-paragraph';
+    ta.placeholder = 'Write something…';
+    ta.value = block.content || '';
+    ta.oninput = () => { autoResize(ta); markUnsaved(); };
+    ta.onkeydown = e => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        collectBlocksFromDOM(pi);
+        projectBlocks[pi].splice(bi + 1, 0, newBlock('paragraph'));
+        renderBlockList(pi);
+        markUnsaved();
+        setTimeout(() => {
+          const next = document.querySelector(`#block_item_${pi}_${bi+1} .block-paragraph`);
+          if (next) next.focus();
+        }, 50);
+      }
+      if (e.key === 'Backspace' && ta.value === '' && projectBlocks[pi].length > 1) {
+        e.preventDefault();
+        collectBlocksFromDOM(pi);
+        projectBlocks[pi].splice(bi, 1);
+        renderBlockList(pi);
+        markUnsaved();
+        setTimeout(() => {
+          const prev = document.querySelector(`#block_item_${pi}_${Math.max(0,bi-1)} .block-paragraph`);
+          if (prev) { prev.focus(); prev.setSelectionRange(prev.value.length, prev.value.length); }
+        }, 50);
+      }
+    };
+    setTimeout(() => autoResize(ta), 0);
+    wrap.appendChild(ta);
+
+  } else if (block.type === 'heading1' || block.type === 'heading2' || block.type === 'heading3') {
+    const cls = { heading1:'block-h1', heading2:'block-h2', heading3:'block-h3' }[block.type];
+    const ph = { heading1:'Heading 1', heading2:'Heading 2', heading3:'Heading 3' }[block.type];
+    const inp = document.createElement('input');
+    inp.className = cls;
+    inp.placeholder = ph;
+    inp.value = block.content || '';
+    inp.oninput = () => markUnsaved();
+    inp.onkeydown = e => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        collectBlocksFromDOM(pi);
+        projectBlocks[pi].splice(bi + 1, 0, newBlock('paragraph'));
+        renderBlockList(pi);
+        markUnsaved();
+        setTimeout(() => {
+          const next = document.querySelector(`#block_item_${pi}_${bi+1} .block-paragraph`);
+          if (next) next.focus();
+        }, 50);
+      }
+    };
+    wrap.appendChild(inp);
+
+  } else if (block.type === 'image') {
+    const imgWrap = document.createElement('div');
+    imgWrap.className = 'block-image-wrap';
+    const hasSrc = block.src && block.src.length > 4;
+    imgWrap.innerHTML = `
+      <div class="block-image-controls">
+        <label class="block-img-upload-btn">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Upload
+          <input type="file" accept="image/*" style="display:none" onchange="handleBlockImage(${pi},${bi},this)">
+        </label>
+        <input type="url" class="block-image-url-input" placeholder="or paste image URL…" value="${esc(hasSrc && !block.src.startsWith('data:') ? block.src : '')}" oninput="handleBlockImageURL(${pi},${bi},this.value)">
+        <div class="img-size-btns">
+          <button class="img-size-btn ${block.size==='small'?'active':''}" onclick="setImgSize(${pi},${bi},'small','this')">Small</button>
+          <button class="img-size-btn ${(block.size||'medium')==='medium'?'active':''}" onclick="setImgSize(${pi},${bi},'medium',this)">Medium</button>
+          <button class="img-size-btn ${block.size==='full'?'active':''}" onclick="setImgSize(${pi},${bi},'full',this)">Full</button>
+        </div>
+      </div>
+      <div id="block_img_preview_${pi}_${bi}" style="text-align:center;padding:${hasSrc?'0':'20px'}">
+        ${hasSrc ? `<img src="${block.src}" class="block-image-preview-el" style="max-width:${block.size==='small'?'40%':block.size==='full'?'100%':'70%'}">` : '<span style="color:#334155;font-size:0.82rem">Image preview will appear here</span>'}
+      </div>
+      <input type="text" class="block-image-caption" placeholder="Caption (optional)…" value="${esc(block.caption||'')}">
+    `;
+    wrap.appendChild(imgWrap);
+
+  } else if (block.type === 'formula') {
+    const fWrap = document.createElement('div');
+    fWrap.className = 'block-formula-wrap';
+    const inputRow = document.createElement('div');
+    inputRow.className = 'block-formula-input-row';
+    inputRow.innerHTML = `<span class="block-formula-label">∑ LaTeX</span>`;
+    const inp = document.createElement('input');
+    inp.className = 'block-formula-input';
+    inp.placeholder = 'e.g.  E = mc^2  or  \\frac{a}{b}';
+    inp.value = block.latex || '';
+    const preview = document.createElement('div');
+    preview.className = 'block-formula-preview';
+    preview.id = `formula_preview_${pi}_${bi}`;
+    renderFormulaPreview(block.latex || '', preview);
+    inp.oninput = () => {
+      markUnsaved();
+      renderFormulaPreview(inp.value, preview);
+    };
+    inputRow.appendChild(inp);
+    fWrap.appendChild(inputRow);
+    fWrap.appendChild(preview);
+    wrap.appendChild(fWrap);
+
+  } else if (block.type === 'code') {
+    const cWrap = document.createElement('div');
+    cWrap.className = 'block-code-wrap';
+    cWrap.innerHTML = `
+      <input class="block-code-lang" placeholder="Language (e.g. python, matlab)…" value="${esc(block.language||'')}">
+      <textarea class="block-code" placeholder="Paste your code here…" oninput="markUnsaved()">${esc(block.content||'')}</textarea>`;
+    cWrap.querySelector('.block-code-lang').oninput = () => markUnsaved();
+    wrap.appendChild(cWrap);
+
+  } else if (block.type === 'divider') {
+    const div = document.createElement('div');
+    div.className = 'block-divider-el';
+    wrap.appendChild(div);
+
+  } else if (block.type === 'callout') {
+    const cWrap = document.createElement('div');
+    cWrap.className = 'block-callout-wrap';
+    const CALLOUT_ICONS = ['💡','⚠️','📌','🔬','📝','✅'];
+    const iconEl = document.createElement('span');
+    iconEl.className = 'block-callout-icon';
+    iconEl.textContent = block.icon || '💡';
+    iconEl.title = 'Click to change icon';
+    let iconIdx = CALLOUT_ICONS.indexOf(iconEl.textContent);
+    iconEl.onclick = () => { iconIdx = (iconIdx + 1) % CALLOUT_ICONS.length; iconEl.textContent = CALLOUT_ICONS[iconIdx]; markUnsaved(); };
+    const ta = document.createElement('textarea');
+    ta.className = 'block-callout-text';
+    ta.placeholder = 'Write a note or callout…';
+    ta.value = block.content || '';
+    ta.oninput = () => { autoResize(ta); markUnsaved(); };
+    setTimeout(() => autoResize(ta), 0);
+    cWrap.appendChild(iconEl);
+    cWrap.appendChild(ta);
+    wrap.appendChild(cWrap);
+
+  } else if (block.type === 'table') {
+    const tWrap = document.createElement('div');
+    tWrap.className = 'block-table-wrap';
+    const toolbar = document.createElement('div');
+    toolbar.className = 'block-table-toolbar';
+    toolbar.innerHTML = `<span>Table</span>
+      <button onclick="addTableRow(${pi},${bi})">+ Row</button>
+      <button onclick="addTableCol(${pi},${bi})">+ Col</button>
+      <button onclick="removeTableRow(${pi},${bi})" style="color:#f87171">− Row</button>
+      <button onclick="removeTableCol(${pi},${bi})" style="color:#f87171">− Col</button>`;
+    const scroll = document.createElement('div');
+    scroll.className = 'block-table-scroll';
+    scroll.appendChild(buildTableEl(pi, bi, block));
+    tWrap.appendChild(toolbar);
+    tWrap.appendChild(scroll);
+    wrap.appendChild(tWrap);
+  }
+
+  return wrap;
+}
+
+function renderFormulaPreview(latex, el) {
+  if (!latex.trim()) {
+    el.innerHTML = '<span class="block-formula-error">Type a LaTeX formula above to see the preview</span>';
+    return;
+  }
+  try {
+    el.innerHTML = window.katex.renderToString(latex.trim(), { throwOnError: true, displayMode: true });
+  } catch(e) {
+    el.innerHTML = '<span class="block-formula-error">⚠ Invalid formula — check your LaTeX syntax</span>';
+  }
+}
+
+function autoResize(ta) {
+  ta.style.height = 'auto';
+  ta.style.height = ta.scrollHeight + 'px';
+}
+
+function handleBlockImage(pi, bi, input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 2*1024*1024) { showToast('Keep images under 2MB for best performance.', 'error'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    collectBlocksFromDOM(pi);
+    projectBlocks[pi][bi].src = e.target.result;
+    const previewEl = document.getElementById(`block_img_preview_${pi}_${bi}`);
+    const size = projectBlocks[pi][bi].size || 'medium';
+    if (previewEl) previewEl.innerHTML = `<img src="${e.target.result}" class="block-image-preview-el" style="max-width:${size==='small'?'40%':size==='full'?'100%':'70%'}">`;
+    markUnsaved();
+    showToast('Image loaded ✓', 'success');
+  };
+  reader.readAsDataURL(file);
+}
+
+function handleBlockImageURL(pi, bi, url) {
+  collectBlocksFromDOM(pi);
+  if (!projectBlocks[pi][bi]) return;
+  projectBlocks[pi][bi].src = url;
+  const previewEl = document.getElementById(`block_img_preview_${pi}_${bi}`);
+  const size = projectBlocks[pi][bi].size || 'medium';
+  if (previewEl && url.trim()) {
+    previewEl.innerHTML = `<img src="${url}" class="block-image-preview-el" style="max-width:${size==='small'?'40%':size==='full'?'100%':'70%'}" onerror="this.style.display='none'">`;
+  }
   markUnsaved();
 }
 
-function collectProjectsFromQuill() {
-  (adminData.projects || []).forEach((p, i) => {
-    const g = id => { const el = document.getElementById(id); return el ? el.value : null; };
-    if (g('pt_' + i) !== null) {
-      p.title   = g('pt_' + i) || p.title;
-      p.date    = g('pdate_' + i) || '';
-      p.status  = g('pstatus_' + i) || 'Ongoing';
-      p.excerpt = g('pexcerpt_' + i) || '';
-      p.tags    = g('pg_' + i) || '';
-      p.link    = g('pl_' + i) || '#';
-      if (quillInstances[i]) {
-        p.desc = quillInstances[i].root.innerHTML;
+function setImgSize(pi, bi, size, btnEl) {
+  collectBlocksFromDOM(pi);
+  if (!projectBlocks[pi][bi]) return;
+  projectBlocks[pi][bi].size = size;
+  const previewImg = document.querySelector(`#block_img_preview_${pi}_${bi} img`);
+  if (previewImg) previewImg.style.maxWidth = size==='small'?'40%':size==='full'?'100%':'70%';
+  const row = btnEl.closest ? btnEl.closest('.block-image-controls') : null;
+  if (row) row.querySelectorAll('.img-size-btn').forEach(b => { b.classList.toggle('active', b.textContent.toLowerCase() === size); });
+  markUnsaved();
+}
+
+function buildTableEl(pi, bi, block) {
+  const rows = block.rows || 3;
+  const cols = block.cols || 3;
+  const data = block.data || Array.from({length:rows},()=>Array(cols).fill(''));
+  const table = document.createElement('table');
+  table.className = 'block-table-el';
+  for (let r = 0; r < rows; r++) {
+    const tr = document.createElement('tr');
+    for (let c = 0; c < cols; c++) {
+      const cell = r === 0 ? document.createElement('th') : document.createElement('td');
+      const inp = document.createElement('input');
+      inp.type = 'text';
+      inp.value = (data[r] && data[r][c]) || '';
+      inp.oninput = () => markUnsaved();
+      cell.appendChild(inp);
+      tr.appendChild(cell);
+    }
+    table.appendChild(tr);
+  }
+  return table;
+}
+
+function addTableRow(pi, bi) {
+  collectBlocksFromDOM(pi);
+  const b = projectBlocks[pi][bi];
+  b.rows++;
+  b.data.push(Array(b.cols).fill(''));
+  renderBlockList(pi);
+}
+function addTableCol(pi, bi) {
+  collectBlocksFromDOM(pi);
+  const b = projectBlocks[pi][bi];
+  b.cols++;
+  b.data.forEach(r => r.push(''));
+  renderBlockList(pi);
+}
+function removeTableRow(pi, bi) {
+  collectBlocksFromDOM(pi);
+  const b = projectBlocks[pi][bi];
+  if (b.rows <= 1) return;
+  b.rows--;
+  b.data.pop();
+  renderBlockList(pi);
+}
+function removeTableCol(pi, bi) {
+  collectBlocksFromDOM(pi);
+  const b = projectBlocks[pi][bi];
+  if (b.cols <= 1) return;
+  b.cols--;
+  b.data.forEach(r => r.pop());
+  renderBlockList(pi);
+}
+
+/* ── Collect all block DOM state back to projectBlocks ── */
+function collectBlocksFromDOM(pi) {
+  const blocks = projectBlocks[pi];
+  if (!blocks) return;
+  blocks.forEach((block, bi) => {
+    const item = document.getElementById(`block_item_${pi}_${bi}`);
+    if (!item) return;
+    if (block.type === 'paragraph') {
+      const ta = item.querySelector('.block-paragraph');
+      if (ta) block.content = ta.value;
+    } else if (block.type === 'heading1' || block.type === 'heading2' || block.type === 'heading3') {
+      const inp = item.querySelector('.block-h1,.block-h2,.block-h3');
+      if (inp) block.content = inp.value;
+    } else if (block.type === 'formula') {
+      const inp = item.querySelector('.block-formula-input');
+      if (inp) block.latex = inp.value;
+    } else if (block.type === 'code') {
+      const lang = item.querySelector('.block-code-lang');
+      const code = item.querySelector('.block-code');
+      if (lang) block.language = lang.value;
+      if (code) block.content = code.value;
+    } else if (block.type === 'callout') {
+      const icon = item.querySelector('.block-callout-icon');
+      const ta = item.querySelector('.block-callout-text');
+      if (icon) block.icon = icon.textContent;
+      if (ta) block.content = ta.value;
+    } else if (block.type === 'image') {
+      const cap = item.querySelector('.block-image-caption');
+      if (cap) block.caption = cap.value;
+      // src and size already updated via handlers
+    } else if (block.type === 'table') {
+      const inputs = item.querySelectorAll('.block-table-el input');
+      let idx = 0;
+      for (let r = 0; r < block.rows; r++) {
+        for (let c = 0; c < block.cols; c++) {
+          if (inputs[idx]) block.data[r][c] = inputs[idx].value;
+          idx++;
+        }
       }
     }
   });
 }
 
+function collectAllProjectBlocks() {
+  (adminData.projects || []).forEach((p, i) => {
+    collectBlocksFromDOM(i);
+    if (projectBlocks[i]) p.blocks = projectBlocks[i];
+  });
+}
+
+/* ── Featured Image ── */
+function handleFeaturedImage(i, input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 2*1024*1024) { showToast('Featured image should be under 2MB.','error'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    adminData.projects[i].featuredImage = e.target.result;
+    const zone = document.getElementById(`feat_img_zone_${i}`);
+    if (zone) zone.innerHTML = `<img src="${e.target.result}" class="feat-img-preview" id="feat_img_preview_${i}">`;
+    markUnsaved();
+    showToast('Featured image loaded ✓', 'success');
+  };
+  reader.readAsDataURL(file);
+}
+function handleFeaturedImageURL(i, url) {
+  if (!url.trim()) return;
+  adminData.projects[i].featuredImage = url;
+  const zone = document.getElementById(`feat_img_zone_${i}`);
+  if (zone) zone.innerHTML = `<img src="${url}" class="feat-img-preview" onerror="this.style.opacity=0.3">`;
+  markUnsaved();
+}
+function clearFeaturedImage(i) {
+  adminData.projects[i].featuredImage = '';
+  loadProjects();
+  markUnsaved();
+}
+
+/* ── Project CRUD ── */
 function addProject() {
-  collectProjectsFromQuill();
-  adminData.projects.push({
-    title: 'New Project',
+  collectAllProjectBlocks();
+  adminData.projects.unshift({
+    title: '',
     excerpt: '',
-    desc: '<p>Write your project description here.</p>',
-    tags: 'Tag1, Tag2',
+    featuredImage: '',
+    tags: '',
     link: '#',
     date: '',
-    status: 'Ongoing'
+    status: 'Ongoing',
+    blocks: [newBlock('paragraph')]
   });
   loadProjects();
   markUnsaved();
-  // Scroll to new card
   setTimeout(() => {
-    const cards = document.querySelectorAll('#projectsEditor .editor-card');
-    if (cards.length) cards[cards.length - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const pe = document.getElementById('projectsEditor');
+    if (pe) pe.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const firstTitle = document.getElementById('pt_0');
+    if (firstTitle) { firstTitle.focus(); }
   }, 100);
 }
 
 function deleteProject(i) {
-  showModal('Delete Project', `Delete "${adminData.projects[i].title}"?`, () => {
-    collectProjectsFromQuill();
-    delete quillInstances[i];
+  const title = adminData.projects[i].title || `Project ${i+1}`;
+  showModal('Delete Project', `Delete "${title}"?`, () => {
+    collectAllProjectBlocks();
+    delete projectBlocks[i];
     adminData.projects.splice(i, 1);
     loadProjects();
     markUnsaved();
   });
 }
 
+/* ── Preview Drawer ── */
+function openPreview(i) {
+  collectAllProjectBlocks();
+  collectProjectFields(i);
+  const p = adminData.projects[i];
+  const body = document.getElementById('previewBody');
+
+  let html = '';
+  if (p.featuredImage) {
+    html += `<div style="width:100%;max-height:220px;overflow:hidden;border-radius:12px;margin-bottom:20px;position:relative">
+      <img src="${p.featuredImage}" style="width:100%;height:220px;object-fit:cover;border-radius:12px;display:block">
+      <div style="position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(transparent,rgba(9,9,26,0.95))"></div>
+    </div>`;
+  }
+  // Badges
+  const statusClass = {Ongoing:'status-ongoing',Completed:'status-completed',Paused:'status-paused'}[p.status]||'status-ongoing';
+  html += `<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">`;
+  if (p.status) html += `<span class="project-status-badge ${statusClass}">${p.status}</span>`;
+  if (p.date) html += `<span class="project-date-badge">${p.date}</span>`;
+  html += `</div>`;
+  html += `<h2 style="font-family:'Syne',sans-serif;font-size:1.6rem;color:#f8fafc;margin-bottom:10px">${p.title||'Untitled'}</h2>`;
+  if (p.tags) {
+    html += `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px">${p.tags.split(',').map(t=>`<span class="project-tag">${t.trim()}</span>`).join('')}</div>`;
+  }
+  html += `<div class="project-rich-content">${renderBlocksToHTML(p.blocks||[])}</div>`;
+  body.innerHTML = html;
+
+  // Re-render KaTeX in preview
+  body.querySelectorAll('[data-latex]').forEach(el => {
+    try { el.innerHTML = katex.renderToString(el.dataset.latex, {throwOnError:false, displayMode:true}); } catch(e) {}
+  });
+
+  document.getElementById('previewDrawer').classList.add('open');
+  document.getElementById('previewOverlay').classList.add('open');
+}
+function closePreview() {
+  document.getElementById('previewDrawer').classList.remove('open');
+  document.getElementById('previewOverlay').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if (e.key==='Escape') closePreview(); });
+
+function collectProjectFields(i) {
+  const g = id => { const el = document.getElementById(id); return el ? el.value : null; };
+  const p = adminData.projects[i];
+  if (!p) return;
+  if (g(`pt_${i}`) !== null) {
+    p.title   = g(`pt_${i}`) || p.title;
+    p.date    = g(`pdate_${i}`) || '';
+    p.status  = g(`pstatus_${i}`) || 'Ongoing';
+    p.excerpt = g(`pexcerpt_${i}`) || '';
+    p.tags    = g(`pg_${i}`) || '';
+    p.link    = g(`pl_${i}`) || '#';
+  }
+  collectBlocksFromDOM(i);
+  if (projectBlocks[i]) p.blocks = projectBlocks[i];
+}
+
+function renderBlocksToHTML(blocks) {
+  return blocks.map(b => {
+    if (b.type === 'paragraph') return `<p>${b.content||''}</p>`;
+    if (b.type === 'heading1') return `<h1>${b.content||''}</h1>`;
+    if (b.type === 'heading2') return `<h2>${b.content||''}</h2>`;
+    if (b.type === 'heading3') return `<h3>${b.content||''}</h3>`;
+    if (b.type === 'image' && b.src) {
+      const w = b.size==='small'?'40%':b.size==='full'?'100%':'70%';
+      return `<div style="text-align:center;margin:20px 0"><img src="${b.src}" style="max-width:${w};border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.4)"><br>${b.caption?`<em style="font-size:0.8rem;color:#64748b">${b.caption}</em>`:''}</div>`;
+    }
+    if (b.type === 'formula') return `<div class="ql-formula-block" data-latex="${esc(b.latex||'')}"></div>`;
+    if (b.type === 'code') return `<pre><code class="lang-${b.language||''}">${esc(b.content||'')}</code></pre>`;
+    if (b.type === 'divider') return `<hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:20px 0">`;
+    if (b.type === 'callout') return `<div style="padding:14px 18px;background:rgba(6,182,212,0.08);border-left:3px solid #06b6d4;border-radius:0 8px 8px 0;margin:12px 0">${b.icon||'💡'} ${b.content||''}</div>`;
+    if (b.type === 'table') {
+      const rows = b.data||[];
+      return `<div class="table-wrap"><table>${rows.map((r,ri)=>`<tr>${r.map(c=>ri===0?`<th>${c}</th>`:`<td>${c}</td>`).join('')}</tr>`).join('')}</table></div>`;
+    }
+    return '';
+  }).join('\n');
+}
+
+/* ══ Collect all projects ══ */
+function collectAllProjects() {
+  collectAllProjectBlocks();
+  (adminData.projects || []).forEach((p, i) => {
+    collectProjectFields(i);
+  });
+}
+
+/* ══ Research, Contact, Appearance ══ */
 function loadResearch() {
   const re=document.getElementById('researchEditor'); re.innerHTML='';
   (adminData.researchInterests||[]).forEach((r,i)=>{const row=document.createElement('div');row.className='list-row';row.innerHTML=`<input type="text" class="field-input" id="ri_${i}" value="${esc(r)}" oninput="markUnsaved()" style="flex:1"><button class="row-delete-btn" onclick="deleteResearch(${i})">×</button>`;re.appendChild(row);});
@@ -761,142 +1383,89 @@ function previewColor(hex){document.getElementById('f_accentColorHex').value=hex
 function syncColorFromText(){const v=document.getElementById('f_accentColorHex').value;if(/^#[0-9A-Fa-f]{6}$/.test(v)){document.getElementById('f_accentColor').value=v;previewColor(v);}markUnsaved();}
 function setColor(hex){document.getElementById('f_accentColor').value=hex;document.getElementById('f_accentColorHex').value=hex;previewColor(hex);markUnsaved();}
 
-/* ── Collect ── */
+/* ══ Collect current tab ══ */
 function collectCurrentTab() {
   const g=id=>{const el=document.getElementById(id);return el?el.value:null;};
   if(currentTab==='profile'){if(g('f_name')!==null){adminData.name=g('f_name');adminData.heroLabel=g('f_heroLabel');adminData.subtitle=g('f_subtitle');adminData.typewriterWords=(g('f_twWords')||'').split('\n').map(s=>s.trim()).filter(Boolean);adminData.photoURL=g('f_photoURL');adminData.cvLink=g('f_cvLink');}}
   else if(currentTab==='about'){if(g('f_bio')!==null){adminData.bio=g('f_bio');adminData.university=g('f_uni');adminData.department=g('f_dept');adminData.year=g('f_year');}}
   else if(currentTab==='skills'){document.querySelectorAll('#skillsEditor .editor-card').forEach((card,i)=>{const t=card.querySelector('.card-title-input');if(t&&adminData.skills[i])adminData.skills[i].title=t.value;});}
-  else if(currentTab==='projects'){ collectProjectsFromQuill(); }
+  else if(currentTab==='projects'){ collectAllProjects(); }
   else if(currentTab==='research'){adminData.researchInterests=adminData.researchInterests.map((_,i)=>g('ri_'+i)??_);adminData.publications=adminData.publications.map((_,i)=>g('pub_'+i)??_);}
   else if(currentTab==='contact'){if(g('f_email')!==null){adminData.contactMessage=g('f_contactMsg');adminData.email=g('f_email');adminData.github=g('f_github');adminData.linkedin=g('f_linkedin');adminData.researchgate=g('f_rg');}}
   else if(currentTab==='appearance'){adminData.appearance=adminData.appearance||{};adminData.appearance.accentColor=g('f_accentColor');adminData.appearance.fontSize=g('f_fontSize');}
 }
 
-/* ── Save & Publish to GitHub ── */
+/* ══ Save & Publish ══ */
 async function saveAndPublish() {
   collectCurrentTab();
   const token = localStorage.getItem('gh_token');
   if (!token) { showToast('GitHub not connected — click the status button to set up.','error'); return; }
-
   document.getElementById('publishOverlay').classList.add('show');
   document.getElementById('publishMsg').textContent = 'Connecting to GitHub…';
-
   try {
-    // Get current file SHA
-    const getRes = await fetch(
-      `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE}?ref=${GITHUB_BRANCH}`,
-      { headers: { Authorization: `token ${token}`, 'User-Agent': 'PortfolioAdmin' } }
-    );
+    const getRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE}?ref=${GITHUB_BRANCH}`,
+      { headers: { Authorization: `token ${token}`, 'User-Agent': 'PortfolioAdmin' } });
     if (!getRes.ok) throw new Error('Could not reach GitHub. Check your token.');
     const fileData = await getRes.json();
-
     document.getElementById('publishMsg').textContent = 'Pushing changes…';
-
-    // Build and encode new data.js
     const newContent = buildDataJS(adminData);
     const encoded = btoa(unescape(encodeURIComponent(newContent)));
-
-    // Push to GitHub
-    const putRes = await fetch(
-      `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`,
-      {
-        method: 'PUT',
-        headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json', 'User-Agent': 'PortfolioAdmin' },
-        body: JSON.stringify({
-          message: 'Portfolio update via Admin Panel',
-          content: encoded,
-          sha: fileData.sha,
-          branch: GITHUB_BRANCH
-        })
-      }
-    );
+    const putRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`,
+      { method: 'PUT', headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json', 'User-Agent': 'PortfolioAdmin' },
+        body: JSON.stringify({ message: 'Portfolio update via Admin Panel', content: encoded, sha: fileData.sha, branch: GITHUB_BRANCH }) });
     if (!putRes.ok) { const e=await putRes.json(); throw new Error(e.message||'Push failed.'); }
-
     document.getElementById('publishOverlay').classList.remove('show');
     hasUnsaved = false;
     document.getElementById('unsavedBadge').style.display = 'none';
     saveData(adminData);
     showToast('✓ Published! Live for everyone in ~30 seconds.', 'success');
-
   } catch(err) {
     document.getElementById('publishOverlay').classList.remove('show');
-    if (String(err.message).includes('401')) {
-      updateGithubStatus(false);
-      showToast('Token expired. Click the status button to update it.','error');
-    } else {
-      showToast('Publish failed: ' + err.message, 'error');
-    }
+    if (String(err.message).includes('401')) { updateGithubStatus(false); showToast('Token expired. Click the status button to update it.','error'); }
+    else { showToast('Publish failed: ' + err.message, 'error'); }
   }
 }
 
-/* ── Build data.js ── */
 function buildDataJS(D) {
   return `/* Auto-generated by Admin Panel */\n\nconst DEFAULT_DATA = ${JSON.stringify(D, null, 2)};\n\nfunction getData() {\n  try {\n    const saved = localStorage.getItem('portfolioData');\n    if (saved) { const parsed = JSON.parse(saved); return deepMerge(DEFAULT_DATA, parsed); }\n  } catch (e) {}\n  return JSON.parse(JSON.stringify(DEFAULT_DATA));\n}\n\nfunction saveData(data) {\n  try { localStorage.setItem('portfolioData', JSON.stringify(data)); return true; } catch(e) { return false; }\n}\n\nfunction resetData() {\n  localStorage.removeItem('portfolioData');\n  return JSON.parse(JSON.stringify(DEFAULT_DATA));\n}\n\nfunction deepMerge(target, source) {\n  const result = Object.assign({}, target);\n  for (const key of Object.keys(source)) {\n    if (source[key] !== null && typeof source[key] === 'object' && !Array.isArray(source[key])) {\n      result[key] = deepMerge(target[key] || {}, source[key]);\n    } else { result[key] = source[key]; }\n  }\n  return result;\n}\n`;
 }
 
-/* ── Reset ── */
 function confirmReset(){showModal('Reset All Data','Restore defaults and publish to GitHub? Cannot be undone.',()=>{adminData=getData();initDashboard();markUnsaved();showToast('Reset to defaults — click Save & Publish to go live.','warning');},'danger');}
 
-/* ── Password ── */
 async function changePassword() {
   const cur=document.getElementById('f_curPw').value, nw=document.getElementById('f_newPw').value, nw2=document.getElementById('f_newPw2').value;
   if(!cur){showToast('Enter your current password.','error');return;}
   if(!nw||nw.length<4){showToast('New password must be at least 4 characters.','error');return;}
   if(nw!==nw2){showToast('Passwords do not match.','error');return;}
-  // Hash current password and verify
   const hashStr = async pw => { const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(pw)); return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join(''); };
   const curHash = await hashStr(cur);
   if(curHash !== adminData.adminPassword){showToast('Current password is incorrect.','error');return;}
-  // Hash and save new password
   adminData.adminPassword = await hashStr(nw);
   markUnsaved();
   document.getElementById('f_curPw').value=''; document.getElementById('f_newPw').value=''; document.getElementById('f_newPw2').value='';
   showToast('Password updated — click Save & Publish to go live.','success');
 }
 
-/* ── Modal ── */
 let modalCb=null;
 function showModal(title,desc,cb,type='normal'){document.getElementById('modalTitle').textContent=title;document.getElementById('modalDesc').textContent=desc;document.getElementById('modalOverlay').style.display='flex';const btn=document.getElementById('modalConfirm');btn.textContent=type==='danger'?'Yes, proceed':'Confirm';btn.className=type==='danger'?'modal-confirm danger':'modal-confirm';modalCb=cb;}
 function closeModal(){document.getElementById('modalOverlay').style.display='none';modalCb=null;}
 document.getElementById('modalConfirm').addEventListener('click',()=>{if(modalCb)modalCb();closeModal();});
 document.getElementById('modalOverlay').addEventListener('click',e=>{if(e.target===document.getElementById('modalOverlay'))closeModal();});
 
-/* ── Toast ── */
 function showToast(msg,type='success'){const t=document.getElementById('adminToast');t.textContent=msg;t.className='admin-toast show '+type;setTimeout(()=>t.className='admin-toast',4000);}
 function esc(str){return String(str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 window.addEventListener('beforeunload',e=>{if(hasUnsaved){e.preventDefault();e.returnValue='';}});
 
-/* ── Photo Upload ── */
 function handlePhotoUpload(input) {
-  const file = input.files[0];
-  if (!file) return;
-  if (file.size > 3 * 1024 * 1024) {
-    showToast('Image too large — please use a file under 3MB.', 'error');
-    return;
-  }
+  const file = input.files[0]; if (!file) return;
+  if (file.size > 3*1024*1024) { showToast('Image too large — please use a file under 3MB.','error'); return; }
   const reader = new FileReader();
-  reader.onload = function(e) {
-    const base64 = e.target.result;
-    // Set the URL field and update adminData
-    const urlField = document.getElementById('f_photoURL');
-    if (urlField) urlField.value = base64;
-    adminData.photoURL = base64;
-    updatePhotoPreview(base64);
-    markUnsaved();
-    showToast('Photo loaded — click Save & Publish to go live.', 'success');
-  };
+  reader.onload = e => { const b=e.target.result; document.getElementById('f_photoURL').value=b; adminData.photoURL=b; updatePhotoPreview(b); markUnsaved(); showToast('Photo loaded — click Save & Publish to go live.','success'); };
   reader.readAsDataURL(file);
 }
-
 function updatePhotoPreview(src) {
-  const preview = document.getElementById('photoPreview');
-  if (!preview) return;
-  if (src && src.length > 4) {
-    preview.innerHTML = `<img src="${src}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
-  } else {
-    preview.innerHTML = 'TI';
-  }
+  const p = document.getElementById('photoPreview'); if (!p) return;
+  p.innerHTML = src && src.length>4 ? `<img src="${src}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">` : 'TI';
 }
 </script>
 </body>
