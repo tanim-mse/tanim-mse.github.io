@@ -18,47 +18,30 @@ const DEFAULT_DATA = {
   "skills": [
     {
       "title": "Materials Science",
-      "items": [
-        "Crystallography",
-        "Phase Diagrams",
-        "Fracture"
-      ]
+      "items": ["Crystallography", "Phase Diagrams", "Fracture"]
     },
     {
       "title": "Research & Analysis",
-      "items": [
-        "Literature Review",
-        "Data Analysis",
-        "Lab Techniques"
-      ]
+      "items": ["Literature Review", "Data Analysis", "Lab Techniques"]
     },
     {
       "title": "Software & Tools",
-      "items": [
-        "MATLAB",
-        "Origin Pro",
-        "AutoCAD",
-        "Davinci Resolve",
-        "MS Office"
-      ]
+      "items": ["MATLAB", "Origin Pro", "AutoCAD", "Davinci Resolve", "MS Office"]
     },
     {
       "title": "Engineering Skills",
-      "items": [
-        "Problem Solving",
-        "Technical Writing",
-        "Teamwork",
-        "Project Management",
-        "Critical Thinking"
-      ]
+      "items": ["Problem Solving", "Technical Writing", "Teamwork", "Project Management", "Critical Thinking"]
     }
   ],
   "projects": [
     {
       "title": "Projects coming soon...",
-      "desc": "",
-      "tags": "",
-      "link": "#"
+      "excerpt": "Exciting projects are on the way. Check back soon!",
+      "desc": "<p>Exciting projects are on the way. Check back soon!</p>",
+      "tags": "Materials Science",
+      "link": "#",
+      "date": "",
+      "status": "Ongoing"
     }
   ],
   "researchInterests": [

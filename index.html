@@ -172,7 +172,7 @@
           </div>
           <div>
             <div class="contact-label">Email</div>
-            <div class="contact-val" id="emailVal">tanim97@proton.me</div>
+            <div class="contact-val" id="emailVal"><span class="__cf_email__" data-cfemail="d5a1b4bbbcb8ece295a5a7baa1babbfbb8b0">[email&#160;protected]</span></div>
           </div>
         </a>
         <div class="social-row">
@@ -209,6 +209,33 @@
   </div>
 </section>
 
+<!-- Project Detail Modal -->
+<div class="project-modal-overlay" id="projectModalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalProjectTitle">
+  <div class="project-modal" id="projectModal">
+    <div class="project-modal-header">
+      <div class="project-modal-header-left">
+        <div class="project-modal-badges" id="modalBadges"></div>
+        <h2 class="project-modal-title" id="modalProjectTitle"></h2>
+        <div class="project-modal-tags" id="modalTags"></div>
+      </div>
+      <button class="project-modal-close" onclick="closeProjectModal()" aria-label="Close">✕</button>
+    </div>
+    <div class="project-modal-body">
+      <div class="project-rich-content" id="modalRichContent"></div>
+    </div>
+    <div class="project-modal-footer">
+      <button class="modal-close-btn" onclick="closeProjectModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to Projects
+      </button>
+      <a href="#" class="modal-ext-link" id="modalExtLink" target="_blank" rel="noopener" style="display:none">
+        View Full Project
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
 <!-- Footer -->
 <footer class="footer">
   <div class="container">
@@ -229,7 +256,7 @@
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<script src="data.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="data.js"></script>
 <script>
 /* ── Canvas Background Animation ── */
 const canvas = document.getElementById('bgCanvas');
@@ -424,6 +451,74 @@ function handleFormSubmit(e) {
   });
 }
 
+/* ── Strip HTML helper ── */
+function stripHtml(html) {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  return div.textContent || div.innerText || '';
+}
+
+/* ── Project Modal ── */
+let _projectsCache = [];
+
+function openProjectModal(idx) {
+  const D = getData();
+  _projectsCache = D.projects || [];
+  const p = _projectsCache[idx];
+  if (!p) return;
+
+  // Badges
+  const badgesEl = document.getElementById('modalBadges');
+  const statusClass = { 'Ongoing': 'status-ongoing', 'Completed': 'status-completed', 'Paused': 'status-paused' }[p.status] || 'status-ongoing';
+  badgesEl.innerHTML = [
+    p.status ? `<span class="project-status-badge ${statusClass}">${p.status}</span>` : '',
+    p.date ? `<span class="project-date-badge">${p.date}</span>` : ''
+  ].join('');
+
+  // Title
+  document.getElementById('modalProjectTitle').textContent = p.title;
+
+  // Tags
+  const tags = p.tags ? p.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
+  document.getElementById('modalTags').innerHTML = tags.map(t => `<span class="project-tag">${t}</span>`).join('');
+
+  // Rich content — wrap tables for horizontal scroll on mobile
+  let html = p.desc || '<p>No description provided.</p>';
+  html = html.replace(/<table/g, '<div class="table-wrap"><table').replace(/<\/table>/g, '</table></div>');
+  document.getElementById('modalRichContent').innerHTML = html;
+
+  // External link
+  const extLink = document.getElementById('modalExtLink');
+  if (p.link && p.link !== '#') {
+    extLink.href = p.link;
+    extLink.style.display = 'inline-flex';
+  } else {
+    extLink.style.display = 'none';
+  }
+
+  // Open overlay
+  const overlay = document.getElementById('projectModalOverlay');
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // Scroll modal body to top
+  document.getElementById('projectModal').querySelector('.project-modal-body').scrollTop = 0;
+}
+
+function closeProjectModal() {
+  document.getElementById('projectModalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Close on backdrop click
+document.getElementById('projectModalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeProjectModal();
+});
+
+// Close on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeProjectModal();
+});
+
 /* ── Toast ── */
 function showToast(msg, duration = 3500) {
   const t = document.getElementById('toast');
@@ -465,15 +560,35 @@ function render() {
 
   // Projects
   const pg = document.getElementById('projectsGrid');
-  pg.innerHTML = D.projects.map((p, i) => `
-    <div class="project-card glass dyn-card" style="animation-delay:${i * 0.12}s">
-      <div class="project-num">0${i + 1}</div>
+  pg.innerHTML = D.projects.map((p, i) => {
+    const tags = p.tags ? p.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
+    const excerpt = p.excerpt || stripHtml(p.desc || '').slice(0, 130) + (stripHtml(p.desc || '').length > 130 ? '…' : '');
+    const statusClass = { 'Ongoing': 'status-ongoing', 'Completed': 'status-completed', 'Paused': 'status-paused' }[p.status] || 'status-ongoing';
+    return `
+    <div class="project-card dyn-card" style="animation-delay:${i * 0.12}s" onclick="openProjectModal(${i})" role="button" tabindex="0" onkeydown="if(event.key==='Enter')openProjectModal(${i})">
+      <div class="project-card-top">
+        <div class="project-num">0${i + 1}</div>
+        <div class="project-meta-badges">
+          ${p.status ? `<span class="project-status-badge ${statusClass}">${p.status}</span>` : ''}
+          ${p.date ? `<span class="project-date-badge">${p.date}</span>` : ''}
+        </div>
+      </div>
       <h3 class="project-title">${p.title}</h3>
-      <p class="project-desc">${p.desc}</p>
-      <div class="chip-row" style="margin-bottom:20px">${p.tags ? p.tags.split(',').map(t => `<span class="chip chip-0">${t.trim()}</span>`).join('') : ''}</div>
-      ${p.link && p.link !== '#' ? `<a href="${p.link}" class="project-link" target="_blank">View Project <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>` : ''}
-    </div>
-  `).join('');
+      <p class="project-excerpt">${excerpt}</p>
+      <div class="project-tags">${tags.map(t => `<span class="project-tag">${t}</span>`).join('')}</div>
+      <div class="project-card-footer">
+        <span class="project-view-btn">
+          Read More
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </span>
+        ${p.link && p.link !== '#' ? `<a href="${p.link}" class="project-ext-link" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          External
+        </a>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+  observeReveal();
 
   // Research
   document.getElementById('researchList').innerHTML = D.researchInterests.map(r => `
@@ -508,7 +623,18 @@ function render() {
     if (D.appearance.fontSize) document.documentElement.style.fontSize = D.appearance.fontSize;
   }
 
-  setTimeout(observeReveal, 50);
+  // Dynamic card animation
+  document.querySelectorAll('.dyn-card').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    setTimeout(() => {
+      el.style.transition = 'opacity .5s ease, transform .5s ease';
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, 80 + i * 80);
+  });
+
+  observeReveal();
 }
 
 render();

@@ -8,6 +8,77 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.snow.min.css">
+<style>
+/* ── Quill Dark Theme Override ── */
+.ql-toolbar.ql-snow {
+  background: #12121f;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-bottom: none !important;
+  border-radius: 10px 10px 0 0;
+  padding: 8px;
+  flex-wrap: wrap;
+}
+.ql-container.ql-snow {
+  background: #0d0d1a;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 0 0 10px 10px;
+  min-height: 260px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  color: #e2e8f0;
+}
+.ql-editor { min-height: 240px; color: #e2e8f0; line-height: 1.75; }
+.ql-editor p, .ql-editor li { color: #cbd5e1; }
+.ql-editor h1, .ql-editor h2, .ql-editor h3 { color: #f8fafc; }
+.ql-editor a { color: #67e8f9; }
+.ql-editor blockquote { border-left: 3px solid #7c3aed; background: rgba(124,58,237,0.07); padding: 10px 16px; color: #94a3b8; }
+.ql-editor code, .ql-editor pre { background: rgba(0,0,0,0.4); color: #67e8f9; border-radius: 6px; }
+.ql-editor.ql-blank::before { color: #475569; font-style: normal; }
+.ql-toolbar .ql-stroke { stroke: #94a3b8 !important; }
+.ql-toolbar .ql-fill { fill: #94a3b8 !important; }
+.ql-toolbar .ql-picker { color: #94a3b8 !important; }
+.ql-toolbar button:hover .ql-stroke,
+.ql-toolbar button.ql-active .ql-stroke { stroke: #c4b5fd !important; }
+.ql-toolbar button:hover .ql-fill,
+.ql-toolbar button.ql-active .ql-fill { fill: #c4b5fd !important; }
+.ql-toolbar button:hover,
+.ql-toolbar button.ql-active { background: rgba(124,58,237,0.15) !important; border-radius: 5px; }
+.ql-toolbar .ql-picker-label:hover,
+.ql-toolbar .ql-picker-label.ql-active { color: #c4b5fd !important; }
+.ql-toolbar .ql-picker-options {
+  background: #12121f !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 8px;
+}
+.ql-toolbar .ql-picker-item:hover { color: #c4b5fd !important; }
+.ql-snow .ql-tooltip {
+  background: #12121f !important;
+  border: 1px solid rgba(124,58,237,0.3) !important;
+  color: #e2e8f0 !important;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.ql-snow .ql-tooltip input[type=text] {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  color: #f8fafc;
+  padding: 4px 10px;
+}
+.ql-snow .ql-tooltip a { color: #67e8f9 !important; }
+.ql-editor table { border-collapse: collapse; width: 100%; }
+.ql-editor td, .ql-editor th { border: 1px solid rgba(255,255,255,0.1); padding: 8px 12px; }
+.ql-editor th { background: rgba(124,58,237,0.15); color: #f8fafc; }
+.quill-image-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 600;
+  background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3);
+  color: #c4b5fd; cursor: pointer; transition: all .2s; margin-top: 8px;
+}
+.quill-image-btn:hover { background: rgba(124,58,237,0.25); }
+.quill-label { font-size: 0.8rem; color: #94a3b8; margin-bottom: 6px; font-weight: 500; }
+</style>
 <style>
 .setup-screen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:#080810}
 .setup-card{background:rgba(12,12,24,.95);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:44px 40px;width:100%;max-width:460px;text-align:center}
@@ -187,7 +258,27 @@
           <div class="field-group full"><label class="field-label">Hero Label <span class="field-hint">(above your name)</span></label><input type="text" class="field-input" id="f_heroLabel" oninput="markUnsaved()"></div>
           <div class="field-group full"><label class="field-label">Subtitle</label><textarea class="field-textarea" id="f_subtitle" rows="2" oninput="markUnsaved()"></textarea></div>
           <div class="field-group full"><label class="field-label">Typewriter Roles <span class="field-hint">one per line</span></label><textarea class="field-textarea" id="f_twWords" rows="5" oninput="markUnsaved()"></textarea></div>
-          <div class="field-group"><label class="field-label">Photo URL</label><input type="url" class="field-input" id="f_photoURL" placeholder="https://i.ibb.co/..." oninput="markUnsaved()"><p class="field-note">Upload to imgbb.com, paste the direct link</p></div>
+          <div class="field-group"><label class="field-label">Profile Photo</label>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div id="photoPreview" style="width:64px;height:64px;border-radius:50%;background:rgba(124,58,237,0.15);border:2px solid rgba(124,58,237,0.3);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;font-size:1.5rem;color:#c4b5fd">TI</div>
+                <div style="flex:1">
+                  <label style="display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:10px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);color:#c4b5fd;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all .2s;margin-bottom:8px" onmouseover="this.style.background='rgba(124,58,237,0.25)'" onmouseout="this.style.background='rgba(124,58,237,0.15)'">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    Upload Photo
+                    <input type="file" accept="image/*" style="display:none" onchange="handlePhotoUpload(this)">
+                  </label>
+                  <p class="field-note" style="margin:0">JPG, PNG, WebP — max 2MB recommended</p>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div style="flex:1;height:1px;background:rgba(255,255,255,0.08)"></div>
+                <span style="font-size:0.75rem;color:#475569">or paste URL</span>
+                <div style="flex:1;height:1px;background:rgba(255,255,255,0.08)"></div>
+              </div>
+              <input type="url" class="field-input" id="f_photoURL" placeholder="https://i.ibb.co/…" oninput="markUnsaved();updatePhotoPreview(this.value)">
+            </div>
+          </div>
           <div class="field-group"><label class="field-label">CV / Resume Link</label><input type="url" class="field-input" id="f_cvLink" placeholder="https://..." oninput="markUnsaved()"></div>
         </div>
       </div>
@@ -335,6 +426,7 @@
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.min.js"></script>
 <script src="data.js"></script>
 <script>
 /* ── GitHub config ── */
@@ -465,17 +557,151 @@ function deleteSkillCategory(i){showModal('Delete Category','Remove this categor
 function addSkill(ci){const inp=document.getElementById('chipInput_'+ci);if(!inp.value.trim())return;collectCurrentTab();adminData.skills[ci].items.push(inp.value.trim());inp.value='';loadSkills();markUnsaved();}
 function removeSkill(ci,si){adminData.skills[ci].items.splice(si,1);loadSkills();markUnsaved();}
 
+/* ── Quill instances registry ── */
+const quillInstances = {};
+
 function loadProjects() {
-  const pe=document.getElementById('projectsEditor'); pe.innerHTML='';
-  (adminData.projects||[]).forEach((p,i)=>pe.appendChild(buildProjectCard(p,i)));
+  // Save any existing Quill content before destroying
+  collectProjectsFromQuill();
+  // Destroy old Quill instances
+  Object.keys(quillInstances).forEach(k => { delete quillInstances[k]; });
+  const pe = document.getElementById('projectsEditor');
+  pe.innerHTML = '';
+  (adminData.projects || []).forEach((p, i) => pe.appendChild(buildProjectCard(p, i)));
+  // Init Quill for each card after DOM is ready
+  (adminData.projects || []).forEach((p, i) => initQuill(i, p.desc || ''));
 }
-function buildProjectCard(p,i) {
-  const card=document.createElement('div'); card.className='editor-card';
-  card.innerHTML=`<div class="editor-card-header"><span class="card-index">Project ${i+1}</span><button class="card-delete-btn" onclick="deleteProject(${i})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg></button></div><div class="fields-grid" style="padding:0;gap:12px"><div class="field-group full"><label class="field-label">Title</label><input type="text" class="field-input" id="pt_${i}" value="${esc(p.title)}" oninput="markUnsaved()"></div><div class="field-group full"><label class="field-label">Description</label><textarea class="field-textarea" id="pd_${i}" rows="2" oninput="markUnsaved()">${esc(p.desc)}</textarea></div><div class="field-group"><label class="field-label">Tags <span class="field-hint">comma-separated</span></label><input type="text" class="field-input" id="pg_${i}" value="${esc(p.tags)}" oninput="markUnsaved()"></div><div class="field-group"><label class="field-label">Link</label><input type="url" class="field-input" id="pl_${i}" value="${esc(p.link)}" oninput="markUnsaved()"></div></div>`;
+
+function buildProjectCard(p, i) {
+  const card = document.createElement('div');
+  card.className = 'editor-card';
+  const trashIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>`;
+  card.innerHTML = `
+    <div class="editor-card-header">
+      <span class="card-index">Project ${i + 1}</span>
+      <button class="card-delete-btn" onclick="deleteProject(${i})">${trashIcon}</button>
+    </div>
+    <div class="fields-grid" style="padding:0;gap:14px">
+      <div class="field-group full">
+        <label class="field-label">Title</label>
+        <input type="text" class="field-input" id="pt_${i}" value="${esc(p.title || '')}" oninput="markUnsaved()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Date <span class="field-hint">e.g. Jan 2025</span></label>
+        <input type="text" class="field-input" id="pdate_${i}" value="${esc(p.date || '')}" placeholder="Jan 2025" oninput="markUnsaved()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Status</label>
+        <select class="field-select" id="pstatus_${i}" onchange="markUnsaved()">
+          <option value="Ongoing" ${(p.status||'Ongoing')==='Ongoing'?'selected':''}>Ongoing</option>
+          <option value="Completed" ${p.status==='Completed'?'selected':''}>Completed</option>
+          <option value="Paused" ${p.status==='Paused'?'selected':''}>Paused</option>
+        </select>
+      </div>
+      <div class="field-group full">
+        <label class="field-label">Short Excerpt <span class="field-hint">shown on card — leave blank to auto-generate</span></label>
+        <input type="text" class="field-input" id="pexcerpt_${i}" value="${esc(p.excerpt || '')}" placeholder="One sentence summary of this project…" oninput="markUnsaved()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Tags <span class="field-hint">comma-separated</span></label>
+        <input type="text" class="field-input" id="pg_${i}" value="${esc(p.tags || '')}" placeholder="Materials, MATLAB, Research" oninput="markUnsaved()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">External Link <span class="field-hint">optional</span></label>
+        <input type="url" class="field-input" id="pl_${i}" value="${esc(p.link || '')}" placeholder="https://…" oninput="markUnsaved()">
+      </div>
+      <div class="field-group full">
+        <label class="field-label">Full Description <span class="field-hint">rich text — supports images, tables, headings, code</span></label>
+        <div class="quill-label">Use the toolbar to format. Paste an image URL via the image button (🖼).</div>
+        <div id="quill_${i}"></div>
+        <button class="quill-image-btn" onclick="insertImageByURL(${i})">
+          🖼 Insert Image by URL
+        </button>
+      </div>
+    </div>`;
   return card;
 }
-function addProject(){collectCurrentTab();adminData.projects.push({title:'New Project',desc:'Description.',tags:'Tag1,Tag2',link:'#'});loadProjects();markUnsaved();}
-function deleteProject(i){showModal('Delete Project',`Delete "${adminData.projects[i].title}"?`,()=>{collectCurrentTab();adminData.projects.splice(i,1);loadProjects();markUnsaved();});}
+
+function initQuill(i, htmlContent) {
+  const toolbarOptions = [
+    [{ 'header': [1, 2, 3, false] }],
+    ['bold', 'italic', 'underline', 'strike'],
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    ['blockquote', 'code-block'],
+    ['link'],
+    [{ 'color': [] }, { 'background': [] }],
+    [{ 'align': [] }],
+    ['clean']
+  ];
+  const quill = new Quill(`#quill_${i}`, {
+    theme: 'snow',
+    placeholder: 'Write a detailed project description here. Add headings, bullet points, images, tables…',
+    modules: { toolbar: toolbarOptions }
+  });
+  // Load existing HTML content
+  if (htmlContent) {
+    quill.root.innerHTML = htmlContent;
+  }
+  quill.on('text-change', () => markUnsaved());
+  quillInstances[i] = quill;
+}
+
+function insertImageByURL(i) {
+  const url = prompt('Paste the image URL:');
+  if (!url) return;
+  const quill = quillInstances[i];
+  if (!quill) return;
+  const range = quill.getSelection(true);
+  quill.insertEmbed(range ? range.index : 0, 'image', url);
+  markUnsaved();
+}
+
+function collectProjectsFromQuill() {
+  (adminData.projects || []).forEach((p, i) => {
+    const g = id => { const el = document.getElementById(id); return el ? el.value : null; };
+    if (g('pt_' + i) !== null) {
+      p.title   = g('pt_' + i) || p.title;
+      p.date    = g('pdate_' + i) || '';
+      p.status  = g('pstatus_' + i) || 'Ongoing';
+      p.excerpt = g('pexcerpt_' + i) || '';
+      p.tags    = g('pg_' + i) || '';
+      p.link    = g('pl_' + i) || '#';
+      if (quillInstances[i]) {
+        p.desc = quillInstances[i].root.innerHTML;
+      }
+    }
+  });
+}
+
+function addProject() {
+  collectProjectsFromQuill();
+  adminData.projects.push({
+    title: 'New Project',
+    excerpt: '',
+    desc: '<p>Write your project description here.</p>',
+    tags: 'Tag1, Tag2',
+    link: '#',
+    date: '',
+    status: 'Ongoing'
+  });
+  loadProjects();
+  markUnsaved();
+  // Scroll to new card
+  setTimeout(() => {
+    const cards = document.querySelectorAll('#projectsEditor .editor-card');
+    if (cards.length) cards[cards.length - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+function deleteProject(i) {
+  showModal('Delete Project', `Delete "${adminData.projects[i].title}"?`, () => {
+    collectProjectsFromQuill();
+    delete quillInstances[i];
+    adminData.projects.splice(i, 1);
+    loadProjects();
+    markUnsaved();
+  });
+}
 
 function loadResearch() {
   const re=document.getElementById('researchEditor'); re.innerHTML='';
@@ -513,7 +739,7 @@ function collectCurrentTab() {
   if(currentTab==='profile'){if(g('f_name')!==null){adminData.name=g('f_name');adminData.heroLabel=g('f_heroLabel');adminData.subtitle=g('f_subtitle');adminData.typewriterWords=(g('f_twWords')||'').split('\n').map(s=>s.trim()).filter(Boolean);adminData.photoURL=g('f_photoURL');adminData.cvLink=g('f_cvLink');}}
   else if(currentTab==='about'){if(g('f_bio')!==null){adminData.bio=g('f_bio');adminData.university=g('f_uni');adminData.department=g('f_dept');adminData.year=g('f_year');}}
   else if(currentTab==='skills'){document.querySelectorAll('#skillsEditor .editor-card').forEach((card,i)=>{const t=card.querySelector('.card-title-input');if(t&&adminData.skills[i])adminData.skills[i].title=t.value;});}
-  else if(currentTab==='projects'){(adminData.projects||[]).forEach((p,i)=>{if(g('pt_'+i)!==null){p.title=g('pt_'+i);p.desc=g('pd_'+i);p.tags=g('pg_'+i);p.link=g('pl_'+i);}});}
+  else if(currentTab==='projects'){ collectProjectsFromQuill(); }
   else if(currentTab==='research'){adminData.researchInterests=adminData.researchInterests.map((_,i)=>g('ri_'+i)??_);adminData.publications=adminData.publications.map((_,i)=>g('pub_'+i)??_);}
   else if(currentTab==='contact'){if(g('f_email')!==null){adminData.contactMessage=g('f_contactMsg');adminData.email=g('f_email');adminData.github=g('f_github');adminData.linkedin=g('f_linkedin');adminData.researchgate=g('f_rg');}}
   else if(currentTab==='appearance'){adminData.appearance=adminData.appearance||{};adminData.appearance.accentColor=g('f_accentColor');adminData.appearance.fontSize=g('f_fontSize');}
@@ -612,6 +838,46 @@ document.getElementById('modalOverlay').addEventListener('click',e=>{if(e.target
 function showToast(msg,type='success'){const t=document.getElementById('adminToast');t.textContent=msg;t.className='admin-toast show '+type;setTimeout(()=>t.className='admin-toast',4000);}
 function esc(str){return String(str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 window.addEventListener('beforeunload',e=>{if(hasUnsaved){e.preventDefault();e.returnValue='';}});
+
+/* ── Photo Upload ── */
+function handlePhotoUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 3 * 1024 * 1024) {
+    showToast('Image too large — please use a file under 3MB.', 'error');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const base64 = e.target.result;
+    // Set the URL field and update adminData
+    const urlField = document.getElementById('f_photoURL');
+    if (urlField) urlField.value = base64;
+    adminData.photoURL = base64;
+    updatePhotoPreview(base64);
+    markUnsaved();
+    showToast('Photo loaded — click Save & Publish to go live.', 'success');
+  };
+  reader.readAsDataURL(file);
+}
+
+function updatePhotoPreview(src) {
+  const preview = document.getElementById('photoPreview');
+  if (!preview) return;
+  if (src && src.length > 4) {
+    preview.innerHTML = `<img src="${src}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+  } else {
+    preview.innerHTML = 'TI';
+  }
+}
+
+// Update loadProfile to also show the photo preview
+const _origLoadProfile = loadProfile;
+function loadProfile() {
+  _origLoadProfile();
+  const D = adminData;
+  updatePhotoPreview(D.photoURL || '');
+};
 </script>
 </body>
 </html>
