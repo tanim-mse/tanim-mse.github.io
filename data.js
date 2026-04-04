@@ -67,8 +67,7 @@ const DEFAULT_DATA = {
   "researchInterests": [
     "Nanomaterials and Nanotechnology",
     "Sustainable and Green Materials",
-    "Energy Storage Materials",
-    "New Research Interest"
+    "Energy Storage Materials"
   ],
   "publications": [
     "Publication title. Journal, Year."
