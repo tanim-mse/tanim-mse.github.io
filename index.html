@@ -161,7 +161,7 @@
       <div class="contact-info">
         <a href="#" class="contact-item" id="emailLink">
           <div class="contact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-          <div><div class="contact-label">Email</div><div class="contact-val" id="emailVal">tanim97@proton.me</div></div>
+          <div><div class="contact-label">Email</div><div class="contact-val" id="emailVal"><span class="__cf_email__" data-cfemail="592d38373034606e19292b362d363777343c">[email&#160;protected]</span></div></div>
         </a>
         <div class="social-row">
           <a href="#" class="social-btn" id="githubLink" title="GitHub"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></a>
@@ -202,16 +202,29 @@
 
 <!-- Project Detail Modal -->
 <div class="project-modal-overlay" id="projectModalOverlay" role="dialog" aria-modal="true">
+  <div class="modal-progress-bar" id="modalProgressBar"></div>
   <div class="project-modal" id="projectModal">
-    <div class="project-modal-header">
+    <button class="project-modal-close-fixed" onclick="closeProjectModal()" aria-label="Close">✕</button>
+    <div class="project-modal-header" id="projectModalHeader">
       <div class="project-modal-header-left">
         <div class="project-modal-badges" id="modalBadges"></div>
-        <h2 class="project-modal-title" id="modalProjectTitle"></h2>
+        <div class="modal-title-wrap">
+          <h2 class="project-modal-title" id="modalProjectTitle"></h2>
+          <button class="modal-title-toggle" id="modalTitleToggle" onclick="toggleModalTitle()" style="display:none" aria-label="Expand title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+        </div>
         <div class="project-modal-tags" id="modalTags"></div>
+        <div class="modal-meta-row">
+          <span class="modal-read-time" id="modalReadTime"></span>
+          <button class="modal-copy-link-btn" id="modalCopyLink" onclick="copyProjectLink()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            Copy Link
+          </button>
+        </div>
       </div>
-      <button class="project-modal-close" onclick="closeProjectModal()" aria-label="Close">✕</button>
     </div>
-    <div class="project-modal-body">
+    <div class="project-modal-body" id="projectModalBody">
       <div id="modalFeaturedImage"></div>
       <div class="project-rich-content" id="modalRichContent"></div>
     </div>
@@ -225,6 +238,13 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
       </a>
     </div>
+  </div>
+  <div class="toc-btn-wrap" id="tocBtnWrap" style="display:none">
+    <button class="toc-toggle-btn" onclick="toggleToc()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      Contents
+    </button>
+    <div class="toc-panel" id="tocPanel"></div>
   </div>
 </div>
 
@@ -248,37 +268,36 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
 <script src="data.js"></script>
 <script>
-/* ── Canvas Background ── */
-const canvas = document.getElementById('bgCanvas');
-const ctx = canvas.getContext('2d');
-let W, H, particles = [], animFrame;
-const COLORS = ['rgba(124,58,237,','rgba(37,99,235,','rgba(6,182,212,','rgba(16,185,129,'];
-function resizeCanvas() { W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
-function Particle() { this.x=Math.random()*W; this.y=Math.random()*H; this.vx=(Math.random()-.5)*.4; this.vy=(Math.random()-.5)*.4; this.r=Math.random()*2+.5; this.color=COLORS[Math.floor(Math.random()*COLORS.length)]; this.alpha=Math.random()*.5+.2; this.pulse=Math.random()*Math.PI*2; this.pulseSpeed=Math.random()*.02+.005; }
+/* Canvas Background */
+const canvas=document.getElementById('bgCanvas'),ctx=canvas.getContext('2d');
+let W,H,particles=[],animFrame;
+const COLORS=['rgba(124,58,237,','rgba(37,99,235,','rgba(6,182,212,','rgba(16,185,129,'];
+function resizeCanvas(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+function Particle(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.4;this.vy=(Math.random()-.5)*.4;this.r=Math.random()*2+.5;this.color=COLORS[Math.floor(Math.random()*COLORS.length)];this.alpha=Math.random()*.5+.2;this.pulse=Math.random()*Math.PI*2;this.pulseSpeed=Math.random()*.02+.005;}
 Particle.prototype.update=function(){this.x+=this.vx;this.y+=this.vy;this.pulse+=this.pulseSpeed;if(this.x<0||this.x>W)this.vx*=-1;if(this.y<0||this.y>H)this.vy*=-1;};
 Particle.prototype.draw=function(){const a=this.alpha+Math.sin(this.pulse)*.1;ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=this.color+a+')';ctx.fill();};
-function initParticles(){const count=Math.floor((W*H)/12000);particles=Array.from({length:Math.min(count,120)},()=>new Particle());}
-function drawConnections(){for(let i=0;i<particles.length;i++){for(let j=i+1;j<particles.length;j++){const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<130){const alpha=(1-dist/130)*.15;ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=`rgba(124,58,237,${alpha})`;ctx.lineWidth=.6;ctx.stroke();}}}}
-let auroraT=0;
-function drawAurora(){auroraT+=.003;const g1=ctx.createRadialGradient(W*(.3+Math.sin(auroraT)*.1),H*.3,0,W*(.3+Math.sin(auroraT)*.1),H*.3,W*.5);g1.addColorStop(0,'rgba(124,58,237,0.05)');g1.addColorStop(1,'transparent');ctx.fillStyle=g1;ctx.fillRect(0,0,W,H);const g2=ctx.createRadialGradient(W*(.7+Math.cos(auroraT*.7)*.1),H*.6,0,W*(.7+Math.cos(auroraT*.7)*.1),H*.6,W*.4);g2.addColorStop(0,'rgba(6,182,212,0.04)');g2.addColorStop(1,'transparent');ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);}
+function initParticles(){const c=Math.floor((W*H)/12000);particles=Array.from({length:Math.min(c,120)},()=>new Particle());}
+function drawConnections(){for(let i=0;i<particles.length;i++){for(let j=i+1;j<particles.length;j++){const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<130){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=`rgba(124,58,237,${(1-d/130)*.15})`;ctx.lineWidth=.6;ctx.stroke();}}}}
+let aT=0;
+function drawAurora(){aT+=.003;const g1=ctx.createRadialGradient(W*(.3+Math.sin(aT)*.1),H*.3,0,W*(.3+Math.sin(aT)*.1),H*.3,W*.5);g1.addColorStop(0,'rgba(124,58,237,0.05)');g1.addColorStop(1,'transparent');ctx.fillStyle=g1;ctx.fillRect(0,0,W,H);const g2=ctx.createRadialGradient(W*(.7+Math.cos(aT*.7)*.1),H*.6,0,W*(.7+Math.cos(aT*.7)*.1),H*.6,W*.4);g2.addColorStop(0,'rgba(6,182,212,0.04)');g2.addColorStop(1,'transparent');ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);}
 function animate(){ctx.clearRect(0,0,W,H);drawAurora();particles.forEach(p=>{p.update();p.draw();});drawConnections();animFrame=requestAnimationFrame(animate);}
 resizeCanvas();initParticles();animate();
 window.addEventListener('resize',()=>{resizeCanvas();initParticles();});
-document.addEventListener('mousemove',e=>{particles.forEach((p,i)=>{if(i%4===0){const dx=e.clientX-p.x,dy=e.clientY-p.y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<100){p.vx-=dx*.0003;p.vy-=dy*.0003;}}});});
+document.addEventListener('mousemove',e=>{particles.forEach((p,i)=>{if(i%4===0){const dx=e.clientX-p.x,dy=e.clientY-p.y,d=Math.sqrt(dx*dx+dy*dy);if(d<100){p.vx-=dx*.0003;p.vy-=dy*.0003;}}});});
 
-/* ── Typewriter ── */
+/* Typewriter */
 let twWords=[],twIdx=0,twChar=0,twDeleting=false,twTimer;
-function typewrite(){if(!twWords.length)return;const word=twWords[twIdx];const el=document.getElementById('twText');if(!el)return;if(!twDeleting){el.textContent=word.slice(0,++twChar);if(twChar===word.length){twDeleting=true;twTimer=setTimeout(typewrite,1800);return;}}else{el.textContent=word.slice(0,--twChar);if(twChar===0){twDeleting=false;twIdx=(twIdx+1)%twWords.length;}}twTimer=setTimeout(typewrite,twDeleting?60:100);}
+function typewrite(){if(!twWords.length)return;const w=twWords[twIdx];const el=document.getElementById('twText');if(!el)return;if(!twDeleting){el.textContent=w.slice(0,++twChar);if(twChar===w.length){twDeleting=true;twTimer=setTimeout(typewrite,1800);return;}}else{el.textContent=w.slice(0,--twChar);if(twChar===0){twDeleting=false;twIdx=(twIdx+1)%twWords.length;}}twTimer=setTimeout(typewrite,twDeleting?60:100);}
 
-/* ── Scroll reveal ── */
+/* Scroll reveal */
 const revealObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});},{threshold:.08});
 function observeReveal(){document.querySelectorAll('.reveal:not(.visible)').forEach(el=>revealObs.observe(el));}
 observeReveal();
 
-/* ── Navbar scroll ── */
-window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);document.getElementById('backTop').classList.toggle('show',window.scrollY>400);const sections=['home','about','skills','projects','research','contact'];let current='home';sections.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-120)current=id;});document.querySelectorAll('.nav-link').forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+current);});});
+/* Navbar */
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);document.getElementById('backTop').classList.toggle('show',window.scrollY>400);const secs=['home','about','skills','projects','research','contact'];let cur='home';secs.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-120)cur=id;});document.querySelectorAll('.nav-link').forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});});
 
-/* ── Mobile menu ── */
+/* Mobile menu */
 document.getElementById('hamburger').addEventListener('click',()=>{document.getElementById('mobileMenu').classList.add('open');document.getElementById('mobileOverlay').classList.add('open');});
 function closeMobile(){document.getElementById('mobileMenu').classList.remove('open');document.getElementById('mobileOverlay').classList.remove('open');}
 document.getElementById('mobileClose').addEventListener('click',closeMobile);
@@ -286,273 +305,148 @@ document.getElementById('mobileOverlay').addEventListener('click',closeMobile);
 document.querySelectorAll('.mobile-link').forEach(a=>a.addEventListener('click',closeMobile));
 document.getElementById('backTop').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 
-/* ── Form ── */
-function handleFormSubmit(e){e.preventDefault();const form=e.target;const btn=form.querySelector('button[type="submit"]');btn.textContent='Sending…';btn.disabled=true;fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}}).then(res=>{if(res.ok){showToast("Message sent! I'll get back to you soon.");form.reset();}else{showToast('Something went wrong. Email me directly.');}}).catch(()=>showToast('Something went wrong. Email me directly.')).finally(()=>{btn.innerHTML='Send Message <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';btn.disabled=false;});}
-function showToast(msg,duration=3500){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),duration);}
+/* Form */
+function handleFormSubmit(e){e.preventDefault();const form=e.target,btn=form.querySelector('button[type="submit"]');btn.textContent='Sending…';btn.disabled=true;fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}}).then(r=>{if(r.ok){showToast("Message sent! I'll get back to you soon.");form.reset();}else showToast('Something went wrong. Email me directly.');}).catch(()=>showToast('Something went wrong. Email me directly.')).finally(()=>{btn.innerHTML='Send Message';btn.disabled=false;});}
+function showToast(msg,dur=3500){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),dur);}
 
-/* ── Strip HTML helper ── */
-function stripHtml(html){const d=document.createElement('div');d.innerHTML=html;return d.textContent||d.innerText||'';}
+/* Helpers */
+function stripHtml(h){const d=document.createElement('div');d.innerHTML=h;return d.textContent||d.innerText||'';}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-/* ═══════════════════════════════════════════
-   BLOCKS RENDERER — render blocks[] to HTML
-═══════════════════════════════════════════ */
-function renderBlocksToHTML(blocks) {
-  if (!blocks || !blocks.length) return '<p style="color:#475569">No content yet.</p>';
-  return blocks.map(b => {
-    if (b.type === 'paragraph') return `<p>${escapeHTML(b.content||'')}</p>`;
-    if (b.type === 'heading1') return `<h1>${escapeHTML(b.content||'')}</h1>`;
-    if (b.type === 'heading2') return `<h2>${escapeHTML(b.content||'')}</h2>`;
-    if (b.type === 'heading3') return `<h3>${escapeHTML(b.content||'')}</h3>`;
-    if (b.type === 'image' && b.src) {
-      const w = b.size==='small'?'40%':b.size==='full'?'100%':'70%';
-      return `<div style="text-align:center;margin:20px 0">
-        <img src="${b.src}" style="max-width:${w};border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.4);display:inline-block">
-        ${b.caption?`<p style="font-size:0.8rem;color:#64748b;font-style:italic;margin-top:8px">${escapeHTML(b.caption)}</p>`:''}
-      </div>`;
-    }
-    if (b.type === 'formula') {
-      try {
-        const rendered = window.katex ? window.katex.renderToString(b.latex||'', {throwOnError:false,displayMode:true}) : `<code>${escapeHTML(b.latex||'')}</code>`;
-        return `<div class="formula-block">${rendered}</div>`;
-      } catch(e) { return `<div class="formula-block"><code>${escapeHTML(b.latex||'')}</code></div>`; }
-    }
-    if (b.type === 'code') return `<div class="code-block-wrap">${b.language?`<div class="code-lang-label">${escapeHTML(b.language)}</div>`:''}<pre><code>${escapeHTML(b.content||'')}</code></pre></div>`;
-    if (b.type === 'divider') return `<hr class="content-divider">`;
-    if (b.type === 'callout') return `<div class="callout-block">${b.icon||'💡'} ${escapeHTML(b.content||'')}</div>`;
-    if (b.type === 'table' && b.data) {
-      const rows = b.data;
-      return `<div class="table-wrap"><table>${rows.map((r,ri)=>`<tr>${r.map(c=>ri===0?`<th>${escapeHTML(c)}</th>`:`<td>${escapeHTML(c)}</td>`).join('')}</tr>`).join('')}</table></div>`;
-    }
-    // Fallback: legacy HTML desc
-    if (b.type === 'legacy_html') return b.content || '';
+/* Smart excerpt — skips headings, uses first real paragraph */
+function smartExcerpt(p){
+  if(p.excerpt&&p.excerpt.trim())return p.excerpt.trim();
+  const blocks=p.blocks||[];
+  for(const b of blocks){if(b.type==='paragraph'&&b.content&&b.content.trim().length>20){const t=b.content.trim();return t.length>130?t.slice(0,127)+'…':t;}}
+  for(const b of blocks){if(b.type==='callout'&&b.content&&b.content.trim().length>20){const t=b.content.trim();return t.length>130?t.slice(0,127)+'…':t;}}
+  const raw=stripHtml(p.desc||'');return raw.length>130?raw.slice(0,127)+'…':raw;
+}
+
+/* Blocks renderer */
+function renderBlocksToHTML(blocks){
+  if(!blocks||!blocks.length)return '<p style="color:#475569">No content yet.</p>';
+  return blocks.map(b=>{
+    if(b.type==='paragraph')return `<p>${esc(b.content||'')}</p>`;
+    if(b.type==='heading1')return `<h1>${esc(b.content||'')}</h1>`;
+    if(b.type==='heading2')return `<h2>${esc(b.content||'')}</h2>`;
+    if(b.type==='heading3')return `<h3>${esc(b.content||'')}</h3>`;
+    if(b.type==='image'&&b.src){const w=b.size==='small'?'40%':b.size==='full'?'100%':'70%';return `<div style="text-align:center;margin:20px 0"><img src="${b.src}" style="max-width:${w};border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.4);display:inline-block">${b.caption?`<p style="font-size:0.8rem;color:#64748b;font-style:italic;margin-top:8px">${esc(b.caption)}</p>`:''}</div>`;}
+    if(b.type==='formula'){try{const r=window.katex?window.katex.renderToString(b.latex||'',{throwOnError:false,displayMode:true}):`<code>${esc(b.latex||'')}</code>`;return `<div class="formula-block">${r}</div>`;}catch(e){return `<div class="formula-block"><code>${esc(b.latex||'')}</code></div>`;}}
+    if(b.type==='code')return `<div class="code-block-wrap">${b.language?`<div class="code-lang-label">${esc(b.language)}</div>`:''}<pre><code>${esc(b.content||'')}</code></pre></div>`;
+    if(b.type==='divider')return '<hr class="content-divider">';
+    if(b.type==='callout')return `<div class="callout-block">${b.icon||'💡'} ${esc(b.content||'')}</div>`;
+    if(b.type==='table'&&b.data){const tRows=b.data.map((r,ri)=>`<tr>${r.map(c=>ri===0?`<th>${esc(c)}</th>`:`<td>${esc(c)}</td>`).join('')}</tr>`).join('');return `<div class="table-wrap"><table>${tRows}</table></div>`;}
     return '';
   }).join('\n');
 }
 
-function escapeHTML(str) {
-  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+/* ═══ PROJECT MODAL ═══ */
+let _allProjects=[],_currentModalIdx=null,_titleCollapsed=false;
 
-/* ═══════════════════════════════════════════
-   PROJECT MODAL
-═══════════════════════════════════════════ */
-let _allProjects = [];
+function countWords(blocks){if(!blocks)return 0;return blocks.reduce((acc,b)=>{if(b.content)return acc+b.content.trim().split(/\s+/).filter(Boolean).length;if(b.data)return acc+b.data.flat().join(' ').split(/\s+/).filter(Boolean).length;return acc;},0);}
 
-function openProjectModal(idx) {
-  const p = _allProjects[idx];
-  if (!p) return;
-
-  const statusClass = {Ongoing:'status-ongoing',Completed:'status-completed',Paused:'status-paused'}[p.status]||'status-ongoing';
-  document.getElementById('modalBadges').innerHTML = [
-    p.status ? `<span class="project-status-badge ${statusClass}">${p.status}</span>` : '',
-    p.date ? `<span class="project-date-badge">${p.date}</span>` : ''
-  ].join('');
-  document.getElementById('modalProjectTitle').textContent = p.title;
-  const tags = p.tags ? p.tags.split(',').map(t=>t.trim()).filter(Boolean) : [];
-  document.getElementById('modalTags').innerHTML = tags.map(t=>`<span class="project-tag">${t}</span>`).join('');
-
-  // Featured image banner
-  const fi = document.getElementById('modalFeaturedImage');
-  if (p.featuredImage) {
-    fi.innerHTML = `<div style="width:100%;max-height:240px;overflow:hidden;border-radius:10px;margin-bottom:24px;position:relative">
-      <img src="${p.featuredImage}" style="width:100%;height:240px;object-fit:cover;border-radius:10px;display:block">
-      <div style="position:absolute;bottom:0;left:0;right:0;height:100px;background:linear-gradient(transparent,rgba(13,13,28,0.9))"></div>
-    </div>`;
-  } else { fi.innerHTML = ''; }
-
-  // Render blocks or legacy desc
-  let contentHTML = '';
-  if (p.blocks && p.blocks.length) {
-    contentHTML = renderBlocksToHTML(p.blocks);
-  } else if (p.desc) {
-    contentHTML = p.desc; // legacy HTML
-  } else {
-    contentHTML = '<p style="color:#475569">No content yet.</p>';
-  }
-  document.getElementById('modalRichContent').innerHTML = contentHTML;
-
-  // External link
-  const extLink = document.getElementById('modalExtLink');
-  if (p.link && p.link !== '#') { extLink.href = p.link; extLink.style.display = 'inline-flex'; }
-  else { extLink.style.display = 'none'; }
-
+function openProjectModal(idx){
+  const p=_allProjects[idx];if(!p)return;
+  _currentModalIdx=idx;_titleCollapsed=false;
+  const sc={Ongoing:'status-ongoing',Completed:'status-completed',Paused:'status-paused'};
+  document.getElementById('modalBadges').innerHTML=(p.status?`<span class="project-status-badge ${sc[p.status]||'status-ongoing'}">${p.status}</span>`:'')+( p.date?`<span class="project-date-badge">${p.date}</span>`:'');
+  const titleEl=document.getElementById('modalProjectTitle');
+  titleEl.textContent=p.title;titleEl.classList.remove('clamped');
+  const tog=document.getElementById('modalTitleToggle');tog.classList.remove('expanded');tog.style.display='none';
+  setTimeout(()=>{if(window.innerWidth<=640&&titleEl.scrollHeight>titleEl.clientHeight+4){titleEl.classList.add('clamped');tog.style.display='flex';}},60);
+  const tags=p.tags?p.tags.split(',').map(t=>t.trim()).filter(Boolean):[];
+  document.getElementById('modalTags').innerHTML=tags.map(t=>`<span class="project-tag">${t}</span>`).join('');
+  const mins=Math.max(1,Math.round(countWords(p.blocks||[])/200));
+  document.getElementById('modalReadTime').innerHTML=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${mins} min read`;
+  const fi=document.getElementById('modalFeaturedImage');
+  if(p.featuredImage){fi.innerHTML=`<div style="width:100%;max-height:240px;overflow:hidden;border-radius:10px;margin-bottom:24px;position:relative"><img src="${p.featuredImage}" style="width:100%;height:240px;object-fit:cover;border-radius:10px;display:block"><div style="position:absolute;bottom:0;left:0;right:0;height:100px;background:linear-gradient(transparent,rgba(13,13,28,0.9))"></div></div>`;}
+  else fi.innerHTML='';
+  let cHTML='';
+  if(p.blocks&&p.blocks.length)cHTML=renderBlocksToHTML(p.blocks);
+  else if(p.desc)cHTML=p.desc;
+  else cHTML='<p style="color:#475569">No content yet.</p>';
+  document.getElementById('modalRichContent').innerHTML=cHTML;
+  buildToC(p.blocks||[]);
+  const el=document.getElementById('modalExtLink');
+  if(p.link&&p.link!=='#'){el.href=p.link;el.style.display='inline-flex';}else el.style.display='none';
   document.getElementById('projectModalOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  document.getElementById('projectModal').querySelector('.project-modal-body').scrollTop = 0;
+  document.body.style.overflow='hidden';
+  const body=document.getElementById('projectModalBody');body.scrollTop=0;
+  document.getElementById('modalProgressBar').style.width='0%';
+  body.onscroll=updateModalProgress;
+  if(history.replaceState)history.replaceState(null,'','#project-'+idx);
 }
 
-function closeProjectModal() {
-  document.getElementById('projectModalOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-document.getElementById('projectModalOverlay').addEventListener('click', function(e) { if(e.target===this) closeProjectModal(); });
-document.addEventListener('keydown', e => { if(e.key==='Escape') { closeProjectModal(); closeProjectsDrawer(); } });
+function toggleModalTitle(){_titleCollapsed=!_titleCollapsed;const el=document.getElementById('modalProjectTitle'),tog=document.getElementById('modalTitleToggle');if(_titleCollapsed){el.classList.remove('clamped');tog.classList.add('expanded');}else{el.classList.add('clamped');tog.classList.remove('expanded');}}
+function updateModalProgress(){const b=document.getElementById('projectModalBody');if(!b)return;const pct=b.scrollHeight<=b.clientHeight?100:Math.round((b.scrollTop/(b.scrollHeight-b.clientHeight))*100);document.getElementById('modalProgressBar').style.width=pct+'%';}
+function closeProjectModal(){document.getElementById('projectModalOverlay').classList.remove('open');document.body.style.overflow='';document.getElementById('modalProgressBar').style.width='0%';document.getElementById('tocPanel').classList.remove('open');document.getElementById('tocBtnWrap').style.display='none';_currentModalIdx=null;if(history.replaceState)history.replaceState(null,'',window.location.pathname);}
 
-/* ═══════════════════════════════════════════
-   PROJECTS DRAWER (View All)
-═══════════════════════════════════════════ */
-let _activeTagFilter = '';
+/* ToC */
+function buildToC(blocks){const hs=blocks.filter(b=>b.type==='heading1'||b.type==='heading2'||b.type==='heading3');const wrap=document.getElementById('tocBtnWrap'),panel=document.getElementById('tocPanel');if(hs.length<3||window.innerWidth<768){wrap.style.display='none';return;}const rc=document.getElementById('modalRichContent');rc.querySelectorAll('h1,h2,h3').forEach((el,i)=>el.id='mh-'+i);panel.innerHTML='<div class="toc-panel-title">Contents</div>'+hs.map((b,i)=>`<a class="toc-link ${b.type==='heading2'?'toc-h2':b.type==='heading3'?'toc-h3':''}" onclick="scrollToHeading('mh-${i}');return false" href="#">${b.content||''}</a>`).join('');wrap.style.display='flex';}
+function scrollToHeading(id){const b=document.getElementById('projectModalBody'),el=document.getElementById(id);if(b&&el)b.scrollTo({top:el.offsetTop-20,behavior:'smooth'});document.getElementById('tocPanel').classList.remove('open');}
+function toggleToc(){document.getElementById('tocPanel').classList.toggle('open');}
 
-function openProjectsDrawer() {
-  buildDrawer(_allProjects);
-  document.getElementById('projectsDrawer').classList.add('open');
-  document.getElementById('projectsDrawerOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeProjectsDrawer() {
-  document.getElementById('projectsDrawer').classList.remove('open');
-  document.getElementById('projectsDrawerOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
+/* Copy link */
+function copyProjectLink(){if(_currentModalIdx===null)return;const url=window.location.origin+window.location.pathname+'#project-'+_currentModalIdx;navigator.clipboard.writeText(url).then(()=>{const btn=document.getElementById('modalCopyLink'),orig=btn.innerHTML;btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!';btn.classList.add('copied');setTimeout(()=>{btn.innerHTML=orig;btn.classList.remove('copied');},2000);}).catch(()=>showToast('Copy the URL from your browser address bar'));}
 
-function buildDrawer(projects) {
-  document.getElementById('drawerCount').textContent = `${projects.length} project${projects.length!==1?'s':''}`;
-  // Build tag filters
-  const allTags = new Set();
-  projects.forEach(p => { if(p.tags) p.tags.split(',').forEach(t => allTags.add(t.trim())); });
-  const tagsEl = document.getElementById('drawerTagsFilter');
-  tagsEl.innerHTML = ['All', ...[...allTags]].map(tag => `
-    <button class="drawer-tag-btn ${(tag==='All'&&!_activeTagFilter)||tag===_activeTagFilter?'active':''}" onclick="setTagFilter('${tag==='All'?'':tag}')">${tag}</button>
-  `).join('');
-  filterDrawerProjects(document.getElementById('drawerSearch').value);
-}
+/* Deep link */
+function checkDeepLink(){const m=window.location.hash.match(/^#project-(\d+)$/);if(m){const idx=parseInt(m[1]);if(_allProjects[idx])setTimeout(()=>openProjectModal(idx),500);}}
 
-function setTagFilter(tag) {
-  _activeTagFilter = tag;
-  buildDrawer(_allProjects);
-}
+document.getElementById('projectModalOverlay').addEventListener('click',function(e){if(e.target===this)closeProjectModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeProjectModal();closeProjectsDrawer();}});
 
-function filterDrawerProjects(query) {
-  const q = query.toLowerCase();
-  const filtered = _allProjects.filter((p, i) => {
-    const matchesQuery = !q || p.title.toLowerCase().includes(q) || (p.tags||'').toLowerCase().includes(q) || (p.excerpt||'').toLowerCase().includes(q);
-    const matchesTag = !_activeTagFilter || (p.tags||'').split(',').map(t=>t.trim()).includes(_activeTagFilter);
-    return matchesQuery && matchesTag;
-  });
-  const list = document.getElementById('projectsDrawerList');
-  if (!filtered.length) { list.innerHTML = '<div style="text-align:center;padding:40px;color:#475569">No projects found</div>'; return; }
-  list.innerHTML = filtered.map((p) => {
-    const realIdx = _allProjects.indexOf(p);
-    const statusClass = {Ongoing:'status-ongoing',Completed:'status-completed',Paused:'status-paused'}[p.status]||'status-ongoing';
-    const tags = p.tags ? p.tags.split(',').map(t=>t.trim()).filter(Boolean) : [];
-    return `<div class="drawer-project-row" onclick="closeProjectsDrawer();setTimeout(()=>openProjectModal(${realIdx}),300)">
-      <div class="drawer-row-left">
-        ${p.featuredImage ? `<img src="${p.featuredImage}" class="drawer-thumb" alt="">` : '<div class="drawer-thumb-placeholder">📄</div>'}
-      </div>
-      <div class="drawer-row-body">
-        <div class="drawer-row-top">
-          <h3 class="drawer-row-title">${p.title}</h3>
-          <div style="display:flex;gap:6px;flex-shrink:0">
-            ${p.status?`<span class="project-status-badge ${statusClass}">${p.status}</span>`:''}
-            ${p.date?`<span class="project-date-badge">${p.date}</span>`:''}
-          </div>
-        </div>
-        ${p.excerpt?`<p class="drawer-row-excerpt">${p.excerpt}</p>`:''}
-        <div class="drawer-row-tags">${tags.slice(0,4).map(t=>`<span class="project-tag">${t}</span>`).join('')}</div>
-      </div>
-      <svg class="drawer-row-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-    </div>`;
+/* ═══ PROJECTS DRAWER ═══ */
+let _activeTagFilter='';
+function openProjectsDrawer(){buildDrawer(_allProjects);document.getElementById('projectsDrawer').classList.add('open');document.getElementById('projectsDrawerOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeProjectsDrawer(){document.getElementById('projectsDrawer').classList.remove('open');document.getElementById('projectsDrawerOverlay').classList.remove('open');document.body.style.overflow='';}
+function buildDrawer(projects){document.getElementById('drawerCount').textContent=projects.length+' project'+(projects.length!==1?'s':'');const allTags=new Set();projects.forEach(p=>{if(p.tags)p.tags.split(',').forEach(t=>allTags.add(t.trim()));});document.getElementById('drawerTagsFilter').innerHTML=['All',...allTags].map(tag=>`<button class="drawer-tag-btn ${(tag==='All'&&!_activeTagFilter)||tag===_activeTagFilter?'active':''}" onclick="setTagFilter('${tag==='All'?'':tag}')">${tag}</button>`).join('');filterDrawerProjects(document.getElementById('drawerSearch').value);}
+function setTagFilter(tag){_activeTagFilter=tag;buildDrawer(_allProjects);}
+function filterDrawerProjects(query){const q=query.toLowerCase();const filtered=_allProjects.filter(p=>{const mQ=!q||p.title.toLowerCase().includes(q)||(p.tags||'').toLowerCase().includes(q)||(p.excerpt||'').toLowerCase().includes(q);const mT=!_activeTagFilter||(p.tags||'').split(',').map(t=>t.trim()).includes(_activeTagFilter);return mQ&&mT;});const list=document.getElementById('projectsDrawerList');if(!filtered.length){list.innerHTML='<div style="text-align:center;padding:40px;color:#475569">No projects found</div>';return;}list.innerHTML=filtered.map(p=>{const ri=_allProjects.indexOf(p);const sc={Ongoing:'status-ongoing',Completed:'status-completed',Paused:'status-paused'};const tags=p.tags?p.tags.split(',').map(t=>t.trim()).filter(Boolean):[];const ex=smartExcerpt(p);return `<div class="drawer-project-row" onclick="closeProjectsDrawer();setTimeout(()=>openProjectModal(${ri}),300)"><div class="drawer-row-left">${p.featuredImage?`<img src="${p.featuredImage}" class="drawer-thumb" alt="">`:'<div class="drawer-thumb-placeholder">📄</div>'}</div><div class="drawer-row-body"><div class="drawer-row-top"><h3 class="drawer-row-title">${p.title}</h3><div style="display:flex;gap:6px;flex-shrink:0">${p.status?`<span class="project-status-badge ${sc[p.status]||'status-ongoing'}">${p.status}</span>`:''}${p.date?`<span class="project-date-badge">${p.date}</span>`:''}</div></div>${ex?`<p class="drawer-row-excerpt">${ex}</p>`:''}<div class="drawer-row-tags">${tags.slice(0,4).map(t=>`<span class="project-tag">${t}</span>`).join('')}</div></div><svg class="drawer-row-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>`;}).join('');}
+
+/* ═══ RENDER ═══ */
+const PROJECTS_INITIAL_SHOW=6;
+function render(){
+  const D=getData();
+  document.getElementById('heroName').textContent=D.name;
+  document.getElementById('heroSub').textContent=D.subtitle;
+  document.getElementById('heroLabel').textContent=D.heroLabel;
+  const cvBtn=document.getElementById('cvBtn');if(D.cvLink)cvBtn.href=D.cvLink;
+  twWords=D.typewriterWords||['Materials Engineer','Researcher','Innovator'];
+  clearTimeout(twTimer);twIdx=0;twChar=0;twDeleting=false;typewrite();
+  document.getElementById('aboutBio').textContent=D.bio;
+  document.getElementById('statUni').textContent=D.university;
+  document.getElementById('statDept').textContent=D.department;
+  document.getElementById('statYear').textContent=D.year;
+  if(D.photoURL)document.getElementById('avatarImg').src=D.photoURL;
+  document.getElementById('skillsGrid').innerHTML=D.skills.map((cat,i)=>`<div class="skill-card glass dyn-card" style="animation-delay:${i*.12}s"><div class="skill-icon">${['⚗️','💻','🔬','📊'][i%4]}</div><h3 class="skill-title">${cat.title}</h3><div class="chip-row">${cat.items.map(s=>`<span class="chip chip-${i%4}">${s}</span>`).join('')}</div></div>`).join('');
+  _allProjects=D.projects||[];
+  const shown=_allProjects.slice(0,PROJECTS_INITIAL_SHOW);
+  document.getElementById('projectsGrid').innerHTML=shown.map((p,i)=>{
+    const tags=p.tags?p.tags.split(',').map(t=>t.trim()).filter(Boolean):[];
+    const excerpt=smartExcerpt(p);
+    const sc={Ongoing:'status-ongoing',Completed:'status-completed',Paused:'status-paused'};
+    return `<div class="project-card dyn-card" style="animation-delay:${i*.08}s" onclick="openProjectModal(${i})" role="button" tabindex="0" onkeydown="if(event.key==='Enter')openProjectModal(${i})">${p.featuredImage?`<div class="project-card-feat-img"><img src="${p.featuredImage}" alt=""></div>`:''}<div class="project-card-top"><div class="project-num">0${i+1}</div><div class="project-meta-badges">${p.status?`<span class="project-status-badge ${sc[p.status]||'status-ongoing'}">${p.status}</span>`:''} ${p.date?`<span class="project-date-badge">${p.date}</span>`:''}</div></div><h3 class="project-title">${p.title}</h3><p class="project-excerpt">${excerpt}</p><div class="project-tags">${tags.map(t=>`<span class="project-tag">${t}</span>`).join('')}</div><div class="project-card-footer"><span class="project-view-btn">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>${p.link&&p.link!=='#'?`<a href="${p.link}" class="project-ext-link" target="_blank" rel="noopener" onclick="event.stopPropagation()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>External</a>`:''}</div></div>`;
   }).join('');
-}
-
-/* ═══════════════════════════════════════════
-   MAIN RENDER
-═══════════════════════════════════════════ */
-const PROJECTS_INITIAL_SHOW = 6;
-
-function render() {
-  const D = getData();
-
-  document.getElementById('heroName').textContent = D.name;
-  document.getElementById('heroSub').textContent = D.subtitle;
-  document.getElementById('heroLabel').textContent = D.heroLabel;
-  const cvBtn = document.getElementById('cvBtn');
-  if (D.cvLink) cvBtn.href = D.cvLink;
-  twWords = D.typewriterWords || ['Materials Engineer','Researcher','Innovator'];
-  clearTimeout(twTimer); twIdx=0; twChar=0; twDeleting=false; typewrite();
-
-  document.getElementById('aboutBio').textContent = D.bio;
-  document.getElementById('statUni').textContent = D.university;
-  document.getElementById('statDept').textContent = D.department;
-  document.getElementById('statYear').textContent = D.year;
-  if (D.photoURL) document.getElementById('avatarImg').src = D.photoURL;
-
-  // Skills
-  const sg = document.getElementById('skillsGrid');
-  sg.innerHTML = D.skills.map((cat,i)=>`
-    <div class="skill-card glass dyn-card" style="animation-delay:${i*.12}s">
-      <div class="skill-icon">${['⚗️','💻','🔬','📊'][i%4]}</div>
-      <h3 class="skill-title">${cat.title}</h3>
-      <div class="chip-row">${cat.items.map(s=>`<span class="chip chip-${i%4}">${s}</span>`).join('')}</div>
-    </div>`).join('');
-
-  // Projects
-  _allProjects = D.projects || [];
-  const pg = document.getElementById('projectsGrid');
-  const shown = _allProjects.slice(0, PROJECTS_INITIAL_SHOW);
-
-  pg.innerHTML = shown.map((p, i) => {
-    const tags = p.tags ? p.tags.split(',').map(t=>t.trim()).filter(Boolean) : [];
-    const rawExcerpt = p.excerpt || (p.blocks && p.blocks.length ? (p.blocks.find(b=>b.type==='paragraph')||{content:''}).content : '') || stripHtml(p.desc||'');
-    const excerpt = rawExcerpt.slice(0,130)+(rawExcerpt.length>130?'…':'');
-    const statusClass = {Ongoing:'status-ongoing',Completed:'status-completed',Paused:'status-paused'}[p.status]||'status-ongoing';
-    return `<div class="project-card dyn-card" style="animation-delay:${i*.08}s;${p.featuredImage?'padding-top:0;overflow:hidden':''}" onclick="openProjectModal(${i})" role="button" tabindex="0" onkeydown="if(event.key==='Enter')openProjectModal(${i})">
-      ${p.featuredImage?`<div style="width:100%;height:140px;overflow:hidden;margin-bottom:16px;margin-left:-32px;margin-right:-32px;width:calc(100% + 64px);"><img src="${p.featuredImage}" style="width:100%;height:140px;object-fit:cover"></div>`:''}
-      <div class="project-card-top">
-        <div class="project-num">0${i+1}</div>
-        <div class="project-meta-badges">
-          ${p.status?`<span class="project-status-badge ${statusClass}">${p.status}</span>`:''}
-          ${p.date?`<span class="project-date-badge">${p.date}</span>`:''}
-        </div>
-      </div>
-      <h3 class="project-title">${p.title}</h3>
-      <p class="project-excerpt">${excerpt}</p>
-      <div class="project-tags">${tags.map(t=>`<span class="project-tag">${t}</span>`).join('')}</div>
-      <div class="project-card-footer">
-        <span class="project-view-btn">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-        ${p.link&&p.link!=='#'?`<a href="${p.link}" class="project-ext-link" target="_blank" rel="noopener" onclick="event.stopPropagation()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>External</a>`:''}
-      </div>
-    </div>`;
-  }).join('');
-
-  // Show All button
-  const showAllWrap = document.getElementById('showAllWrap');
-  if (_allProjects.length > PROJECTS_INITIAL_SHOW) {
-    showAllWrap.style.display = 'flex';
-    const hidden = _allProjects.length - PROJECTS_INITIAL_SHOW;
-    document.getElementById('showAllCount').textContent = `+${hidden} more`;
-    document.getElementById('showAllLabel').textContent = 'View All Projects';
-  } else {
-    showAllWrap.style.display = 'none';
-  }
-
-  // Research
-  document.getElementById('researchList').innerHTML = D.researchInterests.map(r=>`<div class="timeline-item"><div class="timeline-dot"></div><p>${r}</p></div>`).join('');
-  const pl=document.getElementById('pubList'); const cs=document.getElementById('pubComingSoon');
-  if(!D.publications||D.publications.length===0){pl.innerHTML='';cs.style.display='flex';}
+  const sw=document.getElementById('showAllWrap');
+  if(_allProjects.length>PROJECTS_INITIAL_SHOW){sw.style.display='flex';document.getElementById('showAllCount').textContent=`+${_allProjects.length-PROJECTS_INITIAL_SHOW} more`;}
+  else sw.style.display='none';
+  document.getElementById('researchList').innerHTML=D.researchInterests.map(r=>`<div class="timeline-item"><div class="timeline-dot"></div><p>${r}</p></div>`).join('');
+  const pl=document.getElementById('pubList'),cs=document.getElementById('pubComingSoon');
+  if(!D.publications||!D.publications.length){pl.innerHTML='';cs.style.display='flex';}
   else{cs.style.display='none';pl.innerHTML=D.publications.map((p,i)=>`<div class="pub-item"><span class="pub-num">${i+1}</span><p>${p}</p></div>`).join('');}
-
-  // Contact
-  document.getElementById('contactMsg').textContent = D.contactMessage;
-  document.getElementById('emailVal').textContent = D.email;
-  document.getElementById('emailLink').href = 'mailto:'+D.email;
-  document.getElementById('githubLink').href = D.github||'#';
-  document.getElementById('linkedinLink').href = D.linkedin||'#';
-  document.getElementById('rgLink').href = D.researchgate||'#';
-
-  // Footer
-  document.getElementById('footerTagline').textContent = `${D.name} · ${D.department} · ${D.university}`;
-  document.getElementById('footerYear').textContent = new Date().getFullYear();
-
-  if (D.appearance) {
-    if (D.appearance.accentColor) document.documentElement.style.setProperty('--violet', D.appearance.accentColor);
-    if (D.appearance.fontSize) document.documentElement.style.fontSize = D.appearance.fontSize;
-  }
-
+  document.getElementById('contactMsg').textContent=D.contactMessage;
+  document.getElementById('emailVal').textContent=D.email;
+  document.getElementById('emailLink').href='mailto:'+D.email;
+  document.getElementById('githubLink').href=D.github||'#';
+  document.getElementById('linkedinLink').href=D.linkedin||'#';
+  document.getElementById('rgLink').href=D.researchgate||'#';
+  document.getElementById('footerTagline').textContent=`${D.name} · ${D.department} · ${D.university}`;
+  document.getElementById('footerYear').textContent=new Date().getFullYear();
+  if(D.appearance){if(D.appearance.accentColor)document.documentElement.style.setProperty('--violet',D.appearance.accentColor);if(D.appearance.fontSize)document.documentElement.style.fontSize=D.appearance.fontSize;}
   document.querySelectorAll('.dyn-card').forEach((el,i)=>{el.style.opacity='0';el.style.transform='translateY(20px)';setTimeout(()=>{el.style.transition='opacity .5s ease, transform .5s ease';el.style.opacity='1';el.style.transform='translateY(0)';},80+i*80);});
   observeReveal();
+  checkDeepLink();
 }
-
 render();
 </script>
 </body>
