@@ -57,7 +57,7 @@ const DEFAULT_DATA = {
     {
       "title": "An Overview of the Raw Materials Used for Ceramic Bodies",
       "excerpt": "This experiment presented a comprehensive study of the commonly used raw materials for ceramic body preparation. Various cerami…",
-      "featuredImage": "",
+      "featuredImage": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775414881/h98zhmsrjfhuir1c0unp.jpg",
       "tags": "Raw Materials, Ceramics, Academics",
       "link": "#",
       "date": "Apr 2026",
