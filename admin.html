@@ -48,8 +48,9 @@
   background: #0a0a16;
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 14px;
-  overflow: hidden;
+  overflow: visible;
   min-height: 200px;
+  position: relative;
 }
 .block-list { padding: 12px; display: flex; flex-direction: column; gap: 4px; }
 .block-item {
@@ -64,6 +65,7 @@
   font-size: 14px; line-height: 1;
   border-radius: 4px; transition: color .2s, background .2s;
   user-select: none;
+  -webkit-user-select: none;
 }
 .block-drag-handle:hover { color: #7c3aed; background: rgba(124,58,237,0.1); }
 .block-drag-handle:active { cursor: grabbing; }
@@ -143,16 +145,24 @@
 }
 .add-block-btn:hover { background: rgba(124,58,237,0.25); transform: scale(1.15); }
 
-/* Block picker popup */
-.block-picker {
-  position: absolute; left: 50%; transform: translateX(-50%);
-  bottom: calc(100% + 8px);
-  background: #0f0f1e; border: 1px solid rgba(124,58,237,0.25);
-  border-radius: 14px; padding: 12px; z-index: 500;
-  box-shadow: 0 16px 48px rgba(0,0,0,0.6);
-  width: 320px; display: none;
+/* Block picker portal — rendered in body, position:fixed */
+#blockPickerPortal {
+  position: fixed;
+  background: #0f0f1e;
+  border: 1px solid rgba(124,58,237,0.3);
+  border-radius: 14px;
+  padding: 14px;
+  z-index: 9000;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(124,58,237,0.1);
+  width: 340px;
+  max-height: 420px;
+  overflow-y: auto;
+  display: none;
+  animation: pickerIn .18s ease;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(124,58,237,0.3) transparent;
 }
-.block-picker.open { display: block; animation: pickerIn .18s ease; }
+#blockPickerPortal.open { display: block; }
 @keyframes pickerIn { from { opacity:0; transform: translateX(-50%) translateY(6px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
 .block-picker-group { margin-bottom: 10px; }
 .block-picker-group:last-child { margin-bottom: 0; }
@@ -202,6 +212,8 @@
 </style>
 </head>
 <body>
+<!-- Block picker portal — fixed position, escapes all overflow clipping -->
+<div id="blockPickerPortal"></div>
 
 <!-- SETUP SCREEN -->
 <div class="setup-screen" id="setupScreen" style="display:none">
@@ -613,7 +625,8 @@ function loadSkills() {
 }
 function buildSkillCard(cat,i) {
   const card=document.createElement('div'); card.className='editor-card';
-  card.innerHTML=`<div class="editor-card-header"><input type="text" class="card-title-input" value="${esc(cat.title)}" oninput="markUnsaved()"><button class="card-delete-btn" onclick="deleteSkillCategory(${i})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg></button></div><div class="chip-editor" id="chipEditor_${i}">${cat.items.map((s,j)=>`<span class="admin-chip">${esc(s)}<button onclick="removeSkill(${i},${j})" class="chip-remove">×</button></span>`).join('')}</div><div class="chip-add-row"><input type="text" class="chip-add-input" id="chipInput_${i}" placeholder="Add skill…" onkeydown="if(event.key==='Enter')addSkill(${i})"><button class="chip-add-btn" onclick="addSkill(${i})">Add</button></div>`;
+  const chipsHtml = cat.items.map((s,j) => '<span class="admin-chip">' + esc(s) + '<button onclick="removeSkill(' + i + ',' + j + ')" class="chip-remove">×</button></span>').join('');
+  card.innerHTML = '<div class="editor-card-header"><input type="text" class="card-title-input" value="' + esc(cat.title) + '" oninput="markUnsaved()"><button class="card-delete-btn" onclick="deleteSkillCategory(' + i + ')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg></button></div><div class="chip-editor" id="chipEditor_' + i + '">' + chipsHtml + '</div><div class="chip-add-row"><input type="text" class="chip-add-input" id="chipInput_' + i + '" placeholder="Add skill…" onkeydown="if(event.key===\'Enter\')addSkill(' + i + ')"><button class="chip-add-btn" onclick="addSkill(' + i + ')">Add</button></div>';
   return card;
 }
 function addSkillCategory(){collectCurrentTab();adminData.skills.push({title:'New Category',items:[]});loadSkills();markUnsaved();}
@@ -626,7 +639,7 @@ function removeSkill(ci,si){adminData.skills[ci].items.splice(si,1);loadSkills()
 ══════════════════════════════════════════════ */
 // projectBlocks[i] = array of block objects for project i
 const projectBlocks = {};
-let activePickerBtn = null;
+let _activePi = null, _activeInsertAt = null, _activePickerBtn = null;
 
 const BLOCK_TYPES = [
   { group:'Text', type:'paragraph', icon:'¶', label:'Paragraph', desc:'Body text' },
@@ -774,45 +787,96 @@ function makeAddBlockRow(pi, insertAt) {
   const row = document.createElement('div');
   row.className = 'add-block-row';
   row.dataset.insertAt = insertAt;
-  row.innerHTML = `<div class="add-block-line"></div><button class="add-block-btn" title="Add block" onclick="togglePicker(${pi}, ${insertAt}, this)">+</button><div class="add-block-line"></div><div class="block-picker" id="picker_${pi}_${insertAt}"></div>`;
+  const lineL = document.createElement('div'); lineL.className = 'add-block-line';
+  const lineR = document.createElement('div'); lineR.className = 'add-block-line';
+  const btn = document.createElement('button');
+  btn.className = 'add-block-btn';
+  btn.title = 'Add block here';
+  btn.textContent = '+';
+  btn.addEventListener('click', e => { e.stopPropagation(); togglePicker(pi, insertAt, btn); });
+  row.appendChild(lineL);
+  row.appendChild(btn);
+  row.appendChild(lineR);
   return row;
 }
 
+/* ── Block Picker Portal ── */
+
 function togglePicker(pi, insertAt, btn) {
-  // Close all other pickers
-  document.querySelectorAll('.block-picker.open').forEach(p => {
-    if (p.id !== `picker_${pi}_${insertAt}`) p.classList.remove('open');
-  });
-  const picker = document.getElementById(`picker_${pi}_${insertAt}`);
-  if (!picker) return;
-  if (picker.classList.contains('open')) { picker.classList.remove('open'); return; }
+  const portal = document.getElementById('blockPickerPortal');
+  // If already open for same button — close it
+  if (portal.classList.contains('open') && _activePi === pi && _activeInsertAt === insertAt) {
+    portal.classList.remove('open');
+    _activePi = null; _activeInsertAt = null; _activePickerBtn = null;
+    return;
+  }
   // Build picker content
   const groups = {};
   BLOCK_TYPES.forEach(bt => { if (!groups[bt.group]) groups[bt.group] = []; groups[bt.group].push(bt); });
-  picker.innerHTML = Object.entries(groups).map(([grp, items]) => `
-    <div class="block-picker-group">
-      <div class="block-picker-label">${grp}</div>
-      <div class="block-picker-items">
-        ${items.map(bt => `
-          <div class="block-picker-item" onclick="insertBlock(${pi}, ${insertAt}, '${bt.type}')">
-            <span class="block-picker-item-icon">${bt.icon}</span>
-            <div><div class="block-picker-item-label">${bt.label}</div><div class="block-picker-item-desc">${bt.desc}</div></div>
-          </div>`).join('')}
-      </div>
-    </div>`).join('');
-  picker.classList.add('open');
-  activePickerBtn = btn;
+  portal.innerHTML = Object.entries(groups).map(([grp, items]) =>
+    '<div class="block-picker-group">' +
+    '<div class="block-picker-label">' + grp + '</div>' +
+    '<div class="block-picker-items">' +
+    items.map(bt =>
+      '<div class="block-picker-item" data-pi="' + pi + '" data-insert="' + insertAt + '" data-type="' + bt.type + '">' +
+      '<span class="block-picker-item-icon">' + bt.icon + '</span>' +
+      '<div><div class="block-picker-item-label">' + bt.label + '</div>' +
+      '<div class="block-picker-item-desc">' + bt.desc + '</div></div></div>'
+    ).join('') +
+    '</div></div>'
+  ).join('');
+
+  // Position portal near the + button
+  const rect = btn.getBoundingClientRect();
+  const pw = 340;
+  let left = rect.left + rect.width / 2 - pw / 2;
+  let top = rect.top - 8; // try above first
+  // Clamp to viewport
+  if (left < 8) left = 8;
+  if (left + pw > window.innerWidth - 8) left = window.innerWidth - pw - 8;
+  portal.style.left = left + 'px';
+  portal.style.width = pw + 'px';
+
+  // Check if picker fits above; if not, show below
+  const ph = 420;
+  if (top - ph < 8) {
+    portal.style.top = (rect.bottom + 8) + 'px';
+    portal.style.bottom = 'auto';
+  } else {
+    portal.style.top = 'auto';
+    portal.style.bottom = (window.innerHeight - rect.top + 8) + 'px';
+  }
+
+  portal.classList.add('open');
+  _activePi = pi; _activeInsertAt = insertAt; _activePickerBtn = btn;
 }
 
+// Handle picker item clicks via delegation
+document.getElementById('blockPickerPortal').addEventListener('click', e => {
+  const item = e.target.closest('.block-picker-item');
+  if (!item) return;
+  const pi = parseInt(item.dataset.pi);
+  const insertAt = parseInt(item.dataset.insert);
+  const type = item.dataset.type;
+  document.getElementById('blockPickerPortal').classList.remove('open');
+  _activePi = null; _activeInsertAt = null; _activePickerBtn = null;
+  insertBlock(pi, insertAt, type);
+});
+
+// Close picker on outside click
 document.addEventListener('click', e => {
-  if (!e.target.closest('.add-block-btn') && !e.target.closest('.block-picker')) {
-    document.querySelectorAll('.block-picker.open').forEach(p => p.classList.remove('open'));
-  }
+  const portal = document.getElementById('blockPickerPortal');
+  if (!portal.classList.contains('open')) return;
+  if (e.target.closest('.add-block-btn') || e.target.closest('#blockPickerPortal')) return;
+  portal.classList.remove('open');
+  _activePi = null; _activeInsertAt = null; _activePickerBtn = null;
 });
 
 function insertBlock(pi, insertAt, type) {
-  // Close picker
-  document.querySelectorAll('.block-picker.open').forEach(p => p.classList.remove('open'));
+  // Close portal picker if open
+  const portal = document.getElementById('blockPickerPortal');
+  if (portal) portal.classList.remove('open');
+  _activePi = null; _activeInsertAt = null; _activePickerBtn = null;
   // Save current state
   collectBlocksFromDOM(pi);
   const blocks = projectBlocks[pi];
@@ -822,7 +886,7 @@ function insertBlock(pi, insertAt, type) {
   // Focus the new block
   setTimeout(() => {
     const newBi = insertAt;
-    const input = document.querySelector(`#block_item_${pi}_${newBi} .block-paragraph, #block_item_${pi}_${newBi} .block-h1, #block_item_${pi}_${newBi} .block-h2, #block_item_${pi}_${newBi} .block-h3, #block_item_${pi}_${newBi} .block-formula-input, #block_item_${pi}_${newBi} .block-code`);
+    const input = document.querySelector('#block_item_' + pi + '_' + newBi + ' .block-paragraph, #block_item_' + pi + '_' + newBi + ' .block-h1, #block_item_' + pi + '_' + newBi + ' .block-h2, #block_item_' + pi + '_' + newBi + ' .block-h3, #block_item_' + pi + '_' + newBi + ' .block-formula-input, #block_item_' + pi + '_' + newBi + ' .block-code');
     if (input) input.focus();
   }, 60);
 }
@@ -830,16 +894,26 @@ function insertBlock(pi, insertAt, type) {
 function makeBlockItem(pi, bi, block) {
   const item = document.createElement('div');
   item.className = 'block-item';
-  item.id = `block_item_${pi}_${bi}`;
-  item.draggable = true;
+  item.id = 'block_item_' + pi + '_' + bi;
+  item.dataset.blockId = block.id;
+  // NOTE: draggable is NOT on the item — only the handle fires drag events
+  // This prevents the drag API from stealing mouse clicks in textareas
 
-  // Drag handle
+  // Drag handle — only this element is draggable
   const handle = document.createElement('div');
   handle.className = 'block-drag-handle';
   handle.title = 'Drag to reorder';
   handle.innerHTML = '⠿';
-  handle.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', `${pi}:${bi}`); item.classList.add('dragging'); });
-  handle.addEventListener('dragend', () => item.classList.remove('dragging'));
+  handle.draggable = true;
+  handle.addEventListener('dragstart', e => {
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', pi + ':' + block.id);
+    setTimeout(() => item.classList.add('dragging'), 0);
+  });
+  handle.addEventListener('dragend', () => {
+    item.classList.remove('dragging');
+    document.querySelectorAll('.block-item.drag-over').forEach(el => el.classList.remove('drag-over'));
+  });
 
   // Delete button
   const delBtn = document.createElement('button');
@@ -848,7 +922,8 @@ function makeBlockItem(pi, bi, block) {
   delBtn.innerHTML = '✕';
   delBtn.onclick = () => {
     collectBlocksFromDOM(pi);
-    projectBlocks[pi].splice(bi, 1);
+    const idx = projectBlocks[pi].findIndex(b => b.id === block.id);
+    if (idx !== -1) projectBlocks[pi].splice(idx, 1);
     renderBlockList(pi);
     markUnsaved();
   };
@@ -862,18 +937,25 @@ function makeBlockItem(pi, bi, block) {
   item.appendChild(wrap);
   item.appendChild(delBtn);
 
-  // Drop target
-  item.addEventListener('dragover', e => { e.preventDefault(); item.classList.add('drag-over'); });
-  item.addEventListener('dragleave', () => item.classList.remove('drag-over'));
+  // Drop target — on the item itself (not the handle)
+  item.addEventListener('dragover', e => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; item.classList.add('drag-over'); });
+  item.addEventListener('dragleave', e => { if (!item.contains(e.relatedTarget)) item.classList.remove('drag-over'); });
   item.addEventListener('drop', e => {
     e.preventDefault();
     item.classList.remove('drag-over');
-    const [fromPi, fromBi] = e.dataTransfer.getData('text/plain').split(':').map(Number);
-    if (fromPi !== pi) return;
+    const data = e.dataTransfer.getData('text/plain');
+    const colonIdx = data.indexOf(':');
+    const fromPi = parseInt(data.slice(0, colonIdx));
+    const fromId = data.slice(colonIdx + 1);
+    if (fromPi !== pi || fromId === block.id) return;
     collectBlocksFromDOM(pi);
     const blocks = projectBlocks[pi];
-    const [moved] = blocks.splice(fromBi, 1);
-    blocks.splice(bi, 0, moved);
+    const fromIdx = blocks.findIndex(b => b.id === fromId);
+    const toIdx = blocks.findIndex(b => b.id === block.id);
+    if (fromIdx === -1 || toIdx === -1) return;
+    const [moved] = blocks.splice(fromIdx, 1);
+    const newToIdx = blocks.findIndex(b => b.id === block.id);
+    blocks.splice(newToIdx + 1, 0, moved);
     renderBlockList(pi);
     markUnsaved();
   });
@@ -1287,7 +1369,8 @@ function openPreview(i) {
   html += `</div>`;
   html += `<h2 style="font-family:'Syne',sans-serif;font-size:1.6rem;color:#f8fafc;margin-bottom:10px">${p.title||'Untitled'}</h2>`;
   if (p.tags) {
-    html += `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px">${p.tags.split(',').map(t=>`<span class="project-tag">${t.trim()}</span>`).join('')}</div>`;
+    const tagSpans = p.tags.split(',').map(function(t) { return '<span class="project-tag">' + t.trim() + '</span>'; }).join('');
+    html += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px">' + tagSpans + '</div>';
   }
   html += `<div class="project-rich-content">${renderBlocksToHTML(p.blocks||[])}</div>`;
   body.innerHTML = html;
@@ -1338,7 +1421,11 @@ function renderBlocksToHTML(blocks) {
     if (b.type === 'callout') return `<div style="padding:14px 18px;background:rgba(6,182,212,0.08);border-left:3px solid #06b6d4;border-radius:0 8px 8px 0;margin:12px 0">${b.icon||'💡'} ${b.content||''}</div>`;
     if (b.type === 'table') {
       const rows = b.data||[];
-      return `<div class="table-wrap"><table>${rows.map((r,ri)=>`<tr>${r.map(c=>ri===0?`<th>${c}</th>`:`<td>${c}</td>`).join('')}</tr>`).join('')}</table></div>`;
+      const tableRows = rows.map(function(r, ri) {
+        const cells = r.map(function(c) { return ri === 0 ? '<th>' + c + '</th>' : '<td>' + c + '</td>'; }).join('');
+        return '<tr>' + cells + '</tr>';
+      }).join('');
+      return '<div class="table-wrap"><table>' + tableRows + '</table></div>';
     }
     return '';
   }).join('\n');
