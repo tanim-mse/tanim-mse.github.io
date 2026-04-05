@@ -55,6 +55,395 @@ const DEFAULT_DATA = {
   ],
   "projects": [
     {
+      "title": "An Overview of the Raw Materials Used for Ceramic Bodies",
+      "excerpt": "This experiment presented a comprehensive study of the commonly used raw materials for ceramic body preparation. Various cerami…",
+      "featuredImage": "",
+      "tags": "Raw Materials, Ceramics, Academics",
+      "link": "#",
+      "date": "Apr 2026",
+      "status": "Ongoing",
+      "blocks": [
+        {
+          "type": "heading1",
+          "id": "agn56z1sodv",
+          "content": "Abstract"
+        },
+        {
+          "type": "paragraph",
+          "id": "erats6v6ymu",
+          "content": "This experiment presented a comprehensive study of the commonly used raw materials for ceramic body preparation. Various ceramic raw materials such as ball clay, china clay, quartz, feldspar, dolomite, talc, bone ash, pyrophyllite, wollastonite, alumina, zirconia, and others were examined with respect to their physical, chemical, and thermal properties. The role of each raw material in influencing plasticity, strength, thermal resistance, vitrification, and dimensional stability of ceramic bodies was discussed. The study emphasized that the proper selection and exact proportion of raw materials are crucial for designing ceramic bodies with desired performance characteristics."
+        },
+        {
+          "type": "heading1",
+          "id": "uh4tgrds3i",
+          "content": "Objectives"
+        },
+        {
+          "type": "paragraph",
+          "id": "qm2j6c6pnnm",
+          "content": "•\tTo identify different types of raw materials used in ceramic bodies.\n•\tTo understand the physical, chemical, and thermal properties of ceramic raw materials. \n•\tTo study the role and application of each raw material in ceramic body formulation.\n•\tTo relate ceramic raw materials to their real-life and industrial applications.\n"
+        },
+        {
+          "type": "heading1",
+          "id": "a8tq7sgsuo",
+          "content": "Introduction"
+        },
+        {
+          "type": "paragraph",
+          "content": "Ceramics are inorganic, non-metallic materials whose properties are strongly governed by their raw material composition. The quality, performance, and durability of a ceramic body depend not only on the type of raw materials used but also on their proportions and interactions during processing and firing. Ceramic materials are widely applied in daily life, including household items, construction, electronics, biomedical devices and advanced engineering systems.\nThis experiment focused on familiarizing students with a wide range of ceramic raw materials, their characteristics and their functional contributions to ceramic body design.",
+          "id": "u2u58ukuifj"
+        },
+        {
+          "type": "heading1",
+          "id": "46dbid6zege",
+          "content": "Theory"
+        },
+        {
+          "type": "paragraph",
+          "id": "2zy04j8qxzt",
+          "content": "Description of Ceramic Raw Materials: "
+        },
+        {
+          "type": "heading2",
+          "id": "im92kxh9ci",
+          "content": "Ball Clay"
+        },
+        {
+          "type": "image",
+          "id": "rhr52ph0pvo",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775412867/humyhflx8sqhg7u06zsr.jpg",
+          "caption": "Fig. 2.1: Ball Clay.",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "tashj2p4jsq",
+          "content": "Ball clay is a sedimentary kaolinitic clay composed mainly of kaolinite, mica, and quartz. It provides high plasticity and green strength, making it essential for shaping ceramic bodies, especially in sanitary ware and whiteware applications."
+        },
+        {
+          "type": "heading2",
+          "id": "3oz17g5zqke",
+          "content": "China Clay (Kaolin)"
+        },
+        {
+          "type": "image",
+          "id": "dzkmokwgykf",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775412983/nojlnjloijuomv4a9wdw.jpg",
+          "caption": "Fig. 2.2: China Clay.",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "0lec5wz03ojs",
+          "content": "China clay is a soft, white clay primarily composed of kaolinite. It exhibits high refractoriness, low plasticity, and good chemical stability, making it suitable for high-temperature ceramics, porcelain, and industrial applications."
+        },
+        {
+          "type": "heading2",
+          "id": "oju66p4f9z",
+          "content": "Quartz"
+        },
+        {
+          "type": "image",
+          "id": "7y2bm5nehbb",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775413053/l5llpovvwfprd1ucgsgp.jpg",
+          "caption": "Fig. 2.3: Quartz.",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "bgrxcisnce9",
+          "content": "Quartz (SiO₂) is a chemically stable and hard material that improves dimensional stability and controls shrinkage. It also contributes thermal resistance and is widely used in ceramics, glass, and electronic applications."
+        },
+        {
+          "type": "heading2",
+          "id": "fl6k04rzy3t",
+          "content": "Dolomite"
+        },
+        {
+          "type": "image",
+          "id": "kpj5opi76op",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775413125/iywepdzmtlvgojobtnpq.jpg",
+          "caption": "Fig. 2.4: Dolomite.",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "ok7pi2yisl",
+          "content": "Dolomite is a calcium-magnesium carbonate mineral that acts as a flux and improves mechanical strength. It enhances densification and is commonly used in ceramics, glass, construction, and biomedical materials."
+        },
+        {
+          "type": "heading2",
+          "id": "8p5x2qdk7j9",
+          "content": "Feldspar"
+        },
+        {
+          "type": "image",
+          "id": "xtp15c469tm",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775413242/bdvqitwmody6lbgqvvue.jpg",
+          "caption": "Fig. 2.5: Feldspar",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "7x0x5coio8c",
+          "content": "Feldspars are aluminosilicate minerals containing potassium, sodium, or calcium. They function as fluxes in ceramic bodies, lowering the melting temperature and promoting vitrification."
+        },
+        {
+          "type": "heading2",
+          "id": "81rntvrp1iq",
+          "content": "Talc"
+        },
+        {
+          "type": "image",
+          "id": "ujm2h8vdn58",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775413313/fbz6ripfnrhubfwhgtez.jpg",
+          "caption": "Fig. 2.6: Talc",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "yw37k6cc2i",
+          "content": "Talc is a hydrated magnesium silicate known for its softness and lubricating properties. In ceramics, it improves thermal shock resistance and reduces firing defects."
+        },
+        {
+          "type": "heading2",
+          "id": "c52ze60r2d5",
+          "content": "Bone Ash"
+        },
+        {
+          "type": "image",
+          "id": "twpu49nc0rd",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775413402/vdm3scttqijxmiyk3aob.jpg",
+          "caption": "Fig. 2.7: Bone Ash.",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "yod79dz6sso",
+          "content": "Bone ash is derived from calcined animal bones and mainly consists of calcium phosphate. It enhances translucency and strength and is a key raw material in bone china production."
+        },
+        {
+          "type": "heading2",
+          "id": "vo9pxceemhr",
+          "content": "Berylite"
+        },
+        {
+          "type": "paragraph",
+          "id": "5lz7fby9867",
+          "content": "Berylite is a hydrated beryllium silicate with high thermal conductivity and refractoriness. It provides electrical insulation and thermal stability in advanced ceramic applications."
+        },
+        {
+          "type": "heading2",
+          "id": "d1vkf3i9fmk",
+          "content": "Pyrophyllite"
+        },
+        {
+          "type": "image",
+          "id": "892m5fkqax5",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775413467/kkpgig2yhilme8lk4jsh.jpg",
+          "caption": "Fig. 2.8: Pyrophyllite",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "1eyjbliihspj",
+          "content": "Pyrophyllite is a phyllosilicate mineral with excellent thermal and chemical stability. It is used in refractories, fillers, and industrial ceramics due to its low thermal expansion."
+        },
+        {
+          "type": "heading2",
+          "id": "mc2aju43799",
+          "content": "Wollastonite"
+        },
+        {
+          "type": "image",
+          "id": "mh2pxhhzat",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775413655/enlseomkhblq3mfgdhmr.jpg",
+          "caption": "Fig. 2.9: Wollastonite",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "3xhcriepk6y",
+          "content": "Wollastonite is a calcium silicate mineral that improves mechanical strength, reduces shrinkage, and enhances thermal resistance. It is widely used in ceramics, plastics, paints, and biomedical materials."
+        },
+        {
+          "type": "heading2",
+          "id": "urcrmwrboxr",
+          "content": "Nepheline Syenite"
+        },
+        {
+          "type": "image",
+          "id": "108qxs7brp4o",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775413790/ggc5dsg2iexyhlyktswo.jpg",
+          "caption": "Fig. 2.10: Nepheline Syenite",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "85jk0dzvzg",
+          "content": "Nepheline syenite is a sodium- and potassium-rich aluminosilicate mineral used as an alternative flux in ceramics and glass manufacturing."
+        },
+        {
+          "type": "image",
+          "id": "0scieehny2sj",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775413855/twevxzivktxxqabuat7q.jpg",
+          "caption": "Fig. 2.11: Bentonite",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "7gly1t03t65",
+          "content": "Bentonite is a clay mineral used in small amounts to enhance plasticity and binding strength. It is widely applied in ceramics, casting, and civil engineering."
+        },
+        {
+          "type": "heading2",
+          "id": "zztzc3zf0in",
+          "content": "Tungsten Carbide"
+        },
+        {
+          "type": "image",
+          "id": "q66lffy5o4g",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775413939/beovwjqem7h283vhfprv.jpg",
+          "caption": "Fig. 2.12: Tungsten Carbide",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "vrdu24jre5a",
+          "content": "Tungsten carbide is an extremely hard ceramic material used for wear-resistant applications. Its  exceptional hardness makes it suitable for cutting tools and industrial components."
+        },
+        {
+          "type": "heading2",
+          "id": "ccais0d28ct",
+          "content": "Alumina (Al₂O₃)"
+        },
+        {
+          "type": "image",
+          "id": "51m2f3qrhce",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775414000/j41d7gylitrbhpvkmxx2.jpg",
+          "caption": "Fig. 2.13: Alumina (Al₂O₃)",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "mod286wtdia",
+          "content": "Alumina is a highly stable ceramic material with excellent hardness, thermal resistance, and chemical inertness. It is extensively used in electronics, aerospace, medical, and energy sectors."
+        },
+        {
+          "type": "heading2",
+          "id": "8f3n05m56cj",
+          "content": "Zirconia (ZrO₂)"
+        },
+        {
+          "type": "image",
+          "id": "02c0fezox90h",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775414056/brdrvlhvwt8yy3rygb5g.jpg",
+          "caption": "Fig. 2.14: Zirconia (ZrO₂)",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "0bqn9cx31noc",
+          "content": "Zirconia is known for its high fracture toughness and strength. Due to its polymorphic nature, it is widely  used in biomedical implants, thermal barrier coatings, and refractories."
+        },
+        {
+          "type": "heading2",
+          "id": "x54mtiywxs",
+          "content": "Titania (TiO₂)"
+        },
+        {
+          "type": "image",
+          "id": "ebmk09colw",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775414108/yz40k4kyfzesgt81jsi2.jpg",
+          "caption": "Fig. 2.15: Titania (TiO₂)",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "gmhng8lgc7",
+          "content": "Titania is a transition metal oxide with high refractoriness and photocatalytic properties. It finds applications in ceramics, environmental technology, and biomedical fields."
+        },
+        {
+          "type": "heading2",
+          "id": "h5wttmhl3i6",
+          "content": "Whiting"
+        },
+        {
+          "type": "image",
+          "id": "v6dygcckfkp",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775414174/frz2zypjgm6kmkhex2pm.jpg",
+          "caption": "Fig. 2.16: Whiting",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "dd7jwo0qy8k",
+          "content": "Whiting or calcium carbonate acts as a flux and filler in ceramic bodies. It improves brightness and is widely used in ceramic and agricultural applications."
+        },
+        {
+          "type": "heading2",
+          "id": "m1aroqwt2uh",
+          "content": "Spodumene"
+        },
+        {
+          "type": "image",
+          "id": "wxy73ij4kg",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775414231/qxjwc8uh8xsboychosk0.jpg",
+          "caption": "Fig. 2.17: Spodumene",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "tb508zkafkm",
+          "content": "Spodumene is a lithium aluminosilicate mineral used as a flux in ceramics and glass. It enhances thermal shock resistance and reduces firing temperature."
+        },
+        {
+          "type": "heading2",
+          "id": "qi0szeqoqt",
+          "content": "Grog"
+        },
+        {
+          "type": "image",
+          "id": "je7yj3ob4rr",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775414286/m0yf6uis66bxqzez7tok.jpg",
+          "caption": "Fig. 2.18: Grog",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "he40egmnrh",
+          "content": "Grog is produced by crushing pre-fired ceramic materials. It reduces shrinkage, improves thermal shock resistance, and enhances structural strength in ceramic bodies."
+        },
+        {
+          "type": "heading2",
+          "id": "dby134l2tan",
+          "content": "Cornwall Stone"
+        },
+        {
+          "type": "image",
+          "id": "wtbbzgzr2q8",
+          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775414342/tapkuigxdiepapoxsw7e.jpg",
+          "caption": "Fig. 2.19: Cornwall Stone",
+          "size": "small"
+        },
+        {
+          "type": "paragraph",
+          "id": "ue6ft50ob89",
+          "content": "Cornwall stone, also known as china stone, is a naturally occurring feldspathic material. It improves vitrification, reduces crazing, and is commonly used in clay bodies."
+        },
+        {
+          "type": "heading1",
+          "id": "staswmzqwab",
+          "content": "Conclusion"
+        },
+        {
+          "type": "paragraph",
+          "id": "v9g3hi0x7je",
+          "content": "This experiment vividly illuminated the pivotal role of raw materials in the captivating realm of ceramic engineering. It revealed that the performance of a ceramic body is intricately tied to its mineralogical and chemical composition, which acts as a foundational cornerstone of its capabilities. Achieving the desired mechanical, thermal, and physical properties requires an artful balancing act of plastic materials, fluxes, and fillers, like conducting a symphony where each element plays a vital role. Even the most subtle variations in raw material proportions can lead to strikingly different outcomes in ceramic behavior, akin to a delicate dance where precision is key. Therefore, cultivating a deep and nuanced understanding of ceramic raw materials is essential for crafting efficient, resilient, and high-performance ceramic systems that meet the demands of modern applications."
+        }
+      ]
+    },
+    {
       "title": "Modified Structural Design of Pit Furnace for Foundry: Mathematical Optimization for enhanced Performance",
       "excerpt": "Pit furnaces are vertical crucible furnaces commonly used in foundries for melting non-ferrous metals such as aluminum. A typic…",
       "featuredImage": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775388449/gjjhfweryrgosuk1gqdy.jpg",
@@ -92,7 +481,7 @@ const DEFAULT_DATA = {
           "type": "image",
           "id": "m2ymva7gyk",
           "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775388336/ujnhu6jwwpnqihjtnhje.jpg",
-          "caption": "",
+          "caption": "Fig. 1.1: Modified Pit Furnace with basic dimensioning. ",
           "size": "small"
         },
         {
