@@ -56,7 +56,7 @@ const DEFAULT_DATA = {
   "projects": [
     {
       "title": "Modified Structural Design of Pit Furnace for Foundry: Mathematical Optimization for enhanced Performance",
-      "excerpt": "Exciting projects are on the way. Check back soon!",
+      "excerpt": "Introduction",
       "featuredImage": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775388449/gjjhfweryrgosuk1gqdy.jpg",
       "tags": "Pit Furnace, Modified Design, Academics",
       "link": "#",
