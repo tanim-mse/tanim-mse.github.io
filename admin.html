@@ -685,10 +685,13 @@ function newBlock(type) {
   return b;
 }
 
-function loadProjects() {
-  collectAllProjectBlocks();
+function loadProjects(skipCollect) {
+  // Only collect DOM state if explicitly needed (not during addProject - data already saved)
+  if (!skipCollect) collectAllProjectBlocks();
   const pe = document.getElementById('projectsEditor');
   pe.innerHTML = '';
+  // Clear and rebuild projectBlocks cleanly from adminData
+  Object.keys(projectBlocks).forEach(k => delete projectBlocks[k]);
   (adminData.projects || []).forEach((p, i) => {
     // Migrate old desc-based projects to blocks
     if (!p.blocks || !p.blocks.length) {
@@ -698,7 +701,9 @@ function loadProjects() {
         p.blocks = [newBlock('paragraph')];
       }
     }
+    // Deep clone blocks to prevent reference sharing between projects
     projectBlocks[i] = p.blocks.map(b => ({ ...b, id: b.id || Math.random().toString(36).slice(2) }));
+    p.blocks = projectBlocks[i];
     pe.appendChild(buildProjectCard(p, i));
   });
 }
@@ -1481,7 +1486,8 @@ function addProject() {
   collectAllProjectBlocks();
   // Step 2: Clear all projectBlocks registry so nothing leaks into new project
   Object.keys(projectBlocks).forEach(k => delete projectBlocks[k]);
-  // Step 3: Create completely fresh project
+  // Step 3: Create completely fresh project with creation order number
+  const nextOrderNum = (adminData.projects || []).length + 1;
   const freshProject = {
     title: '',
     excerpt: '',
@@ -1490,6 +1496,7 @@ function addProject() {
     link: '#',
     date: '',
     status: 'Ongoing',
+    orderNum: nextOrderNum,
     blocks: [{ type: 'paragraph', id: Math.random().toString(36).slice(2), content: '' }]
   };
   // Step 4: Prepend to array
@@ -1499,8 +1506,8 @@ function addProject() {
     projectBlocks[i] = (p.blocks || []).map(b => ({ ...b, id: b.id || Math.random().toString(36).slice(2) }));
     p.blocks = projectBlocks[i];
   });
-  // Step 6: Re-render
-  loadProjects();
+  // Step 6: Re-render — pass true to skip collect (already done in step 1)
+  loadProjects(true);
   markUnsaved();
   setTimeout(() => {
     const pe = document.getElementById('projectsEditor');
@@ -1514,9 +1521,8 @@ function deleteProject(i) {
   const title = adminData.projects[i].title || `Project ${i+1}`;
   showModal('Delete Project', `Delete "${title}"?`, () => {
     collectAllProjectBlocks();
-    delete projectBlocks[i];
     adminData.projects.splice(i, 1);
-    loadProjects();
+    loadProjects(true);
     markUnsaved();
   });
 }
