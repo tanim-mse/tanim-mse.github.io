@@ -200,63 +200,51 @@
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<!-- Full-Page Project View (same background as site) -->
-<div class="project-page" id="projectPage">
-  <!-- Reading progress bar at top -->
-  <div class="proj-page-progress" id="projPageProgress"></div>
-
-  <!-- Sticky top bar -->
-  <div class="proj-page-topbar" id="projPageTopbar">
-    <button class="proj-page-back" onclick="closeProjectModal()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-      Back
-    </button>
-    <div class="proj-page-topbar-title" id="projTopbarTitle"></div>
-    <div class="proj-page-topbar-actions">
-      <button class="proj-page-copy-btn" id="projCopyBtn" onclick="copyProjectLink()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        Share
+<!-- Project Detail Modal -->
+<div class="project-modal-overlay" id="projectModalOverlay" role="dialog" aria-modal="true">
+  <div class="modal-progress-bar" id="modalProgressBar"></div>
+  <div class="project-modal" id="projectModal">
+    <button class="project-modal-close-fixed" onclick="closeProjectModal()" aria-label="Close">✕</button>
+    <div class="project-modal-header" id="projectModalHeader">
+      <div class="project-modal-header-left">
+        <div class="project-modal-badges" id="modalBadges"></div>
+        <div class="modal-title-wrap">
+          <h2 class="project-modal-title" id="modalProjectTitle"></h2>
+          <button class="modal-title-toggle" id="modalTitleToggle" onclick="toggleModalTitle()" style="display:none" aria-label="Expand title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+        </div>
+        <div class="project-modal-tags" id="modalTags"></div>
+        <div class="modal-meta-row">
+          <span class="modal-read-time" id="modalReadTime"></span>
+          <button class="modal-copy-link-btn" id="modalCopyLink" onclick="copyProjectLink()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            Copy Link
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="project-modal-body" id="projectModalBody">
+      <div id="modalFeaturedImage"></div>
+      <div class="project-rich-content" id="modalRichContent"></div>
+    </div>
+    <div class="project-modal-footer">
+      <button class="modal-close-btn" onclick="closeProjectModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to Projects
       </button>
-      <a href="#" class="proj-page-ext-btn" id="projExtLink" target="_blank" rel="noopener" style="display:none">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        External
+      <a href="#" class="modal-ext-link" id="modalExtLink" target="_blank" rel="noopener" style="display:none">
+        View Full Project
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
       </a>
     </div>
   </div>
-
-  <!-- Scrollable content -->
-  <div class="proj-page-scroll" id="projPageScroll">
-    <div class="proj-page-inner">
-      <!-- Featured image -->
-      <div id="projFeaturedImage"></div>
-
-      <!-- Header -->
-      <div class="proj-page-header">
-        <div class="proj-page-badges" id="projBadges"></div>
-        <h1 class="proj-page-title" id="projTitle"></h1>
-        <div class="proj-page-tags" id="projTags"></div>
-        <div class="proj-page-meta">
-          <span class="proj-page-readtime" id="projReadTime"></span>
-        </div>
-      </div>
-
-      <!-- ToC (desktop inline, visible when ≥3 headings) -->
-      <div class="proj-toc-inline" id="projTocInline" style="display:none">
-        <div class="proj-toc-label">Contents</div>
-        <div class="proj-toc-links" id="projTocLinks"></div>
-      </div>
-
-      <!-- Main rich content -->
-      <div class="project-rich-content proj-page-content" id="projContent"></div>
-
-      <!-- Footer nav -->
-      <div class="proj-page-footer">
-        <button class="proj-page-back-bottom" onclick="closeProjectModal()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-          Back to Projects
-        </button>
-      </div>
-    </div>
+  <div class="toc-btn-wrap" id="tocBtnWrap" style="display:none">
+    <button class="toc-toggle-btn" onclick="toggleToc()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      Contents
+    </button>
+    <div class="toc-panel" id="tocPanel"></div>
   </div>
 </div>
 
@@ -343,7 +331,7 @@ function renderBlocksToHTML(blocks){
     if(b.type==='heading2')return `<h2>${esc(b.content||'')}</h2>`;
     if(b.type==='heading3')return `<h3>${esc(b.content||'')}</h3>`;
     if(b.type==='image'&&b.src){const w=b.size==='small'?'40%':b.size==='full'?'100%':'70%';return `<div style="text-align:center;margin:20px 0"><img src="${b.src}" style="max-width:${w};border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.4);display:inline-block">${b.caption?`<p style="font-size:0.8rem;color:#64748b;font-style:italic;margin-top:8px">${esc(b.caption)}</p>`:''}</div>`;}
-    if(b.type==='formula'){try{const r=window.katex?window.katex.renderToString(b.latex||'',{throwOnError:false,displayMode:true}):`<code>${esc(b.latex||'')}</code>`;const notes=b.notes?`<p class="formula-notes-text">${esc(b.notes)}</p>`:'';return `<div class="formula-block">${r}</div>${notes}`;}catch(e){return `<div class="formula-block"><code>${esc(b.latex||'')}</code></div>`;}}
+    if(b.type==='formula'){try{const r=window.katex?window.katex.renderToString(b.latex||'',{throwOnError:false,displayMode:true}):`<code>${esc(b.latex||'')}</code>`;return `<div class="formula-block">${r}</div>`;}catch(e){return `<div class="formula-block"><code>${esc(b.latex||'')}</code></div>`;}}
     if(b.type==='code')return `<div class="code-block-wrap">${b.language?`<div class="code-lang-label">${esc(b.language)}</div>`:''}<pre><code>${esc(b.content||'')}</code></pre></div>`;
     if(b.type==='divider')return '<hr class="content-divider">';
     if(b.type==='callout')return `<div class="callout-block">${b.icon||'💡'} ${esc(b.content||'')}</div>`;
@@ -352,152 +340,60 @@ function renderBlocksToHTML(blocks){
   }).join('\n');
 }
 
-/* ═══ PROJECT FULL-PAGE VIEW ═══ */
-var _allProjects=[],_currentModalIdx=null;
+/* ═══ PROJECT MODAL ═══ */
+let _allProjects=[],_currentModalIdx=null,_titleCollapsed=false;
 
-function countWords(blocks){
-  if(!blocks)return 0;
-  return blocks.reduce(function(acc,b){
-    if(b.content)return acc+b.content.trim().split(/\s+/).filter(Boolean).length;
-    if(b.data)return acc+b.data.flat().join(' ').split(/\s+/).filter(Boolean).length;
-    return acc;
-  },0);
-}
+function countWords(blocks){if(!blocks)return 0;return blocks.reduce((acc,b)=>{if(b.content)return acc+b.content.trim().split(/\s+/).filter(Boolean).length;if(b.data)return acc+b.data.flat().join(' ').split(/\s+/).filter(Boolean).length;return acc;},0);}
 
 function openProjectModal(idx){
-  var p=_allProjects[idx];if(!p)return;
-  _currentModalIdx=idx;
-
-  // Badges
-  var sc={Ongoing:'status-ongoing',Completed:'status-completed',Paused:'status-paused'};
-  document.getElementById('projBadges').innerHTML=
-    (p.status?'<span class="project-status-badge '+( sc[p.status]||'status-ongoing')+'">'+p.status+'</span>':'')+
-    (p.date?'<span class="project-date-badge">'+p.date+'</span>':'');
-
-  // Title
-  document.getElementById('projTitle').textContent=p.title;
-  document.getElementById('projTopbarTitle').textContent=p.title;
-
-  // Tags
-  var tags=p.tags?p.tags.split(',').map(function(t){return t.trim();}).filter(Boolean):[];
-  document.getElementById('projTags').innerHTML=tags.map(function(t){return '<span class="project-tag">'+t+'</span>';}).join('');
-
-  // Read time
-  var mins=Math.max(1,Math.round(countWords(p.blocks||[])/200));
-  document.getElementById('projReadTime').innerHTML=
-    '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> '+mins+' min read';
-
-  // Featured image
-  var fi=document.getElementById('projFeaturedImage');
-  if(p.featuredImage){
-    fi.innerHTML='<div class="proj-feat-img-wrap"><img src="'+p.featuredImage+'" alt="'+p.title+'"><div class="proj-feat-img-fade"></div></div>';
-  } else fi.innerHTML='';
-
-  // Content
-  var html='';
-  if(p.blocks&&p.blocks.length) html=renderBlocksToHTML(p.blocks);
-  else if(p.desc) html=p.desc;
-  else html='<p style="color:#475569">No content yet.</p>';
-  document.getElementById('projContent').innerHTML=html;
-
-  // Table of Contents
+  const p=_allProjects[idx];if(!p)return;
+  _currentModalIdx=idx;_titleCollapsed=false;
+  const sc={Ongoing:'status-ongoing',Completed:'status-completed',Paused:'status-paused'};
+  document.getElementById('modalBadges').innerHTML=(p.status?`<span class="project-status-badge ${sc[p.status]||'status-ongoing'}">${p.status}</span>`:'')+( p.date?`<span class="project-date-badge">${p.date}</span>`:'');
+  const titleEl=document.getElementById('modalProjectTitle');
+  titleEl.textContent=p.title;titleEl.classList.remove('clamped');
+  const tog=document.getElementById('modalTitleToggle');tog.classList.remove('expanded');tog.style.display='none';
+  setTimeout(()=>{if(window.innerWidth<=640&&titleEl.scrollHeight>titleEl.clientHeight+4){titleEl.classList.add('clamped');tog.style.display='flex';}},60);
+  const tags=p.tags?p.tags.split(',').map(t=>t.trim()).filter(Boolean):[];
+  document.getElementById('modalTags').innerHTML=tags.map(t=>`<span class="project-tag">${t}</span>`).join('');
+  const mins=Math.max(1,Math.round(countWords(p.blocks||[])/200));
+  document.getElementById('modalReadTime').innerHTML=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${mins} min read`;
+  const fi=document.getElementById('modalFeaturedImage');
+  if(p.featuredImage){fi.innerHTML=`<div style="width:100%;max-height:240px;overflow:hidden;border-radius:10px;margin-bottom:24px;position:relative"><img src="${p.featuredImage}" style="width:100%;height:240px;object-fit:cover;border-radius:10px;display:block"><div style="position:absolute;bottom:0;left:0;right:0;height:100px;background:linear-gradient(transparent,rgba(13,13,28,0.9))"></div></div>`;}
+  else fi.innerHTML='';
+  let cHTML='';
+  if(p.blocks&&p.blocks.length)cHTML=renderBlocksToHTML(p.blocks);
+  else if(p.desc)cHTML=p.desc;
+  else cHTML='<p style="color:#475569">No content yet.</p>';
+  document.getElementById('modalRichContent').innerHTML=cHTML;
   buildToC(p.blocks||[]);
-
-  // External link
-  var el=document.getElementById('projExtLink');
-  if(p.link&&p.link!=='#'){el.href=p.link;el.style.display='inline-flex';}
-  else el.style.display='none';
-
-  // Show the full-page view
-  var page=document.getElementById('projectPage');
-  page.classList.add('open');
-  document.body.classList.add('proj-page-open');
-
-  // Reset scroll and progress
-  var scroll=document.getElementById('projPageScroll');
-  scroll.scrollTop=0;
-  document.getElementById('projPageProgress').style.width='0%';
-  scroll.onscroll=updateProgress;
-
-  // Compact topbar on scroll
-  document.getElementById('projPageTopbar').classList.remove('compact');
-
-  // Deep link
-  if(history.pushState) history.pushState({projectIdx:idx},'','#project-'+idx);
+  const el=document.getElementById('modalExtLink');
+  if(p.link&&p.link!=='#'){el.href=p.link;el.style.display='inline-flex';}else el.style.display='none';
+  document.getElementById('projectModalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  const body=document.getElementById('projectModalBody');body.scrollTop=0;
+  document.getElementById('modalProgressBar').style.width='0%';
+  body.onscroll=updateModalProgress;
+  if(history.replaceState)history.replaceState(null,'','#project-'+idx);
 }
 
-function updateProgress(){
-  var s=document.getElementById('projPageScroll');
-  if(!s)return;
-  var pct=s.scrollHeight<=s.clientHeight?100:Math.round((s.scrollTop/(s.scrollHeight-s.clientHeight))*100);
-  document.getElementById('projPageProgress').style.width=pct+'%';
-  // Compact topbar after 80px scroll
-  document.getElementById('projPageTopbar').classList.toggle('compact',s.scrollTop>80);
-}
+function toggleModalTitle(){_titleCollapsed=!_titleCollapsed;const el=document.getElementById('modalProjectTitle'),tog=document.getElementById('modalTitleToggle');if(_titleCollapsed){el.classList.remove('clamped');tog.classList.add('expanded');}else{el.classList.add('clamped');tog.classList.remove('expanded');}}
+function updateModalProgress(){const b=document.getElementById('projectModalBody');if(!b)return;const pct=b.scrollHeight<=b.clientHeight?100:Math.round((b.scrollTop/(b.scrollHeight-b.clientHeight))*100);document.getElementById('modalProgressBar').style.width=pct+'%';}
+function closeProjectModal(){document.getElementById('projectModalOverlay').classList.remove('open');document.body.style.overflow='';document.getElementById('modalProgressBar').style.width='0%';document.getElementById('tocPanel').classList.remove('open');document.getElementById('tocBtnWrap').style.display='none';_currentModalIdx=null;if(history.replaceState)history.replaceState(null,'',window.location.pathname);}
 
-function closeProjectModal(){
-  var page=document.getElementById('projectPage');
-  page.classList.remove('open');
-  document.body.classList.remove('proj-page-open');
-  _currentModalIdx=null;
-  if(history.replaceState) history.replaceState(null,'',window.location.pathname);
-}
-
-/* ToC — shown inline above content */
-function buildToC(blocks){
-  var hs=blocks.filter(function(b){return b.type==='heading1'||b.type==='heading2'||b.type==='heading3';});
-  var wrap=document.getElementById('projTocInline');
-  var linksEl=document.getElementById('projTocLinks');
-  if(hs.length<3){wrap.style.display='none';return;}
-  var content=document.getElementById('projContent');
-  content.querySelectorAll('h1,h2,h3').forEach(function(el,i){el.id='ph-'+i;});
-  linksEl.innerHTML=hs.map(function(b,i){
-    var cls=b.type==='heading2'?'toc-h2':b.type==='heading3'?'toc-h3':'';
-    return '<a class="toc-link '+cls+'" onclick="projScrollTo('ph-'+i+'');return false" href="#">'+(b.content||'')+'</a>';
-  }).join('');
-  wrap.style.display='block';
-}
-
-function projScrollTo(id){
-  var s=document.getElementById('projPageScroll');
-  var el=document.getElementById(id);
-  if(s&&el) s.scrollTo({top:el.offsetTop-80,behavior:'smooth'});
-}
+/* ToC */
+function buildToC(blocks){const hs=blocks.filter(b=>b.type==='heading1'||b.type==='heading2'||b.type==='heading3');const wrap=document.getElementById('tocBtnWrap'),panel=document.getElementById('tocPanel');if(hs.length<3||window.innerWidth<768){wrap.style.display='none';return;}const rc=document.getElementById('modalRichContent');rc.querySelectorAll('h1,h2,h3').forEach((el,i)=>el.id='mh-'+i);panel.innerHTML='<div class="toc-panel-title">Contents</div>'+hs.map((b,i)=>`<a class="toc-link ${b.type==='heading2'?'toc-h2':b.type==='heading3'?'toc-h3':''}" onclick="scrollToHeading('mh-${i}');return false" href="#">${b.content||''}</a>`).join('');wrap.style.display='flex';}
+function scrollToHeading(id){const b=document.getElementById('projectModalBody'),el=document.getElementById(id);if(b&&el)b.scrollTo({top:el.offsetTop-20,behavior:'smooth'});document.getElementById('tocPanel').classList.remove('open');}
+function toggleToc(){document.getElementById('tocPanel').classList.toggle('open');}
 
 /* Copy link */
-function copyProjectLink(){
-  if(_currentModalIdx===null)return;
-  var url=window.location.origin+window.location.pathname+'#project-'+_currentModalIdx;
-  navigator.clipboard.writeText(url).then(function(){
-    var btn=document.getElementById('projCopyBtn');
-    var orig=btn.innerHTML;
-    btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
-    btn.style.color='#6ee7b7';btn.style.borderColor='rgba(16,185,129,0.4)';
-    setTimeout(function(){btn.innerHTML=orig;btn.style.color='';btn.style.borderColor='';},2000);
-  }).catch(function(){showToast('Copy the URL from your browser address bar');});
-}
+function copyProjectLink(){if(_currentModalIdx===null)return;const url=window.location.origin+window.location.pathname+'#project-'+_currentModalIdx;navigator.clipboard.writeText(url).then(()=>{const btn=document.getElementById('modalCopyLink'),orig=btn.innerHTML;btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!';btn.classList.add('copied');setTimeout(()=>{btn.innerHTML=orig;btn.classList.remove('copied');},2000);}).catch(()=>showToast('Copy the URL from your browser address bar'));}
 
 /* Deep link */
-function checkDeepLink(){
-  var m=window.location.hash.match(/^#project-(\d+)$/);
-  if(m){var idx=parseInt(m[1]);if(_allProjects[idx])setTimeout(function(){openProjectModal(idx);},400);}
-}
+function checkDeepLink(){const m=window.location.hash.match(/^#project-(\d+)$/);if(m){const idx=parseInt(m[1]);if(_allProjects[idx])setTimeout(()=>openProjectModal(idx),500);}}
 
-/* Browser back button */
-window.addEventListener('popstate',function(e){
-  if(document.getElementById('projectPage').classList.contains('open')){
-    document.getElementById('projectPage').classList.remove('open');
-    document.body.classList.remove('proj-page-open');
-    _currentModalIdx=null;
-  }
-});
-
-document.addEventListener('keydown',function(e){
-  if(e.key==='Escape'&&document.getElementById('projectPage').classList.contains('open')){
-    closeProjectModal();
-  }
-  if(e.key==='Escape') closeProjectsDrawer();
-});
+document.getElementById('projectModalOverlay').addEventListener('click',function(e){if(e.target===this)closeProjectModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeProjectModal();closeProjectsDrawer();}});
 
 /* ═══ PROJECTS DRAWER ═══ */
 let _activeTagFilter='';
@@ -505,7 +401,7 @@ function openProjectsDrawer(){buildDrawer(_allProjects);document.getElementById(
 function closeProjectsDrawer(){document.getElementById('projectsDrawer').classList.remove('open');document.getElementById('projectsDrawerOverlay').classList.remove('open');document.body.style.overflow='';}
 function buildDrawer(projects){document.getElementById('drawerCount').textContent=projects.length+' project'+(projects.length!==1?'s':'');const allTags=new Set();projects.forEach(p=>{if(p.tags)p.tags.split(',').forEach(t=>allTags.add(t.trim()));});document.getElementById('drawerTagsFilter').innerHTML=['All',...allTags].map(tag=>`<button class="drawer-tag-btn ${(tag==='All'&&!_activeTagFilter)||tag===_activeTagFilter?'active':''}" onclick="setTagFilter('${tag==='All'?'':tag}')">${tag}</button>`).join('');filterDrawerProjects(document.getElementById('drawerSearch').value);}
 function setTagFilter(tag){_activeTagFilter=tag;buildDrawer(_allProjects);}
-function filterDrawerProjects(query){const q=query.toLowerCase();const filtered=_allProjects.filter(p=>{const mQ=!q||p.title.toLowerCase().includes(q)||(p.tags||'').toLowerCase().includes(q)||(p.excerpt||'').toLowerCase().includes(q);const mT=!_activeTagFilter||(p.tags||'').split(',').map(t=>t.trim()).includes(_activeTagFilter);return mQ&&mT;});const list=document.getElementById('projectsDrawerList');if(!filtered.length){list.innerHTML='<div style="text-align:center;padding:40px;color:#475569">No projects found</div>';return;}list.innerHTML=filtered.map(p=>{const ri=_allProjects.indexOf(p);const sc={Ongoing:'status-ongoing',Completed:'status-completed',Paused:'status-paused'};const tags=p.tags?p.tags.split(',').map(t=>t.trim()).filter(Boolean):[];const ex=smartExcerpt(p);return `<div class="drawer-project-row" onclick="closeProjectsDrawer();openProjectModal(${ri})"><div class="drawer-row-left">${p.featuredImage?`<img src="${p.featuredImage}" class="drawer-thumb" alt="">`:'<div class="drawer-thumb-placeholder">📄</div>'}</div><div class="drawer-row-body"><div class="drawer-row-top"><h3 class="drawer-row-title">${p.title}</h3><div style="display:flex;gap:6px;flex-shrink:0">${p.status?`<span class="project-status-badge ${sc[p.status]||'status-ongoing'}">${p.status}</span>`:''}${p.date?`<span class="project-date-badge">${p.date}</span>`:''}</div></div>${ex?`<p class="drawer-row-excerpt">${ex}</p>`:''}<div class="drawer-row-tags">${tags.slice(0,4).map(t=>`<span class="project-tag">${t}</span>`).join('')}</div></div><svg class="drawer-row-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>`;}).join('');}
+function filterDrawerProjects(query){const q=query.toLowerCase();const filtered=_allProjects.filter(p=>{const mQ=!q||p.title.toLowerCase().includes(q)||(p.tags||'').toLowerCase().includes(q)||(p.excerpt||'').toLowerCase().includes(q);const mT=!_activeTagFilter||(p.tags||'').split(',').map(t=>t.trim()).includes(_activeTagFilter);return mQ&&mT;});const list=document.getElementById('projectsDrawerList');if(!filtered.length){list.innerHTML='<div style="text-align:center;padding:40px;color:#475569">No projects found</div>';return;}list.innerHTML=filtered.map(p=>{const ri=_allProjects.indexOf(p);const sc={Ongoing:'status-ongoing',Completed:'status-completed',Paused:'status-paused'};const tags=p.tags?p.tags.split(',').map(t=>t.trim()).filter(Boolean):[];const ex=smartExcerpt(p);return `<div class="drawer-project-row" onclick="closeProjectsDrawer();setTimeout(()=>openProjectModal(${ri}),300)"><div class="drawer-row-left">${p.featuredImage?`<img src="${p.featuredImage}" class="drawer-thumb" alt="">`:'<div class="drawer-thumb-placeholder">📄</div>'}</div><div class="drawer-row-body"><div class="drawer-row-top"><h3 class="drawer-row-title">${p.title}</h3><div style="display:flex;gap:6px;flex-shrink:0">${p.status?`<span class="project-status-badge ${sc[p.status]||'status-ongoing'}">${p.status}</span>`:''}${p.date?`<span class="project-date-badge">${p.date}</span>`:''}</div></div>${ex?`<p class="drawer-row-excerpt">${ex}</p>`:''}<div class="drawer-row-tags">${tags.slice(0,4).map(t=>`<span class="project-tag">${t}</span>`).join('')}</div></div><svg class="drawer-row-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>`;}).join('');}
 
 /* ═══ RENDER ═══ */
 const PROJECTS_INITIAL_SHOW=6;
