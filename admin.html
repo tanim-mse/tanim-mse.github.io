@@ -219,7 +219,14 @@
 
 /* Drag state */
 .block-item.dragging { opacity: 0.4; }
-.block-item.drag-over { border-top: 2px solid #7c3aed; }
+.block-item.drag-over-top { border-top: 2px solid #7c3aed; }
+.block-item.drag-over-bottom { border-bottom: 2px solid #7c3aed; }
+.block-formula-notes {
+  width: 100%; background: transparent; border: none; outline: none;
+  color: #64748b; font-family: 'DM Sans', sans-serif; font-size: 0.82rem;
+  font-style: italic; line-height: 1.5; resize: none; padding: 0;
+}
+.block-formula-notes::placeholder { color: #1e293b; }
 </style>
 </head>
 <body>
@@ -948,12 +955,20 @@ function makeBlockItem(pi, bi, block) {
   item.appendChild(wrap);
   item.appendChild(delBtn);
 
-  // Drop target — on the item itself (not the handle)
-  item.addEventListener('dragover', e => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; item.classList.add('drag-over'); });
-  item.addEventListener('dragleave', e => { if (!item.contains(e.relatedTarget)) item.classList.remove('drag-over'); });
+  // Drop target — visual indicator shows above/below target
+  item.addEventListener('dragover', e => {
+    e.preventDefault(); e.dataTransfer.dropEffect = 'move';
+    const mid = item.getBoundingClientRect().top + item.getBoundingClientRect().height / 2;
+    item.classList.remove('drag-over-top','drag-over-bottom');
+    item.classList.add(e.clientY < mid ? 'drag-over-top' : 'drag-over-bottom');
+  });
+  item.addEventListener('dragleave', e => {
+    if (!item.contains(e.relatedTarget)) item.classList.remove('drag-over-top','drag-over-bottom');
+  });
   item.addEventListener('drop', e => {
     e.preventDefault();
-    item.classList.remove('drag-over');
+    const dropAbove = item.classList.contains('drag-over-top');
+    item.classList.remove('drag-over-top','drag-over-bottom');
     const data = e.dataTransfer.getData('text/plain');
     const colonIdx = data.indexOf(':');
     const fromPi = parseInt(data.slice(0, colonIdx));
@@ -962,11 +977,11 @@ function makeBlockItem(pi, bi, block) {
     collectBlocksFromDOM(pi);
     const blocks = projectBlocks[pi];
     const fromIdx = blocks.findIndex(b => b.id === fromId);
-    const toIdx = blocks.findIndex(b => b.id === block.id);
-    if (fromIdx === -1 || toIdx === -1) return;
+    const toIdx   = blocks.findIndex(b => b.id === block.id);
+    if (fromIdx === -1 || toIdx === -1 || fromIdx === toIdx) return;
     const [moved] = blocks.splice(fromIdx, 1);
     const newToIdx = blocks.findIndex(b => b.id === block.id);
-    blocks.splice(newToIdx + 1, 0, moved);
+    blocks.splice(dropAbove ? newToIdx : newToIdx + 1, 0, moved);
     renderBlockList(pi);
     markUnsaved();
   });
@@ -1079,6 +1094,21 @@ function buildBlockContent(pi, bi, block) {
     inputRow.appendChild(inp);
     fWrap.appendChild(inputRow);
     fWrap.appendChild(preview);
+    // Notes/variable definitions field
+    const notesRow = document.createElement('div');
+    notesRow.style.cssText = 'padding:0 12px 10px;border-top:1px solid rgba(124,58,237,0.1)';
+    const notesLabel = document.createElement('div');
+    notesLabel.style.cssText = 'font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#475569;padding:8px 0 4px';
+    notesLabel.textContent = 'Variable definitions (optional)';
+    const notesInp = document.createElement('textarea');
+    notesInp.className = 'block-formula-notes';
+    notesInp.placeholder = 'e.g. Where Q = heat input (kW), T = temperature (°C), η = efficiency';
+    notesInp.value = block.notes || '';
+    notesInp.rows = 2;
+    notesInp.oninput = () => markUnsaved();
+    notesRow.appendChild(notesLabel);
+    notesRow.appendChild(notesInp);
+    fWrap.appendChild(notesRow);
     wrap.appendChild(fWrap);
 
   } else if (block.type === 'code') {
@@ -1404,6 +1434,8 @@ function collectBlocksFromDOM(pi) {
     } else if (block.type === 'formula') {
       const inp = item.querySelector('.block-formula-input');
       if (inp) block.latex = inp.value;
+      const notes = item.querySelector('.block-formula-notes');
+      if (notes) block.notes = notes.value;
     } else if (block.type === 'code') {
       const lang = item.querySelector('.block-code-lang');
       const code = item.querySelector('.block-code');
@@ -1445,8 +1477,12 @@ function collectAllProjectBlocks() {
 /* ── Featured Image ── */
 /* ── Project CRUD ── */
 function addProject() {
+  // Step 1: Save all current DOM state to adminData first
   collectAllProjectBlocks();
-  adminData.projects.unshift({
+  // Step 2: Clear all projectBlocks registry so nothing leaks into new project
+  Object.keys(projectBlocks).forEach(k => delete projectBlocks[k]);
+  // Step 3: Create completely fresh project
+  const freshProject = {
     title: '',
     excerpt: '',
     featuredImage: '',
@@ -1454,15 +1490,23 @@ function addProject() {
     link: '#',
     date: '',
     status: 'Ongoing',
-    blocks: [newBlock('paragraph')]
+    blocks: [{ type: 'paragraph', id: Math.random().toString(36).slice(2), content: '' }]
+  };
+  // Step 4: Prepend to array
+  adminData.projects.unshift(freshProject);
+  // Step 5: Rebuild projectBlocks from clean adminData
+  (adminData.projects || []).forEach((p, i) => {
+    projectBlocks[i] = (p.blocks || []).map(b => ({ ...b, id: b.id || Math.random().toString(36).slice(2) }));
+    p.blocks = projectBlocks[i];
   });
+  // Step 6: Re-render
   loadProjects();
   markUnsaved();
   setTimeout(() => {
     const pe = document.getElementById('projectsEditor');
     if (pe) pe.scrollIntoView({ behavior: 'smooth', block: 'start' });
     const firstTitle = document.getElementById('pt_0');
-    if (firstTitle) { firstTitle.focus(); }
+    if (firstTitle) firstTitle.focus();
   }, 100);
 }
 
