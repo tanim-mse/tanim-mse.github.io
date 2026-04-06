@@ -446,7 +446,7 @@ const DEFAULT_DATA = {
     {
       "title": "Modified Structural Design of Pit Furnace for Foundry: Mathematical Optimization for enhanced Performance",
       "excerpt": "Pit furnaces are vertical crucible furnaces commonly used in foundries for melting non-ferrous metals such as aluminum. A typic…",
-      "featuredImage": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775388449/gjjhfweryrgosuk1gqdy.jpg",
+      "featuredImage": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775470806/m4ump4gdqpeqnlqkdspr.jpg",
       "tags": "Pit Furnace, Modified Design, Academics",
       "link": "#",
       "date": "Apr 2026",
