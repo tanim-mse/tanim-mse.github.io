@@ -552,7 +552,8 @@ const DEFAULT_DATA = {
         {
           "type": "formula",
           "id": "x0l2mww4gjj",
-          "latex": " Q_{\\text{input}} = Q_{\\text{useful}} + Q_{\\text{wall}} + Q_{\\text{exhaust}} + Q_{\\text{other}} "
+          "latex": " Q_{\\text{input}} = Q_{\\text{useful}} + Q_{\\text{wall}} + Q_{\\text{exhaust}} + Q_{\\text{other}} ",
+          "notes": ""
         },
         {
           "type": "paragraph",
@@ -562,7 +563,8 @@ const DEFAULT_DATA = {
         {
           "type": "formula",
           "id": "22m4twffnnd",
-          "latex": " Q_{\\text{other}} = includes opening/radiation losses (minimized by sealing)"
+          "latex": " Q_{\\text{other}} = includes opening/radiation losses (minimized by sealing)",
+          "notes": ""
         },
         {
           "type": "heading3",
@@ -577,32 +579,38 @@ const DEFAULT_DATA = {
         {
           "type": "formula",
           "id": "r0ps63fbitr",
-          "latex": " \\eta = \\frac{Q_{\\text{useful}}}{Q_{\\text{input}}} \\times 100\\% "
+          "latex": " \\eta = \\frac{Q_{\\text{useful}}}{Q_{\\text{input}}} \\times 100\\% ",
+          "notes": ""
         },
         {
           "type": "formula",
           "id": "gw9a2sxdow",
-          "latex": " Q_{\\text{useful}} = M_{\\text{metal}} \\times (C_p \\Delta T + L_f) = 20.06 \\text{ MJ} "
+          "latex": " Q_{\\text{useful}} = M_{\\text{metal}} \\times (C_p \\Delta T + L_f) = 20.06 \\text{ MJ} ",
+          "notes": ""
         },
         {
           "type": "formula",
           "id": "63skm4kqjfy",
-          "latex": "M_{\\text{metal}} = 20 \\text{ kg}"
+          "latex": "M_{\\text{metal}} = 20 \\text{ kg}",
+          "notes": ""
         },
         {
           "type": "formula",
           "id": "i8t70fpbt8",
-          "latex": "C_p \\approx 0.9 \\text{ J/kg.K} "
+          "latex": "C_p \\approx 0.9 \\text{ J/kg.K} ",
+          "notes": ""
         },
         {
           "type": "formula",
           "id": "nhyozu98mi",
-          "latex": "\\Delta T = 670 \\text{ K}   "
+          "latex": "\\Delta T = 670 \\text{ K}   ",
+          "notes": ""
         },
         {
           "type": "formula",
           "id": "xq1cjqtjngp",
-          "latex": " L_f = 400 \\text{ kJ/kg} "
+          "latex": " L_f = 400 \\text{ kJ/kg} ",
+          "notes": ""
         },
         {
           "type": "paragraph",
@@ -612,7 +620,8 @@ const DEFAULT_DATA = {
         {
           "type": "formula",
           "id": "w6mo6ex8mxi",
-          "latex": " Q_{\\text{wall}} = \\frac{\\Delta T}{R_{\\text{total}}} \\quad \\begin{cases} \\Delta T = 870 \\text{ K} \\\\ H = 1.35 \\text{ m} \\\\ h_0 = 15 \\text{ W/m}^2 \\text{ K} \\end{cases} "
+          "latex": " Q_{\\text{wall}} = \\frac{\\Delta T}{R_{\\text{total}}} \\quad \\begin{cases} \\Delta T = 870 \\text{ K} \\\\ H = 1.35 \\text{ m} \\\\ h_0 = 15 \\text{ W/m}^2 \\text{ K} \\end{cases} ",
+          "notes": ""
         },
         {
           "type": "heading1",
