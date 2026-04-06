@@ -202,6 +202,8 @@
 
 <!-- Full-Page Project View (same background as site) -->
 <div class="project-page" id="projectPage">
+  <!-- Scroll wrapper — contains progress + topbar + content -->
+  <div class="proj-page-scroll" id="projPageScroll">
   <!-- Reading progress bar at top -->
   <div class="proj-page-progress" id="projPageProgress"></div>
 
@@ -224,8 +226,7 @@
     </div>
   </div>
 
-  <!-- Scrollable content -->
-  <div class="proj-page-scroll" id="projPageScroll">
+  <!-- Scrollable content inner -->
     <div class="proj-page-inner">
       <!-- Featured image -->
       <div id="projFeaturedImage"></div>
@@ -417,7 +418,8 @@ function openProjectModal(idx){
   var scroll=document.getElementById('projPageScroll');
   scroll.scrollTop=0;
   document.getElementById('projPageProgress').style.width='0%';
-  scroll.onscroll=updateProgress;
+  scroll.removeEventListener('scroll', updateProgress);
+  scroll.addEventListener('scroll', updateProgress);
 
   // Compact topbar on scroll
   document.getElementById('projPageTopbar').classList.remove('compact');
@@ -431,7 +433,6 @@ function updateProgress(){
   if(!s)return;
   var pct=s.scrollHeight<=s.clientHeight?100:Math.round((s.scrollTop/(s.scrollHeight-s.clientHeight))*100);
   document.getElementById('projPageProgress').style.width=pct+'%';
-  // Compact topbar after 80px scroll
   document.getElementById('projPageTopbar').classList.toggle('compact',s.scrollTop>80);
 }
 

@@ -616,39 +616,48 @@ h1,h2,h3,h4 { font-family: var(--font-head); font-weight: 700; line-height: 1.2;
   position: fixed;
   inset: 0;
   z-index: 500;
-  display: flex;
+  display: none;
   flex-direction: column;
   opacity: 0;
   pointer-events: none;
-  transform: translateX(40px);
-  transition: opacity .35s var(--ease), transform .35s var(--ease);
-  /* No background — canvas shows through */
+  transform: translateX(30px);
+  transition: opacity .3s var(--ease), transform .3s var(--ease);
+  visibility: hidden;
+  background: var(--bg);
 }
 .project-page.open {
+  display: flex;
   opacity: 1;
   pointer-events: auto;
   transform: translateX(0);
+  visibility: visible;
+  animation: projPageIn .3s var(--ease) forwards;
+}
+@keyframes projPageIn {
+  from { opacity:0; transform:translateX(30px); }
+  to   { opacity:1; transform:translateX(0); }
 }
 /* When project page is open, hide the main scroll but keep canvas */
 body.proj-page-open { overflow: hidden; }
 
 /* Reading progress bar */
 .proj-page-progress {
-  position: fixed;
+  position: sticky;
   top: 0; left: 0;
   height: 3px;
   width: 0%;
   background: linear-gradient(90deg, var(--violet), var(--cyan));
-  z-index: 502;
+  z-index: 3;
   transition: width .15s linear;
   pointer-events: none;
+  flex-shrink: 0;
 }
 
 /* ── Sticky top bar ── */
 .proj-page-topbar {
-  position: fixed;
+  position: sticky;
   top: 0; left: 0; right: 0;
-  z-index: 501;
+  z-index: 2;
   height: 60px;
   display: flex;
   align-items: center;
@@ -705,13 +714,13 @@ body.proj-page-open { overflow: hidden; }
 
 /* ── Scrollable area ── */
 .proj-page-scroll {
-  position: fixed;
-  inset: 0;
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  padding-top: 60px;
   scrollbar-width: thin;
   scrollbar-color: rgba(124,58,237,0.3) transparent;
+  display: flex;
+  flex-direction: column;
 }
 .proj-page-scroll::-webkit-scrollbar { width: 5px; }
 .proj-page-scroll::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.3); border-radius: 3px; }
@@ -720,9 +729,8 @@ body.proj-page-open { overflow: hidden; }
 .proj-page-inner {
   max-width: 780px;
   margin: 0 auto;
-  padding: 40px 24px 80px;
-  position: relative;
-  z-index: 1;
+  padding: 32px 24px 80px;
+  flex: 1;
 }
 
 /* Featured image banner */
@@ -887,7 +895,7 @@ body.proj-page-open { overflow: hidden; }
 
 /* ── Mobile ── */
 @media (max-width: 640px) {
-  .proj-page-inner { padding: 24px 16px 60px; }
+  .proj-page-inner { padding: 20px 16px 60px; }
   .proj-page-topbar { padding: 0 14px; }
   .proj-page-back span { display: none; }
   .proj-page-title { font-size: 1.4rem; }
