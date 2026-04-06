@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
 <link rel="stylesheet" href="admin.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
 /* ── Setup / Login screens ── */
 .setup-screen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:#080810}
@@ -227,6 +228,42 @@
   font-style: italic; line-height: 1.5; resize: none; padding: 0;
 }
 .block-formula-notes::placeholder { color: #1e293b; }
+
+/* ── PDF Import bar ── */
+.pdf-import-bar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; margin-bottom: 12px;
+  background: rgba(124,58,237,0.06);
+  border: 1px solid rgba(124,58,237,0.18);
+  border-radius: 10px; flex-wrap: wrap;
+}
+.pdf-import-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 8px; cursor: pointer;
+  font-size: 0.8rem; font-weight: 600;
+  background: rgba(124,58,237,0.15);
+  border: 1px solid rgba(124,58,237,0.3);
+  color: #c4b5fd; transition: all .2s; flex-shrink: 0;
+}
+.pdf-import-btn:hover { background: rgba(124,58,237,0.25); }
+.pdf-import-hint { font-size: 0.75rem; color: #475569; }
+/* PDF progress overlay */
+.pdf-progress-overlay {
+  position: fixed; inset: 0; z-index: 10000;
+  background: rgba(0,0,0,0.75); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+}
+.pdf-progress-box {
+  background: #0f0f1e; border: 1px solid rgba(124,58,237,0.3);
+  border-radius: 20px; padding: 36px 40px; min-width: 340px;
+  text-align: center;
+}
+.pdf-progress-title { font-family: 'Syne',sans-serif; font-size: 1.1rem; font-weight: 700; color: #f8fafc; margin-bottom: 8px; }
+.pdf-progress-sub { font-size: 0.82rem; color: #64748b; margin-bottom: 24px; }
+.pdf-progress-bar-wrap { background: rgba(255,255,255,0.06); border-radius: 50px; height: 6px; overflow: hidden; margin-bottom: 14px; }
+.pdf-progress-bar-fill { height: 100%; background: linear-gradient(90deg,#7c3aed,#06b6d4); border-radius: 50px; transition: width .3s; }
+.pdf-progress-status { font-size: 0.8rem; color: #7c3aed; font-weight: 600; }
+
 </style>
 </head>
 <body>
@@ -773,6 +810,14 @@ function buildProjectCard(p, i) {
       </div>
       <div class="field-group full">
         <label class="field-label">Content</label>
+        <div class="pdf-import-bar">
+          <label class="pdf-import-btn" id="pdf_import_btn_${i}" title="Import content from a PDF file">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            Import from PDF
+            <input type="file" accept=".pdf" style="display:none" onchange="importPDF(${i}, this)">
+          </label>
+          <span class="pdf-import-hint">Extracts headings, paragraphs & formulas in sequence</span>
+        </div>
         <p class="field-note" style="margin-bottom:10px">Click <strong style="color:#7c3aed">+</strong> between blocks to add text, headings, images, formulas, tables and more.</p>
         <div class="block-editor">
           <div class="block-list" id="block_list_${i}"></div>
@@ -1730,6 +1775,167 @@ function showToast(msg,type='success'){const t=document.getElementById('adminToa
 function esc(str){return String(str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 window.addEventListener('beforeunload',e=>{if(hasUnsaved){e.preventDefault();e.returnValue='';}});
 
+
+
+/* ═══════════════════════════════════════════
+   PDF IMPORT — extracts content into blocks
+═══════════════════════════════════════════ */
+async function importPDF(pi, input) {
+  const file = input.files[0];
+  if (!file) return;
+  input.value = ''; // reset so same file can be re-imported
+
+  // Set up PDF.js worker
+  if (window.pdfjsLib) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  } else {
+    showToast('PDF.js not loaded — please refresh and try again.', 'error');
+    return;
+  }
+
+  // Show progress overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'pdf-progress-overlay';
+  overlay.innerHTML = `
+    <div class="pdf-progress-box">
+      <div class="pdf-progress-title">📄 Importing PDF</div>
+      <div class="pdf-progress-sub" id="pdf_prog_sub">Reading file…</div>
+      <div class="pdf-progress-bar-wrap">
+        <div class="pdf-progress-bar-fill" id="pdf_prog_bar" style="width:0%"></div>
+      </div>
+      <div class="pdf-progress-status" id="pdf_prog_status">Starting…</div>
+    </div>`;
+  document.body.appendChild(overlay);
+
+  const setSub = t => { const el = document.getElementById('pdf_prog_sub'); if(el) el.textContent = t; };
+  const setBar = p => { const el = document.getElementById('pdf_prog_bar'); if(el) el.style.width = p + '%'; };
+  const setStatus = t => { const el = document.getElementById('pdf_prog_status'); if(el) el.textContent = t; };
+
+  try {
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    const totalPages = pdf.numPages;
+    const newBlocks = [];
+
+    for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+      setSub(`Analysing page ${pageNum} of ${totalPages}…`);
+      setBar(Math.round((pageNum / totalPages) * 85));
+      setStatus(`Page ${pageNum} / ${totalPages}`);
+
+      const page = await pdf.getPage(pageNum);
+      const textContent = await page.getTextContent();
+      const viewport = page.getViewport({ scale: 1.0 });
+      const pageHeight = viewport.height;
+
+      // Group items by Y position (same line = same item)
+      const lines = [];
+      let currentLine = null;
+      const YTHRESH = 3; // px tolerance for same line
+
+      for (const item of textContent.items) {
+        if (!item.str || !item.str.trim()) continue;
+        const y = Math.round(pageHeight - item.transform[5]); // flip Y
+        const fontSize = Math.abs(item.transform[3]) || 12;
+        const text = item.str;
+
+        if (currentLine && Math.abs(currentLine.y - y) < YTHRESH) {
+          currentLine.text += ' ' + text;
+          currentLine.fontSize = Math.max(currentLine.fontSize, fontSize);
+        } else {
+          if (currentLine) lines.push(currentLine);
+          currentLine = { y, text: text.trim(), fontSize };
+        }
+      }
+      if (currentLine) lines.push(currentLine);
+
+      // Convert lines to blocks
+      let paraBuffer = '';
+      for (const line of lines) {
+        const t = line.text.trim();
+        if (!t) continue;
+        const fs = line.fontSize;
+
+        // Classify by font size
+        if (fs >= 18) {
+          // Flush paragraph buffer first
+          if (paraBuffer.trim()) {
+            newBlocks.push({ type: 'paragraph', id: uid(), content: paraBuffer.trim() });
+            paraBuffer = '';
+          }
+          newBlocks.push({ type: 'heading1', id: uid(), content: t });
+        } else if (fs >= 14) {
+          if (paraBuffer.trim()) {
+            newBlocks.push({ type: 'paragraph', id: uid(), content: paraBuffer.trim() });
+            paraBuffer = '';
+          }
+          newBlocks.push({ type: 'heading2', id: uid(), content: t });
+        } else if (fs >= 12.5) {
+          if (paraBuffer.trim()) {
+            newBlocks.push({ type: 'paragraph', id: uid(), content: paraBuffer.trim() });
+            paraBuffer = '';
+          }
+          newBlocks.push({ type: 'heading3', id: uid(), content: t });
+        } else {
+          // Detect possible formula: contains = with surrounding symbols, or Greek chars
+          const isFormula = /[=∫∑∏√αβγδεθλμπρσφψω±≤≥≠∞∂]/.test(t) && t.length < 200;
+          if (isFormula && !paraBuffer) {
+            newBlocks.push({ type: 'formula', id: uid(), latex: t, notes: '' });
+          } else {
+            // Accumulate paragraph (join consecutive normal lines)
+            if (paraBuffer) paraBuffer += ' ' + t;
+            else paraBuffer = t;
+            // Flush when line seems like end of paragraph (ends with . ! ?)
+            if (/[.!?]$/.test(t) && paraBuffer.length > 120) {
+              newBlocks.push({ type: 'paragraph', id: uid(), content: paraBuffer.trim() });
+              paraBuffer = '';
+            }
+          }
+        }
+      }
+      // Flush remaining paragraph
+      if (paraBuffer.trim()) {
+        newBlocks.push({ type: 'paragraph', id: uid(), content: paraBuffer.trim() });
+      }
+    }
+
+    setSub('Finalising blocks…');
+    setBar(95);
+
+    if (!newBlocks.length) {
+      document.body.removeChild(overlay);
+      showToast('No readable text found in this PDF.', 'error');
+      return;
+    }
+
+    // Save current blocks then append PDF blocks
+    collectBlocksFromDOM(pi);
+    const existing = projectBlocks[pi] || [];
+    // If the project only has one empty block, replace it; otherwise append
+    const isEmpty = existing.length === 1 && existing[0].type === 'paragraph' && !existing[0].content;
+    projectBlocks[pi] = isEmpty ? newBlocks : [...existing, { type:'divider', id:uid() }, ...newBlocks];
+    adminData.projects[pi].blocks = projectBlocks[pi];
+    renderBlockList(pi);
+    markUnsaved();
+
+    setBar(100);
+    setSub(`Done! ${newBlocks.length} blocks imported.`);
+    setStatus(`✓ ${totalPages} pages processed`);
+    setTimeout(() => {
+      document.body.removeChild(overlay);
+      showToast(`✓ Imported ${newBlocks.length} blocks from ${totalPages} page${totalPages>1?'s':''}.`, 'success');
+    }, 1200);
+
+  } catch (err) {
+    document.body.removeChild(overlay);
+    console.error('PDF import error:', err);
+    showToast('Failed to read PDF: ' + (err.message || 'Unknown error'), 'error');
+  }
+}
+
+function uid() {
+  return Math.random().toString(36).slice(2) + Date.now().toString(36);
+}
 
 </script>
 </body>
