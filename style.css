@@ -1237,3 +1237,219 @@ body::after {
 .section-alt {
   transition: background 0.5s;
 }
+
+
+/* ══════════════════════════════════════════════════════
+   LOADING SCREEN
+══════════════════════════════════════════════════════ */
+.loader-screen {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #03030a;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: all;
+}
+.loader-inner {
+  position: relative;
+  width: 80px; height: 80px;
+  display: flex; align-items: center; justify-content: center;
+}
+.loader-ring {
+  position: absolute; inset: 0;
+  width: 80px; height: 80px;
+}
+.loader-ring-fill {
+  stroke-dasharray: 213.6;
+  stroke-dashoffset: 213.6;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+.loader-logo {
+  font-family: var(--font-head);
+  font-size: 1.3rem; font-weight: 800;
+  background: var(--grad-text);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative; z-index: 1;
+}
+.loader-wipe-top,
+.loader-wipe-bot {
+  position: fixed; left: 0; right: 0;
+  height: 50%; background: #03030a;
+  transform-origin: top center;
+  z-index: 9998;
+}
+.loader-wipe-top { top: 0; transform-origin: top center; }
+.loader-wipe-bot { bottom: 0; transform-origin: bottom center; }
+
+/* ══════════════════════════════════════════════════════
+   MSE EASTER EGG CANVAS
+══════════════════════════════════════════════════════ */
+.mse-canvas {
+  position: fixed; inset: 0; z-index: 8000;
+  display: none;
+  background: rgba(3,3,10,0.92);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+.mse-hint {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.75rem; color: rgba(255,255,255,0.3);
+  opacity: 0;
+  transition: opacity 1s;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.mse-hint span { letter-spacing: 0.1em; text-transform: uppercase; }
+.mse-hint kbd {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 5px;
+  background: rgba(124,58,237,0.2); border: 1px solid rgba(124,58,237,0.3);
+  font-family: var(--font-head); font-size: 0.75rem; font-weight: 700;
+  color: #c4b5fd;
+}
+
+/* ══════════════════════════════════════════════════════
+   HERO LETTER SPLIT ANIMATION
+══════════════════════════════════════════════════════ */
+.hero-char {
+  display: inline-block;
+  opacity: 0;
+  animation: charDrop 0.7s var(--ease-spring) both;
+}
+@keyframes charDrop {
+  from { transform: translateY(-60px) rotate(-8deg); opacity: 0; }
+  to   { transform: translateY(0)     rotate(0deg);  opacity: 1; }
+}
+/* Override hero-name for the char spans */
+.hero-name .hero-char {
+  -webkit-text-fill-color: transparent;
+  background: linear-gradient(100deg,#a78bfa 0%,#60a5fa 35%,#22d3ee 55%,#a78bfa 75%,#60a5fa 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* ══════════════════════════════════════════════════════
+   CARD HOVER SPOTLIGHT
+══════════════════════════════════════════════════════ */
+.project-card {
+  --mx: 50%; --my: 50%;
+}
+.project-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: var(--radius);
+  background: radial-gradient(240px circle at var(--mx) var(--my),
+    rgba(124,58,237,0.13), transparent 70%);
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+  z-index: 0;
+}
+.project-card:hover::before { opacity: 1; }
+/* Keep card content above spotlight */
+.project-card > * { position: relative; z-index: 1; }
+
+/* ══════════════════════════════════════════════════════
+   CLIP-PATH SECTION TITLE REVEAL
+══════════════════════════════════════════════════════ */
+.section-title {
+  clip-path: inset(0 100% 0 0);
+  /* GSAP will animate this */
+}
+
+/* ══════════════════════════════════════════════════════
+   HERO SIZE UPGRADE
+══════════════════════════════════════════════════════ */
+.hero-name {
+  font-size: clamp(4.5rem, 12vw, 8rem) !important;
+  text-shadow: 0 0 80px rgba(124,58,237,0.25), 0 0 160px rgba(6,182,212,0.1);
+}
+.section-title {
+  font-size: clamp(2.4rem, 6vw, 3.8rem) !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   CANVAS BACKGROUND UPGRADE
+   (bgCanvas now handles full background - no more body::after grain fighting it)
+══════════════════════════════════════════════════════ */
+#bgCanvas { z-index: 0; }
+body { background: #03030a; }
+
+/* ══════════════════════════════════════════════════════
+   SECTION SCANLINE (subtle depth on alt sections)
+══════════════════════════════════════════════════════ */
+.section-alt::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(255,255,255,0.007) 3px,
+    rgba(255,255,255,0.007) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+.section-alt { position: relative; }
+.section-alt .container { position: relative; z-index: 1; }
+
+/* ══════════════════════════════════════════════════════
+   CONTACT FORM — animated border-bottom on scroll
+══════════════════════════════════════════════════════ */
+.form-input, .form-textarea {
+  border-bottom: 1px solid transparent;
+  transition: border-color .4s, background .3s, box-shadow .3s;
+}
+.form-input:focus, .form-textarea:focus {
+  border-bottom-color: var(--violet);
+}
+
+/* ══════════════════════════════════════════════════════
+   SEND BUTTON HEARTBEAT
+══════════════════════════════════════════════════════ */
+.btn-send {
+  animation: heartbeat 2.5s ease-in-out 4s infinite;
+}
+.btn-send:hover { animation: none; }
+@keyframes heartbeat {
+  0%,100% { box-shadow: 0 4px 24px rgba(124,58,237,0.35); }
+  14%     { box-shadow: 0 4px 40px rgba(124,58,237,0.6);  }
+  28%     { box-shadow: 0 4px 24px rgba(124,58,237,0.35); }
+  42%     { box-shadow: 0 4px 40px rgba(124,58,237,0.55); }
+}
+
+/* ══════════════════════════════════════════════════════
+   CURSOR — "OPEN" label on project card hover
+══════════════════════════════════════════════════════ */
+.has-custom-cursor .project-card:hover ~ #cursorRing::after,
+.cursor-ring.on-card::after {
+  content: 'OPEN';
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.55rem; font-weight: 800; letter-spacing: 0.1em;
+  color: var(--violet-light);
+  font-family: var(--font-head);
+}
+
+/* ══════════════════════════════════════════════════════
+   MOBILE OVERRIDES
+══════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .hero-name { font-size: clamp(3rem, 15vw, 5rem) !important; }
+  .section-title { font-size: clamp(1.8rem, 8vw, 2.8rem) !important; }
+  .mse-hint { display: none; }
+  .loader-screen { display: none; }
+  .section-alt::after { display: none; }
+}
+
+/* Clip path reset for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .section-title { clip-path: none !important; }
+  .hero-char { animation: none !important; opacity: 1 !important; }
+  .loader-screen { display: none !important; }
+}
