@@ -330,11 +330,12 @@ function resizeCanvas() {
 }
 
 /* ── Zoom-in intro state ── */
-let introZoom   = 2.8;   // starts zoomed in, lerps to 1
-let introAlpha  = 0;     // canvas fades from black
-let introActive = true;
-const INTRO_DUR = 2200;  // ms
-let introStart  = null;
+let introActive  = false;  // triggered externally after loader fades
+let introStart   = null;
+const INTRO_DUR  = 3800;   // ms — long, dramatic zoom
+const INTRO_ZOOM_START = 7.0;  // very zoomed in
+/* Canvas hidden until intro starts (no blank flash) */
+let canvasReady  = false;
 
 /* ── Stars — realistic magnitude distribution ── */
 const isMob      = window.matchMedia('(pointer:coarse)').matches;
@@ -688,28 +689,33 @@ function spaceDraw(ts) {
   lastTime = ts;
   aT += dt;
 
-  /* Smooth intro zoom */
-  let zoom = 1, globalAlpha = 1;
+  /* Zoom-in intro — only runs when triggered */
+  let zoom = 1;
+  if (!canvasReady) {
+    /* Canvas fully hidden until intro starts */
+    ctx.clearRect(0, 0, W, H);
+    requestAnimationFrame(spaceDraw);
+    return;
+  }
   if (introActive) {
     if (!introStart) introStart = ts;
-    const pct = Math.min((ts - introStart) / INTRO_DUR, 1);
-    /* ease-out cubic */
-    const eased = 1 - Math.pow(1 - pct, 3);
-    zoom        = 2.8 - eased * 1.8;   /* 2.8 → 1.0 */
-    globalAlpha = eased;               /* 0 → 1 */
-    if (pct >= 1) introActive = false;
+    const pct    = Math.min((ts - introStart) / INTRO_DUR, 1);
+    /* Smooth custom ease: fast start, slow settle */
+    const eased  = 1 - Math.pow(1 - pct, 2.5);
+    zoom         = INTRO_ZOOM_START - eased * (INTRO_ZOOM_START - 1.0);
+    if (pct >= 1) { introActive = false; zoom = 1; }
   }
 
   ctx.clearRect(0, 0, W, H);
 
-  /* Apply zoom transform from centre */
+  /* Apply zoom transform anchored to hero focal point */
   ctx.save();
-  if (zoom !== 1) {
-    ctx.translate(W * 0.5, H * 0.44);
+  if (zoom > 1.001) {
+    const fx = W * 0.5, fy = H * 0.38;  // focal point — galaxy centre
+    ctx.translate(fx, fy);
     ctx.scale(zoom, zoom);
-    ctx.translate(-W * 0.5, -H * 0.44);
+    ctx.translate(-fx, -fy);
   }
-  ctx.globalAlpha = globalAlpha;
 
   /* Lerp state */
   mouseX += (targetMX - mouseX) * 0.055;
@@ -794,8 +800,7 @@ function spaceDraw(ts) {
   /* ── Meteors ── */
   drawMeteors(dt);
 
-  ctx.restore(); // end zoom transform
-
+  ctx.restore(); /* end zoom transform */
   requestAnimationFrame(spaceDraw);
 }
 
@@ -830,9 +835,6 @@ if (!isTouchDevice && dot) {
    GSAP ANIMATIONS
 ══════════════════════════════════════════════ */
 gsap.registerPlugin(ScrollTrigger);
-
-// Hero name letter split (runs immediately, animation starts from runLoader)
-splitHeroName();
 
 // Split-text reveal for section titles
 function initSplitReveals() {
@@ -1263,8 +1265,9 @@ function splitHeroName() {
   const el = document.getElementById('heroName');
   if (!el || !el.textContent.trim()) return;
   const text = el.textContent;
-  el.innerHTML = text.split('').map((ch, i) =>
-    `<span class="hero-char" style="display:inline-block;animation-delay:${0.05+i*0.06}s">${ch === ' ' ? '&nbsp;' : ch}</span>`
+  /* No CSS animation — GSAP drives everything. Start invisible. */
+  el.innerHTML = text.split('').map(ch =>
+    `<span class="hero-char" style="display:inline-block;opacity:0;transform:translateY(-30px)">${ch === ' ' ? '&nbsp;' : ch}</span>`
   ).join('');
 }
 
@@ -1285,18 +1288,28 @@ function initClipReveals() {
    ENHANCED GSAP ANIMATIONS (upgraded versions)
 ══════════════════════════════════════════════ */
 function initHeroAnim() {
-  const tl = gsap.timeline({ delay: 1.6 });
-  tl.fromTo('.hero-label',
-      { y: 24, autoAlpha: 0 }, { y:0, autoAlpha:1, duration:0.6, ease:'power3.out' })
-    .fromTo('.hero-char',
-      { y: -40, autoAlpha:0, rotation:-6 },
-      { y:0, autoAlpha:1, rotation:0, duration:0.55, ease:'back.out(1.4)', stagger:0.04 }, '-=0.2')
-    .fromTo('.hero-typewriter',
-      { y:16, autoAlpha:0 }, { y:0, autoAlpha:1, duration:0.45, ease:'power2.out' }, '-=0.15')
-    .fromTo('.hero-sub',
-      { y:16, autoAlpha:0 }, { y:0, autoAlpha:1, duration:0.45, ease:'power2.out' }, '-=0.25')
-    .fromTo('.hero-btns',
-      { y:16, autoAlpha:0 }, { y:0, autoAlpha:1, duration:0.45, ease:'power2.out' }, '-=0.25');
+  /* Split the name FIRST so .hero-char spans exist */
+  splitHeroName();
+
+  /* Hide everything immediately — no flash before GSAP controls it */
+  gsap.set('.hero-label', { autoAlpha: 0, y: 24 });
+  gsap.set('.hero-char',  { autoAlpha: 0, y: -35, rotation: -5 });
+  gsap.set('.hero-typewriter', { autoAlpha: 0, y: 18 });
+  gsap.set('.hero-sub',  { autoAlpha: 0, y: 18 });
+  gsap.set('.hero-btns', { autoAlpha: 0, y: 18 });
+
+  /* Animate in — no delay needed, loader already waited */
+  const tl = gsap.timeline({ delay: 0.2 });
+  tl.to('.hero-label',
+      { autoAlpha:1, y:0, duration:0.65, ease:'power3.out' })
+    .to('.hero-char',
+      { autoAlpha:1, y:0, rotation:0, duration:0.55, ease:'back.out(1.5)', stagger:0.045 }, '-=0.25')
+    .to('.hero-typewriter',
+      { autoAlpha:1, y:0, duration:0.45, ease:'power2.out' }, '-=0.15')
+    .to('.hero-sub',
+      { autoAlpha:1, y:0, duration:0.45, ease:'power2.out' }, '-=0.28')
+    .to('.hero-btns',
+      { autoAlpha:1, y:0, duration:0.45, ease:'power2.out' }, '-=0.28');
 }
 
 /* ══════════════════════════════════════════════
@@ -1304,26 +1317,39 @@ function initHeroAnim() {
 ══════════════════════════════════════════════ */
 function runLoader() {
   const loader = document.getElementById('loaderScreen');
-  if (!loader) return;
 
-  /* Animate ring stroke */
+  /* No loader element — still need to trigger everything */
+  if (!loader) {
+    canvasReady  = true;
+    introActive  = true;
+    setTimeout(initHeroAnim, INTRO_DUR * 0.6);
+    return;
+  }
+
+  /* Phase 1: Ring draws (0.85s) */
   const ring = loader.querySelector('.loader-ring-fill');
   if (ring) {
     const circ = 2 * Math.PI * 34;
     ring.style.strokeDasharray  = circ;
     ring.style.strokeDashoffset = circ;
-    gsap.to(ring, { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut' });
+    gsap.to(ring, { strokeDashoffset: 0, duration: 0.85, ease: 'power2.inOut' });
   }
 
-  /* After ring finishes: fade loader out as zoom-into-space begins */
+  /* Phase 2: Loader fades out quickly (0 → invisible in 0.45s, starting at 0.9s) */
   gsap.to(loader, {
     autoAlpha: 0,
-    duration: 0.9,
-    ease: 'power2.inOut',
-    delay: 1.25,
+    duration: 0.45,
+    ease: 'power2.in',
+    delay: 0.9,
     onComplete: () => {
       loader.style.display = 'none';
-      initHeroAnim();
+
+      /* Phase 3: Canvas zoom-into-space begins NOW — visible, dramatic */
+      canvasReady = true;
+      introActive = true;
+
+      /* Phase 4: Hero text appears 60% into the zoom (feels like arriving) */
+      setTimeout(initHeroAnim, INTRO_DUR * 0.58);
     }
   });
 }
