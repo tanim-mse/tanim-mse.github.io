@@ -1784,14 +1784,10 @@ async function importPDF(pi, input) {
   const file = input.files[0];
   if (!file) return;
   input.value = '';
-
-  if (!window.pdfjsLib) {
-    showToast('PDF.js not loaded — please refresh and try again.', 'error'); return;
-  }
+  if (!window.pdfjsLib) { showToast('PDF.js not loaded — refresh and try again.', 'error'); return; }
   pdfjsLib.GlobalWorkerOptions.workerSrc =
     'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-  /* ── Progress overlay ── */
   const overlay = document.createElement('div');
   overlay.className = 'pdf-progress-overlay';
   overlay.innerHTML = `<div class="pdf-progress-box">
@@ -1808,128 +1804,136 @@ async function importPDF(pi, input) {
   try {
     const buf = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
-    const totalPages = pdf.numPages;
+    const N = pdf.numPages;
 
-    /* ═══ PASS 1: collect ALL text items across all pages to find body font size ═══ */
-    ppSub('Analysing font sizes…');
-    ppBar(5);
-    const allItems = [];
-    for (let pg = 1; pg <= totalPages; pg++) {
+    /* ══ PASS 1: collect all text items to find body font size (modal) ══ */
+    ppSub('Detecting font sizes…'); ppBar(5);
+    const fsTally = {};
+    for (let pg = 1; pg <= N; pg++) {
       const page = await pdf.getPage(pg);
       const tc = await page.getTextContent();
-      const vp = page.getViewport({ scale: 1.0 });
       for (const item of tc.items) {
         if (!item.str || !item.str.trim()) continue;
-        const fs = Math.round(Math.abs(item.transform[3]) * 10) / 10; // 1dp precision
-        allItems.push({ fs, text: item.str.trim(),
-          y: Math.round(vp.height - item.transform[5]),
-          x: Math.round(item.transform[4]),
-          pg });
+        const fs = Math.round(Math.abs(item.transform[3]));
+        fsTally[fs] = (fsTally[fs] || 0) + item.str.trim().length; // weight by char count
       }
     }
-
-    /* Find modal (most common) font size = body text size */
-    const fsCounts = {};
-    for (const it of allItems) {
-      const k = Math.round(it.fs); // round to integer for grouping
-      fsCounts[k] = (fsCounts[k] || 0) + 1;
+    // Body font = size with most character weight
+    let bodyFS = 11, bestWeight = 0;
+    for (const [k, v] of Object.entries(fsTally)) {
+      if (v > bestWeight) { bestWeight = v; bodyFS = parseFloat(k); }
     }
-    // Body size = most frequent font size
-    let bodyFS = 12;
-    let maxCount = 0;
-    for (const [k, v] of Object.entries(fsCounts)) {
-      if (v > maxCount) { maxCount = v; bodyFS = parseFloat(k); }
-    }
-    // Heading thresholds RELATIVE to body size
-    const H3_MIN = bodyFS * 1.05; // slightly larger than body
-    const H2_MIN = bodyFS * 1.20; // 20% larger
-    const H1_MIN = bodyFS * 1.45; // 45% larger
+    // Safety clamp: body font usually 9-14pt
+    if (bodyFS < 8) bodyFS = 11;
+    const H1 = bodyFS * 1.5;  // headings must be significantly larger
+    const H2 = bodyFS * 1.25;
+    const H3 = bodyFS * 1.10;
+    ppStatus(`Body: ~${bodyFS}pt | H1>=${H1.toFixed(1)} H2>=${H2.toFixed(1)}`);
+    ppBar(12);
 
-    ppStatus(`Body font: ~${bodyFS}pt detected`);
-    ppBar(15);
-
-    /* ═══ PASS 2: extract and merge text page by page ═══ */
+    /* ══ PASS 2: extract blocks page by page ══ */
     const allBlocks = [];
 
-    for (let pg = 1; pg <= totalPages; pg++) {
-      ppSub(`Processing page ${pg} of ${totalPages}…`);
-      ppBar(15 + Math.round((pg / totalPages) * 75));
-      ppStatus(`Page ${pg} / ${totalPages}`);
+    for (let pg = 1; pg <= N; pg++) {
+      ppSub(`Page ${pg} / ${N}…`);
+      ppBar(12 + Math.round((pg / N) * 80));
+      ppStatus(`Processing page ${pg}`);
 
       const page = await pdf.getPage(pg);
       const tc = await page.getTextContent();
       const vp = page.getViewport({ scale: 1.0 });
       const pageH = vp.height;
 
-      /* ── Group raw items into visual lines (same Y ± 3px) ── */
-      const lines = [];
+      /* Step A: flatten all items with position */
+      const raw = [];
       for (const item of tc.items) {
-        if (!item.str || !item.str.trim()) continue;
-        const y = Math.round(pageH - item.transform[5]);
-        const fs = Math.abs(item.transform[3]);
+        if (!item.str) continue;
+        const s = item.str.replace(/\x00/g, '').replace(/\uFFFD/g, '');
+        if (!s.trim()) continue;
+        raw.push({
+          x: item.transform[4],
+          y: pageH - item.transform[5],   // flip so y increases downward
+          fs: Math.abs(item.transform[3]),
+          bold: item.fontName && (item.fontName.toLowerCase().includes('bold') || item.fontName.includes('B')),
+          text: s
+        });
+      }
+
+      /* Step B: sort by Y then X (visual reading order) */
+      raw.sort((a, b) => {
+        const dy = a.y - b.y;
+        return Math.abs(dy) < 4 ? a.x - b.x : dy;
+      });
+
+      /* Step C: group into visual lines (same Y ± 4px) */
+      const lines = [];
+      for (const item of raw) {
         const last = lines[lines.length - 1];
-        if (last && Math.abs(last.y - y) <= 3) {
+        if (last && Math.abs(last.y - item.y) <= 4) {
           const joiner = last.text.endsWith('-') ? '' : ' ';
-          last.text += joiner + item.str;
-          last.fs = Math.max(last.fs, fs);
+          last.text += joiner + item.text;
+          last.fs = Math.max(last.fs, item.fs);
+          last.bold = last.bold || item.bold;
         } else {
-          lines.push({ y, text: item.str, fs });
+          lines.push({ y: item.y, text: item.text, fs: item.fs, bold: item.bold });
         }
       }
 
-      /* ── Classify lines → blocks ── */
+      /* Step D: classify lines → blocks */
       let paraLines = [];
-      let prevY = null;
-      const PARA_GAP = Math.round(bodyFS * 1.8); // gap bigger than 1.8× line height = new para
+      let prevY = -1;
+      const LINE_H = bodyFS * 1.35;          // typical single line height
+      const PARA_GAP = bodyFS * 2.2;         // gap indicating new paragraph
 
       const flushPara = () => {
         if (!paraLines.length) return;
-        // Join lines, fix hyphenation artifacts from PDF line-wrap
-        let joined = '';
-        for (let i = 0; i < paraLines.length; i++) {
-          const l = paraLines[i];
-          if (i === 0) { joined = l; continue; }
-          joined = joined.endsWith('-') ? joined.slice(0, -1) + l : joined + ' ' + l;
-        }
-        joined = joined.replace(/\s+/g, ' ').trim();
-        if (joined.length > 2) allBlocks.push({ type:'paragraph', id:uid(), content:joined });
+        // Join and clean up PDF text artifacts
+        let text = paraLines.join(' ')
+          .replace(/\s+/g, ' ')
+          .replace(/- ([a-z])/g, '$1')       // fix "non- metallic" → "nonmetallic"
+          .replace(/([a-z])- ([A-Z])/g, '$1 $2') // fix sentence-end hyphen
+          .trim();
+        if (text.length > 2) allBlocks.push({ type:'paragraph', id:uid(), content:text });
         paraLines = [];
       };
 
       for (const line of lines) {
         const t = line.text.replace(/\s+/g, ' ').trim();
-        if (!t) { flushPara(); prevY = null; continue; }
+        if (!t || t.length < 2) { flushPara(); prevY = -1; continue; }
 
-        const fs = line.fs;
-        const gap = prevY !== null ? (line.y - prevY) : 0;
-        const bigGap = prevY !== null && gap > PARA_GAP;
+        const gap = prevY >= 0 ? (line.y - prevY) : 0;
+        const bigGap = gap > PARA_GAP;
 
-        /* Bullet detection */
-        const bulletMatch = t.match(/^([•●▸▹\-–—]|\d{1,2}[\.\)])\s+(.+)/);
+        // Heading detection: larger font OR bold + slightly larger
+        const isH1 = line.fs >= H1;
+        const isH2 = line.fs >= H2 || (line.bold && line.fs >= H2 * 0.9);
+        const isH3 = line.fs >= H3 || (line.bold && line.fs >= H3 * 0.9 && !isH2);
 
-        /* Formula detection — only if line is short AND has math symbols */
-        const hasMath = /[=∫∑∏√±≤≥≠∞∂αβγδεθλμπρσφψω²³]/.test(t);
-        const isFormula = hasMath && t.length < 180
-          && !/\b(the|and|that|this|with|from|for|are|was|were|have|been|which)\b/i.test(t);
+        // Bullet detection
+        const bulletM = t.match(/^([•●■▸◦\-–]\s+|\d{1,2}[.)]\s+)(.+)/);
 
-        if (fs >= H1_MIN) {
+        // Formula: has math symbols, no long English words, reasonable length
+        const mathSyms = /[=∫∑∏√±≤≥≠≈∞∂∇×·αβγδεζηθιλμνπρσφψωΑΒΓΔΘΛΞΠΣΦΨΩ²³⁴]/.test(t);
+        const noLongWords = !/\b[a-zA-Z]{6,}\b.{0,30}\b[a-zA-Z]{6,}\b/.test(t);
+        const isFormula = mathSyms && noLongWords && t.length < 200 && !isH1 && !isH2 && !isH3;
+
+        if (isH1) {
           flushPara();
           allBlocks.push({ type:'heading1', id:uid(), content:t });
-        } else if (fs >= H2_MIN) {
+        } else if (isH2) {
           flushPara();
           allBlocks.push({ type:'heading2', id:uid(), content:t });
-        } else if (fs >= H3_MIN) {
+        } else if (isH3) {
           flushPara();
           allBlocks.push({ type:'heading3', id:uid(), content:t });
-        } else if (bulletMatch) {
+        } else if (bulletM) {
           flushPara();
-          allBlocks.push({ type:'paragraph', id:uid(), content:'• ' + bulletMatch[2].trim() });
+          allBlocks.push({ type:'paragraph', id:uid(), content:'• ' + bulletM[2].trim() });
         } else if (isFormula) {
           flushPara();
           allBlocks.push({ type:'formula', id:uid(), latex:t, notes:'' });
         } else {
-          /* Normal paragraph text — accumulate until gap or heading */
-          if (bigGap) flushPara();
+          if (bigGap && paraLines.length) flushPara();
           paraLines.push(t);
         }
         prevY = line.y;
@@ -1937,37 +1941,34 @@ async function importPDF(pi, input) {
       flushPara();
     }
 
-    ppBar(95); ppSub('Inserting blocks…');
+    ppBar(96); ppSub('Inserting blocks…');
 
     if (!allBlocks.length) {
       document.body.removeChild(overlay);
-      showToast('No text found — is this a scanned PDF?', 'error'); return;
+      showToast('No text extracted — may be a scanned/image PDF.', 'error');
+      return;
     }
 
-    /* Insert into project */
     collectBlocksFromDOM(pi);
     const existing = projectBlocks[pi] || [];
-    const isEmpty = existing.length === 1
-      && existing[0].type === 'paragraph' && !existing[0].content;
-    projectBlocks[pi] = isEmpty
-      ? allBlocks
-      : [...existing, { type:'divider', id:uid() }, ...allBlocks];
+    const isEmpty = existing.length === 1 && existing[0].type === 'paragraph' && !existing[0].content;
+    projectBlocks[pi] = isEmpty ? allBlocks : [...existing, { type:'divider', id:uid() }, ...allBlocks];
     adminData.projects[pi].blocks = projectBlocks[pi];
     renderBlockList(pi);
     markUnsaved();
 
     ppBar(100);
-    ppSub(`✓ ${allBlocks.length} blocks from ${totalPages} page${totalPages>1?'s':''}`);
+    ppSub(`✓ ${allBlocks.length} blocks from ${N} page${N>1?'s':''}`);
     ppStatus('Review and edit as needed');
     setTimeout(() => {
       document.body.removeChild(overlay);
       showToast(`✓ Imported ${allBlocks.length} blocks — review and clean up as needed.`, 'success');
     }, 1500);
 
-  } catch (err) {
+  } catch(err) {
     if (document.body.contains(overlay)) document.body.removeChild(overlay);
     console.error('PDF import:', err);
-    showToast('PDF error: ' + (err.message || 'Unknown'), 'error');
+    showToast('PDF error: ' + (err.message||'Unknown'), 'error');
   }
 }
 
