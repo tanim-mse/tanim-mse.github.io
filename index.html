@@ -164,7 +164,7 @@
       <div class="contact-info">
         <a href="#" class="contact-item" id="emailLink" data-cursor="link">
           <div class="contact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-          <div><div class="contact-label">Email</div><div class="contact-val" id="emailVal">tanim97@proton.me</div></div>
+          <div><div class="contact-label">Email</div><div class="contact-val" id="emailVal"><span class="__cf_email__" data-cfemail="dfabbeb1b6b2e6e89fafadb0abb0b1f1b2ba">[email&#160;protected]</span></div></div>
         </a>
         <div class="social-row">
           <a href="#" class="social-btn" id="githubLink"   title="GitHub"      data-cursor="link"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></a>
@@ -279,93 +279,75 @@
 </div>
 
 <!-- GSAP + ScrollTrigger -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
 <script src="data.js"></script>
 <script>
-/* ══════════════════════════════════════════════
-   CANVAS BACKGROUND
-══════════════════════════════════════════════ */
-const canvas = document.getElementById('bgCanvas');
-const ctx = canvas.getContext('2d');
-let W, H, particles = [];
-const COLORS = ['rgba(124,58,237,','rgba(37,99,235,','rgba(6,182,212,','rgba(16,185,129,'];
-
-function resizeCanvas() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-
-function Particle() {
-  this.x = Math.random()*W; this.y = Math.random()*H;
-  this.vx = (Math.random()-.5)*.35; this.vy = (Math.random()-.5)*.35;
-  this.r = Math.random()*1.8+.4;
-  this.color = COLORS[Math.floor(Math.random()*COLORS.length)];
-  this.alpha = Math.random()*.4+.15;
-  this.pulse = Math.random()*Math.PI*2;
-  this.pulseSpeed = Math.random()*.015+.004;
-}
-Particle.prototype.update = function() {
-  this.x += this.vx; this.y += this.vy;
-  this.pulse += this.pulseSpeed;
-  if (this.x < 0 || this.x > W) this.vx *= -1;
-  if (this.y < 0 || this.y > H) this.vy *= -1;
-};
-Particle.prototype.draw = function() {
-  const a = this.alpha + Math.sin(this.pulse)*.08;
-  ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
-  ctx.fillStyle = this.color + a + ')'; ctx.fill();
-};
-
-function initParticles() {
-  const c = Math.floor((W*H)/14000);
-  particles = Array.from({length: Math.min(c,100)}, () => new Particle());
-}
-
-let aT = 0, mouseX = W/2||400, mouseY = H/2||300;
-function drawAurora() {
-  aT += .002;
-  const g1 = ctx.createRadialGradient(W*(.3+Math.sin(aT)*.08),H*.3,0,W*(.3+Math.sin(aT)*.08),H*.3,W*.5);
-  g1.addColorStop(0,'rgba(124,58,237,0.04)'); g1.addColorStop(1,'transparent');
-  ctx.fillStyle = g1; ctx.fillRect(0,0,W,H);
-  const g2 = ctx.createRadialGradient(W*(.7+Math.cos(aT*.7)*.08),H*.65,0,W*(.7+Math.cos(aT*.7)*.08),H*.65,W*.4);
-  g2.addColorStop(0,'rgba(6,182,212,0.03)'); g2.addColorStop(1,'transparent');
-  ctx.fillStyle = g2; ctx.fillRect(0,0,W,H);
-  // Mouse aurora
-  const gm = ctx.createRadialGradient(mouseX,mouseY,0,mouseX,mouseY,200);
-  gm.addColorStop(0,'rgba(124,58,237,0.025)'); gm.addColorStop(1,'transparent');
-  ctx.fillStyle = gm; ctx.fillRect(0,0,W,H);
-}
-
-function drawConnections() {
-  for (let i = 0; i < particles.length; i++) {
-    for (let j = i+1; j < particles.length; j++) {
-      const dx = particles[i].x-particles[j].x, dy = particles[i].y-particles[j].y;
-      const d = Math.sqrt(dx*dx+dy*dy);
-      if (d < 120) {
-        ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y);
-        ctx.strokeStyle = `rgba(124,58,237,${(1-d/120)*.12})`; ctx.lineWidth = .5; ctx.stroke();
-      }
-    }
+/* ═══ CANVAS — Crystal Lattice (Materials Science themed) ═══ */
+const canvas=document.getElementById('bgCanvas'),ctx=canvas.getContext('2d');
+let W,H,nodes=[],mouseX=0,mouseY=0,aT=0;
+const NCOLS=[[124,58,237],[37,99,235],[6,182,212],[16,185,129]];
+function resizeCanvas(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+function buildLattice(){
+  nodes=[];
+  const sp=Math.min(W,H)<600?100:130;
+  const cols=Math.ceil(W/sp)+2,rows=Math.ceil(H/sp)+2;
+  for(let r=-1;r<rows;r++) for(let c=-1;c<cols;c++){
+    const jx=(Math.random()-.5)*sp*.35,jy=(Math.random()-.5)*sp*.35;
+    nodes.push({bx:c*sp+jx,by:r*sp+jy,x:0,y:0,
+      vx:(Math.random()-.5)*.1,vy:(Math.random()-.5)*.1,
+      r:Math.random()*1.3+.5,pulse:Math.random()*Math.PI*2,
+      ps:Math.random()*.016+.006,col:Math.floor(Math.random()*4)});
   }
 }
-
-function animate() {
-  ctx.clearRect(0,0,W,H);
-  drawAurora();
-  particles.forEach(p => { p.update(); p.draw(); });
-  drawConnections();
+function drawAuroras(){
+  [[.28,.25,.04,'124,58,237'],[.72,.65,.03,'6,182,212'],[.5,.45,.02,'37,99,235']].forEach(([fx,fy,a,rgb])=>{
+    const gx=W*(fx+Math.sin(aT*(0.4+fx))*.1),gy=H*(fy+Math.cos(aT*(0.3+fy))*.08);
+    const g=ctx.createRadialGradient(gx,gy,0,gx,gy,Math.min(W,H)*.45);
+    g.addColorStop(0,`rgba(${rgb},${a})`);g.addColorStop(1,'transparent');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  });
+  if(mouseX||mouseY){
+    const gm=ctx.createRadialGradient(mouseX,mouseY,0,mouseX,mouseY,220);
+    gm.addColorStop(0,'rgba(124,58,237,0.04)');gm.addColorStop(1,'transparent');
+    ctx.fillStyle=gm;ctx.fillRect(0,0,W,H);
+  }
+}
+function animate(){
+  ctx.clearRect(0,0,W,H); aT+=.002; drawAuroras();
+  nodes.forEach(n=>{
+    n.pulse+=n.ps; n.bx+=n.vx; n.by+=n.vy;
+    if(n.bx<-150)n.bx=W+50; if(n.bx>W+150)n.bx=-50;
+    if(n.by<-150)n.by=H+50; if(n.by>H+150)n.by=-50;
+    const dx=n.bx-mouseX,dy=n.by-mouseY,d=Math.sqrt(dx*dx+dy*dy);
+    if(d<180){const f=(180-d)/180*.8;n.x=n.bx+(dx/d)*f*18;n.y=n.by+(dy/d)*f*18;}
+    else{n.x+=(n.bx-n.x)*.08;n.y+=(n.by-n.y)*.08;}
+  });
+  // Bonds
+  for(let i=0;i<nodes.length;i++) for(let j=i+1;j<nodes.length;j++){
+    const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y,d=Math.sqrt(dx*dx+dy*dy);
+    if(d<115){
+      const [r1,g1,b1]=NCOLS[nodes[i].col],[r2,g2,b2]=NCOLS[nodes[j].col];
+      const r=Math.round((r1+r2)/2),g=Math.round((g1+g2)/2),b=Math.round((b1+b2)/2);
+      ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);
+      ctx.strokeStyle=`rgba(${r},${g},${b},${(1-d/115)*.16})`;ctx.lineWidth=.7;ctx.stroke();
+    }
+  }
+  // Atoms
+  nodes.forEach(n=>{
+    const [r,g,b]=NCOLS[n.col],p=n.r+Math.sin(n.pulse)*.4,a=.5+Math.sin(n.pulse)*.2;
+    const gr=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,p*4);
+    gr.addColorStop(0,`rgba(${r},${g},${b},${a*.25})`);gr.addColorStop(1,'transparent');
+    ctx.fillStyle=gr;ctx.beginPath();ctx.arc(n.x,n.y,p*4,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(n.x,n.y,p,0,Math.PI*2);
+    ctx.fillStyle=`rgba(${r},${g},${b},${a})`;ctx.fill();
+  });
   requestAnimationFrame(animate);
 }
-resizeCanvas(); initParticles(); animate();
-window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX; mouseY = e.clientY;
-  particles.forEach((p,i) => {
-    if (i%5===0) {
-      const dx = e.clientX-p.x, dy = e.clientY-p.y, d = Math.sqrt(dx*dx+dy*dy);
-      if (d < 120) { p.vx -= dx*.00025; p.vy -= dy*.00025; }
-    }
-  });
-});
+resizeCanvas();buildLattice();animate();
+window.addEventListener('resize',()=>{resizeCanvas();buildLattice();});
+document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;});
 
 /* ══════════════════════════════════════════════
    CUSTOM CURSOR
@@ -409,32 +391,27 @@ gsap.from('.hero-anim', {
 // Split-text reveal for section titles
 function initSplitReveals() {
   document.querySelectorAll('.split-reveal').forEach(el => {
-    gsap.from(el, {
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 85%',
-        toggleActions: 'play none none none'
-      },
-      y: 50, opacity: 0, duration: 0.9, ease: 'power3.out'
-    });
+    gsap.fromTo(el, { y:40, autoAlpha:0 },
+      { y:0, autoAlpha:1, duration:0.85, ease:'power3.out',
+        scrollTrigger:{ trigger:el, start:'top 90%', once:true } });
   });
 }
 
 // Skill cards stagger
 function initSkillAnim() {
-  gsap.from('.skill-card', {
-    scrollTrigger: { trigger: '#skillsGrid', start: 'top 80%' },
-    y: 60, opacity: 0, duration: 0.7, ease: 'back.out(1.5)',
-    stagger: 0.1
+  document.querySelectorAll('.skill-card').forEach((card, i) => {
+    gsap.fromTo(card, { y:40, autoAlpha:0 },
+      { y:0, autoAlpha:1, duration:0.65, ease:'back.out(1.4)', delay:i*0.08,
+        scrollTrigger:{ trigger:card, start:'top 92%', once:true } });
   });
 }
 
 // Project cards stagger
 function initProjectAnim() {
-  gsap.from('.project-card', {
-    scrollTrigger: { trigger: '#projectsGrid', start: 'top 80%' },
-    y: 80, opacity: 0, duration: 0.8, ease: 'power3.out',
-    stagger: 0.12
+  document.querySelectorAll('.project-card').forEach((card, i) => {
+    gsap.fromTo(card, { y:50, autoAlpha:0 },
+      { y:0, autoAlpha:1, duration:0.7, ease:'power3.out', delay:i*0.1,
+        scrollTrigger:{ trigger:card, start:'top 92%', once:true } });
   });
 }
 
@@ -449,10 +426,10 @@ function initTimelineAnim() {
 
 // Stat cards
 function initStatAnim() {
-  gsap.from('.stat-card', {
-    scrollTrigger: { trigger: '.about-stats', start: 'top 85%' },
-    scale: 0.85, opacity: 0, duration: 0.6, ease: 'back.out(1.7)',
-    stagger: 0.1
+  document.querySelectorAll('.stat-card').forEach((card,i) => {
+    gsap.fromTo(card, { scale:0.85, autoAlpha:0, y:20 },
+      { scale:1, autoAlpha:1, y:0, duration:0.6, ease:'back.out(1.7)', delay:i*0.12,
+        scrollTrigger:{ trigger:card, start:'top 92%', once:true } });
   });
 }
 
@@ -518,10 +495,13 @@ function initMagnetic() {
 
 // Parallax on hero content
 function initParallax() {
+  const hero = document.querySelector('.hero-content');
   window.addEventListener('scroll', () => {
     const s = window.scrollY;
-    gsap.to('.hero-content', { y: s * 0.3, ease: 'none', duration: 0 });
-    gsap.to('#bgCanvas', { y: s * 0.1, ease: 'none', duration: 0 });
+    if (s < window.innerHeight && hero) {
+      hero.style.transform = 'translateY('+( s*0.16)+'px)';
+      hero.style.opacity = String(Math.max(0, 1 - s/window.innerHeight*0.7));
+    }
   });
 }
 
@@ -916,7 +896,7 @@ function render() {
   // Re-attach cursor hover for new elements
   if (!isTouchDevice) {
     document.querySelectorAll('[data-cursor="link"],[data-cursor="hover"]').forEach(el => {
-      el.addEventListener('mouseenter', () => ring.classList.add('expanded'));
+      el.addEventListener('mouseeenter', () => ring.classList.add('expanded'));
       el.addEventListener('mouseleave', () => ring.classList.remove('expanded'));
     });
   }
