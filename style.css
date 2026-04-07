@@ -703,8 +703,7 @@ h1,h2,h3,h4 { font-family: var(--font-head); font-weight: 700; line-height: 1.2;
 .toast.show { transform:translateX(0); }
 
 /* ══ REVEAL BASE ══ */
-.split-reveal { opacity:0; transform:translateY(40px); }
-.split-reveal.gsap-done { opacity:1; transform:translateY(0); }
+/* split-reveal: GSAP handles opacity, CSS just defines display */
 
 /* ══ PROJECT PAGE (full-page view) ══ */
 .project-page {
@@ -1003,4 +1002,238 @@ h1,h2,h3,h4 { font-family: var(--font-head); font-weight: 700; line-height: 1.2;
     animation-iteration-count:1!important;
     transition-duration:.01ms!important;
   }
+}
+
+/* ══════════════════════════════════════════════════════
+   WOW FACTOR — Grain texture, mesh backgrounds,
+   memorable typography, depth effects
+══════════════════════════════════════════════════════ */
+
+/* ── Film grain overlay for depth ── */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 1;
+  pointer-events: none;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ── Section alt — gradient mesh instead of flat ── */
+.section-alt {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 40%, rgba(124,58,237,0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 80% at 80% 60%, rgba(6,182,212,0.03) 0%, transparent 70%),
+    rgba(255,255,255,0.012);
+}
+
+/* ── Hero label animated underline ── */
+.hero-label {
+  position: relative;
+  display: inline-block;
+}
+.hero-label::after {
+  content: '';
+  position: absolute; bottom: -4px; left: 0;
+  height: 1px; width: 100%;
+  background: linear-gradient(90deg, var(--cyan), transparent);
+  animation: labelLine 3s ease-in-out infinite;
+}
+@keyframes labelLine {
+  0%,100% { opacity: 0.4; transform: scaleX(0.7); transform-origin: left; }
+  50%      { opacity: 1;   transform: scaleX(1);   }
+}
+
+/* ── Section numbers — large ambient text ── */
+.section::before {
+  display: none; /* Off by default — enable per section via specific selectors */
+}
+
+/* ── Skill icon background glow ── */
+.skill-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 56px; height: 56px; border-radius: 14px;
+  background: rgba(124,58,237,0.1);
+  border: 1px solid rgba(124,58,237,0.15);
+  margin-bottom: 16px;
+  font-size: 1.6rem;
+  transition: all .3s var(--ease);
+  position: relative; overflow: hidden;
+}
+.skill-icon::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at center, rgba(124,58,237,0.3), transparent);
+  opacity: 0; transition: opacity .3s;
+}
+.skill-card:hover .skill-icon::before { opacity: 1; }
+.skill-card:hover .skill-icon { border-color: rgba(124,58,237,0.4); transform: scale(1.08) rotate(-3deg); }
+
+/* ── Project card shimmer border on hover ── */
+.project-card::after {
+  content: '';
+  position: absolute; inset: -1px;
+  border-radius: calc(var(--radius) + 1px);
+  background: linear-gradient(135deg, rgba(124,58,237,0.5), rgba(6,182,212,0.3), rgba(124,58,237,0.1));
+  opacity: 0; z-index: -1;
+  transition: opacity .4s var(--ease);
+}
+.project-card:hover::after { opacity: 1; }
+
+/* ── Section tag — animated scan line ── */
+.section-tag {
+  overflow: hidden;
+  position: relative;
+}
+.section-tag::after {
+  content: '';
+  position: absolute; top: 0; left: -100%; bottom: 0; width: 60%;
+  background: linear-gradient(90deg, transparent, rgba(6,182,212,0.3), transparent);
+  animation: scanLine 3s ease-in-out infinite 1s;
+}
+@keyframes scanLine { 0%{left:-60%} 100%{left:130%} }
+
+/* ── Contact form — glow on focus ── */
+.form-input:focus, .form-textarea:focus {
+  background: rgba(124,58,237,0.05);
+}
+
+/* ── Timeline — animated connector line ── */
+.timeline {
+  position: relative;
+  padding-left: 4px;
+}
+.timeline::before {
+  content: '';
+  position: absolute; left: 3px; top: 20px; bottom: 20px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--violet), var(--cyan), transparent);
+  opacity: 0.3;
+}
+
+/* ── About section avatar frame ── */
+.avatar-img {
+  box-shadow:
+    0 0 0 1px rgba(124,58,237,0.3),
+    0 0 40px rgba(124,58,237,0.15),
+    0 20px 60px rgba(0,0,0,0.4);
+}
+
+/* ── Hero content floating platform ── */
+.hero-content {
+  position: relative;
+}
+.hero-content::before {
+  content: '';
+  position: absolute; bottom: -40px; left: 50%;
+  transform: translateX(-50%);
+  width: 200px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(124,58,237,0.4), transparent);
+}
+
+/* ── Floating section accent numbers ── */
+#about   { counter-increment: section; }
+#skills  { counter-increment: section; }
+#projects{ counter-increment: section; }
+#research{ counter-increment: section; }
+#contact { counter-increment: section; }
+
+/* ── Show all button pulse ring ── */
+.show-all-btn {
+  position: relative;
+}
+.show-all-btn::before {
+  content: '';
+  position: absolute; inset: -6px;
+  border-radius: 60px;
+  border: 1px solid rgba(124,58,237,0.2);
+  animation: ringExpand 2s ease-out infinite;
+}
+@keyframes ringExpand {
+  0%   { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.08); opacity: 0; }
+}
+
+/* ── Stat card — value gradient ── */
+.stat-val {
+  background: linear-gradient(135deg, #f0f4ff, #c4b5fd);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Section title — word highlight ── */
+.section-title {
+  position: relative;
+  line-height: 1.15;
+}
+
+/* ── Navbar logo — DNA helix feel ── */
+.nav-logo {
+  position: relative;
+  font-size: 1.6rem;
+  letter-spacing: 0.06em;
+}
+
+/* ── Project number — huge ambient ── */
+.project-num {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  transition: all .4s var(--ease);
+}
+.project-card:hover .project-num {
+  background: linear-gradient(135deg, #a78bfa, #22d3ee);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Hero typewriter — colored text ── */
+.tw-text {
+  position: relative;
+}
+.tw-text::after {
+  content: '';
+  position: absolute; bottom: -3px; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--violet), var(--cyan));
+  border-radius: 2px;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .3s var(--ease);
+}
+
+/* ── Floating particles around avatar ── */
+@keyframes floatDot {
+  0%,100% { transform: translateY(0) translateX(0); }
+  33%      { transform: translateY(-12px) translateX(6px); }
+  66%      { transform: translateY(6px) translateX(-10px); }
+}
+
+/* ── Footer glow line ── */
+.footer-glow-line {
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%, rgba(124,58,237,0.8) 30%,
+    rgba(6,182,212,0.9) 50%,
+    rgba(124,58,237,0.8) 70%, transparent 100%);
+  filter: blur(0.5px);
+  box-shadow: 0 0 12px rgba(124,58,237,0.4), 0 0 24px rgba(6,182,212,0.2);
+}
+
+/* ── Back to top — pulsing ring ── */
+.back-top::before {
+  content: '';
+  position: absolute; inset: -4px; border-radius: 50%;
+  border: 1px solid rgba(124,58,237,0.3);
+  animation: ringExpand 2s ease-out infinite 0.5s;
+}
+
+/* ── Mobile: grain off for performance ── */
+@media (max-width: 640px) {
+  body::after { display: none; }
+  .section-alt { background: rgba(255,255,255,0.015); }
+}
+
+/* ── Smooth entrance for section alt backgrounds ── */
+.section-alt {
+  transition: background 0.5s;
 }
