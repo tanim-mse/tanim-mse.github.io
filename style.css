@@ -208,9 +208,8 @@ h1,h2,h3,h4 { font-family: var(--font-head); font-weight: 700; line-height: 1.2;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
   line-height: 1.05; letter-spacing: -0.02em;
-  text-shadow: 0 0 60px rgba(124,58,237,0.18);
-  opacity: 0;
-  animation: heroIn .9s .3s var(--ease) forwards, shimmer 6s 1.5s linear infinite;
+  /* No opacity:0 or heroIn here — GSAP controls visibility via .hero-char spans */
+  animation: shimmer 6s linear infinite;  /* shimmer runs continuously */
 }
 @keyframes heroIn { to { opacity: 1; } }
 @keyframes shimmer { 0%{background-position:0% center} 100%{background-position:200% center} }
@@ -1295,12 +1294,7 @@ body::after {
 ══════════════════════════════════════════════════════ */
 .hero-char {
   display: inline-block;
-  opacity: 0;
-  animation: charDrop 0.7s var(--ease-spring) both;
-}
-@keyframes charDrop {
-  from { transform: translateY(-60px) rotate(-8deg); opacity: 0; }
-  to   { transform: translateY(0)     rotate(0deg);  opacity: 1; }
+  /* No CSS animation — GSAP handles all hero-char animations */
 }
 /* Override hero-name for the char spans */
 .hero-name .hero-char {
