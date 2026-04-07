@@ -13,9 +13,8 @@
 </head>
 <body>
 
-<!-- Custom cursor -->
+<!-- Custom cursor: single precise dot only -->
 <div class="cursor-dot" id="cursorDot"></div>
-<div class="cursor-ring" id="cursorRing"></div>
 
 <canvas id="bgCanvas"></canvas>
 
@@ -325,17 +324,19 @@ function resizeCanvas() {
 
 /* ── Stars ── */
 const isMob = window.matchMedia('(pointer:coarse)').matches;
-const STAR_COUNT = isMob ? 180 : 380;
+const STAR_COUNT = isMob ? 120 : 260;
 let stars = [];
 const STAR_COLS = ['255,255,255','200,180,255','150,220,255','220,255,230'];
 
 /* ── Planets ── */
 let planets = [];
 const PLANET_DATA = [
-  { bx:0.82, by:0.18, r:38, col1:'7c3aed', col2:'4c1d95', ringCol:'a78bfa', hasRing:true,  speed:0.00012 },
-  { bx:0.12, by:0.72, r:24, col1:'0e7490', col2:'083344', ringCol:null,      hasRing:false, speed:0.00018 },
-  { bx:0.65, by:0.85, r:16, col1:'065f46', col2:'022c22', ringCol:null,      hasRing:false, speed:0.00025 },
-  { bx:0.92, by:0.58, r:10, col1:'1e3a5f', col2:'0a1628', ringCol:null,      hasRing:false, speed:0.00030 },
+  /* Giant ringed planet — half off right edge, heroic scale */
+  { bx:1.0,  by:0.42, r:160, col1:'3b1d8a', col2:'1e0a4a', ringCol:'a78bfa', hasRing:true,  speed:0.000035 },
+  /* Mid planet — peeking from left edge */
+  { bx:-0.02,by:0.68, r:72,  col1:'0c4a6e', col2:'042835', ringCol:null,      hasRing:false, speed:0.000055 },
+  /* Small distant planet — visible fully, top area */
+  { bx:0.78, by:0.15, r:28,  col1:'1a3a2a', col2:'0a1f12', ringCol:null,      hasRing:false, speed:0.000080 },
 ];
 
 function buildPlanets() {
@@ -369,13 +370,10 @@ function buildStars() {
 
 /* ── Nebulae ── */
 const NEBULAE = [
-  // Each: { baseX(0-1), baseY(0-1), radius, color, speedX, speedY, section }
-  { bx:0.15, by:0.20, r:520, col:'124,58,237',  sx: 0.12, sy: 0.08, phase:0.0  },
-  { bx:0.80, by:0.30, r:480, col:'37,99,235',   sx:-0.09, sy: 0.11, phase:1.2  },
-  { bx:0.50, by:0.70, r:560, col:'6,182,212',   sx: 0.07, sy:-0.06, phase:2.4  },
-  { bx:0.25, by:0.80, r:440, col:'124,58,237',  sx:-0.11, sy:-0.09, phase:0.8  },
-  { bx:0.75, by:0.60, r:500, col:'16,185,129',  sx: 0.06, sy: 0.13, phase:1.8  },
-  { bx:0.60, by:0.15, r:400, col:'6,182,212',   sx:-0.08, sy: 0.07, phase:3.0  },
+  { bx:0.20, by:0.25, r:500, col:'124,58,237', sx: 0.10, sy: 0.07, phase:0.0 },
+  { bx:0.75, by:0.35, r:460, col:'37,99,235',  sx:-0.08, sy: 0.09, phase:1.2 },
+  { bx:0.45, by:0.72, r:520, col:'6,182,212',  sx: 0.06, sy:-0.05, phase:2.4 },
+  { bx:0.65, by:0.18, r:380, col:'6,182,212',  sx:-0.07, sy: 0.06, phase:3.0 },
 ];
 
 /* Section-based nebula mood: [violet-intensity, cyan-intensity, green-intensity] */
@@ -423,7 +421,7 @@ function detectSection() {
       if (id !== lastSectionId) {
         lastSectionId = id;
         targetMood = SECTION_MOODS[id] || SECTION_MOODS.home;
-        nPulse = 1.0; // trigger pulse
+        /* nPulse intentionally removed — no brightness flash on section change */
       }
       return;
     }
@@ -484,8 +482,8 @@ function spaceDraw(ts) {
     /* intensity from mood + pulse */
     const moodIntensity = ni < 2 ? moodT[0] :
                           ni < 4 ? moodT[1] : moodT[2];
-    const baseAlpha = moodIntensity + nPulse * 0.04;
-    const radius    = n.r * (1 + nPulse * 0.3) * (W < 600 ? 0.65 : 1);
+    const baseAlpha = moodIntensity;
+    const radius    = n.r * (W < 600 ? 0.65 : 1);
 
     const g = ctx.createRadialGradient(nx, ny, 0, nx, ny, radius);
     g.addColorStop(0,   `rgba(${n.col},${Math.min(baseAlpha * 1.8, 0.14)})`);
@@ -495,14 +493,7 @@ function spaceDraw(ts) {
     ctx.fillRect(0, 0, W, H);
   });
 
-  /* pulse bloom overlay */
-  if (nPulse > 0.01) {
-    const bloom = ctx.createRadialGradient(W*0.5, H*0.4, 0, W*0.5, H*0.5, Math.max(W,H)*0.7);
-    bloom.addColorStop(0, `rgba(124,58,237,${nPulse * 0.05})`);
-    bloom.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = bloom;
-    ctx.fillRect(0, 0, W, H);
-  }
+  /* bloom overlay removed — no jarring flash */
 
   /* ── Stars — autonomous drift + twinkle + parallax ── */
   stars.forEach(s => {
@@ -640,39 +631,21 @@ document.addEventListener('mousemove', e => { targetMX = e.clientX; targetMY = e
 
 
 /* ══════════════════════════════════════════════
-   CUSTOM CURSOR
+   CUSTOM CURSOR — single precise dot, no ring
 ══════════════════════════════════════════════ */
-const dot  = document.getElementById('cursorDot');
-const ring = document.getElementById('cursorRing');
-let cx=0, cy=0, rx=0, ry=0, onLink=false;
-
+const dot = document.getElementById('cursorDot');
 const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
-if (!isTouchDevice) {
+
+if (!isTouchDevice && dot) {
   document.body.classList.add('has-custom-cursor');
-
   document.addEventListener('mousemove', e => {
-    cx = e.clientX; cy = e.clientY;
-    /* Dot: instant */
-    dot.style.transform = `translate(${cx}px,${cy}px)`;
+    dot.style.left = e.clientX + 'px';
+    dot.style.top  = e.clientY + 'px';
   });
-
-  /* Ring: snappier lerp — 0.28 instead of 0.12 */
-  (function animateRing() {
-    rx += (cx - rx) * 0.28;
-    ry += (cy - ry) * 0.28;
-    ring.style.transform = `translate(${rx}px,${ry}px)`;
-    requestAnimationFrame(animateRing);
-  })();
-
-  /* Ring only visible on hover, hidden otherwise */
-  document.addEventListener('mouseover', e => {
-    const isLink = e.target.closest('[data-cursor="link"],[data-cursor="hover"],a,button');
-    if (isLink) { ring.classList.add('expanded'); onLink=true; }
-    else if (onLink) { ring.classList.remove('expanded'); onLink=false; }
-  });
-  document.addEventListener('mousedown', () => ring.classList.add('clicked'));
-  document.addEventListener('mouseup',   () => ring.classList.remove('clicked'));
+  document.addEventListener('mousedown', () => dot.classList.add('pressed'));
+  document.addEventListener('mouseup',   () => dot.classList.remove('pressed'));
 }
+
 
 /* ══════════════════════════════════════════════
    GSAP ANIMATIONS
@@ -1121,12 +1094,11 @@ function splitHeroName() {
 ══════════════════════════════════════════════ */
 function initClipReveals() {
   document.querySelectorAll('.section-title').forEach(el => {
-    /* Set initial clip via GSAP (not CSS) so heading is never permanently clipped */
-    gsap.set(el, { clipPath: 'inset(0 100% 0 0)' });
-    gsap.to(el, {
-      clipPath: 'inset(0 0% 0 0)', duration: 0.85, ease: 'power3.inOut',
-      scrollTrigger: { trigger: el, start: 'top 90%', once: true }
-    });
+    gsap.fromTo(el,
+      { y: 30, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 90%', once: true } }
+    );
   });
 }
 
@@ -1134,13 +1106,18 @@ function initClipReveals() {
    ENHANCED GSAP ANIMATIONS (upgraded versions)
 ══════════════════════════════════════════════ */
 function initHeroAnim() {
-  const tl = gsap.timeline({ delay: 1.8 }); // after loader
-  tl.from('.hero-label', { y: 30, autoAlpha: 0, duration: 0.7, ease: 'power3.out' })
-    .from('.hero-char',  { y: -50, autoAlpha: 0, rotation: -8,
-      duration: 0.6, ease: 'back.out(1.6)', stagger: 0.05 }, '-=0.3')
-    .from('.hero-typewriter', { y: 20, autoAlpha: 0, duration: 0.5, ease: 'power2.out' }, '-=0.2')
-    .from('.hero-sub',  { y: 20, autoAlpha: 0, duration: 0.5, ease: 'power2.out' }, '-=0.3')
-    .from('.hero-btns', { y: 20, autoAlpha: 0, duration: 0.5, ease: 'power2.out' }, '-=0.3');
+  const tl = gsap.timeline({ delay: 1.6 });
+  tl.fromTo('.hero-label',
+      { y: 24, autoAlpha: 0 }, { y:0, autoAlpha:1, duration:0.6, ease:'power3.out' })
+    .fromTo('.hero-char',
+      { y: -40, autoAlpha:0, rotation:-6 },
+      { y:0, autoAlpha:1, rotation:0, duration:0.55, ease:'back.out(1.4)', stagger:0.04 }, '-=0.2')
+    .fromTo('.hero-typewriter',
+      { y:16, autoAlpha:0 }, { y:0, autoAlpha:1, duration:0.45, ease:'power2.out' }, '-=0.15')
+    .fromTo('.hero-sub',
+      { y:16, autoAlpha:0 }, { y:0, autoAlpha:1, duration:0.45, ease:'power2.out' }, '-=0.25')
+    .fromTo('.hero-btns',
+      { y:16, autoAlpha:0 }, { y:0, autoAlpha:1, duration:0.45, ease:'power2.out' }, '-=0.25');
 }
 
 /* ══════════════════════════════════════════════
