@@ -1231,7 +1231,7 @@ body::after {
 ══════════════════════════════════════════════════════ */
 .loader-screen {
   position: fixed; inset: 0; z-index: 9999;
-  background: #03030a;
+  background: rgb(2,1,6);  /* matches deep space void colour */
   display: flex; align-items: center; justify-content: center;
   pointer-events: all;
 }
@@ -1258,15 +1258,7 @@ body::after {
   background-clip: text;
   position: relative; z-index: 1;
 }
-.loader-wipe-top,
-.loader-wipe-bot {
-  position: fixed; left: 0; right: 0;
-  height: 50%; background: #03030a;
-  transform-origin: top center;
-  z-index: 9998;
-}
-.loader-wipe-top { top: 0; transform-origin: top center; }
-.loader-wipe-bot { bottom: 0; transform-origin: bottom center; }
+/* Wipe panels — removed, using fade+zoom transition instead */
 
 /* ══════════════════════════════════════════════════════
    MSE EASTER EGG CANVAS
@@ -1360,7 +1352,7 @@ body::after {
    (bgCanvas now handles full background - no more body::after grain fighting it)
 ══════════════════════════════════════════════════════ */
 #bgCanvas { z-index: 0; }
-body { background: #03030a; }
+body { background: rgb(2,1,6); }
 
 /* ══════════════════════════════════════════════════════
    SECTION SCANLINE (subtle depth on alt sections)
