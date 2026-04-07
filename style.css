@@ -1373,3 +1373,285 @@ body { min-width: 320px; }
   z-index: 10;
   pointer-events: none;
 }
+/* ══════════════════════════════════════════════════════
+   VISUAL ENHANCEMENTS — Animations, Effects, Polish
+══════════════════════════════════════════════════════ */
+
+/* ── Smooth scrolling ── */
+html { scroll-behavior: smooth; }
+
+/* ── Selection color ── */
+::selection { background: rgba(124,58,237,0.35); color: #f8fafc; }
+
+/* ── Scrollbar styling (webkit) ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.35); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(124,58,237,0.6); }
+
+/* ── Hero name shimmer ── */
+.hero-name {
+  background: linear-gradient(100deg,
+    #a78bfa 0%, #60a5fa 30%, #22d3ee 50%, #a78bfa 70%, #60a5fa 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+@keyframes shimmer {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ── Navbar glass blur on scroll ── */
+.navbar { transition: background .4s, backdrop-filter .4s, box-shadow .4s, border-bottom .4s; }
+.navbar.scrolled { border-bottom: 1px solid rgba(124,58,237,0.15); }
+
+/* ── Section tag pill pulse ── */
+.section-tag {
+  display: inline-block;
+  animation: tagPulse 3s ease-in-out infinite;
+}
+@keyframes tagPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(124,58,237,0); }
+  50%      { box-shadow: 0 0 0 6px rgba(124,58,237,0.08); }
+}
+
+/* ── Section title gradient ── */
+.section-title .grad {
+  background: linear-gradient(135deg, #a78bfa, #60a5fa, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 5s linear infinite;
+  background-size: 200% auto;
+}
+
+/* ── Skill card icon bounce ── */
+.skill-card:hover .skill-icon { animation: iconBounce .5s var(--ease-spring); }
+@keyframes iconBounce {
+  0%   { transform: scale(1) rotate(0deg); }
+  40%  { transform: scale(1.25) rotate(-8deg); }
+  70%  { transform: scale(0.95) rotate(4deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* ── Project card hover glow ── */
+.project-card::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, rgba(124,58,237,0.06), rgba(6,182,212,0.03));
+  opacity: 0;
+  transition: opacity .35s var(--ease);
+  pointer-events: none;
+}
+.project-card:hover::after { opacity: 1; }
+
+/* ── Project card number shimmer on hover ── */
+.project-card:hover .project-num {
+  background: linear-gradient(135deg, rgba(124,58,237,0.5), rgba(6,182,212,0.3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all .3s var(--ease);
+}
+
+/* ── Read More arrow slide ── */
+.project-view-btn svg {
+  transition: transform .25s var(--ease-spring);
+}
+.project-card:hover .project-view-btn svg {
+  transform: translateX(5px);
+}
+
+/* ── Avatar ring spin on hover ── */
+.avatar-wrap:hover .avatar-glow {
+  animation: ringGlow 1.5s linear infinite;
+}
+@keyframes ringGlow {
+  0%   { transform: rotate(0deg) scale(1.05); }
+  100% { transform: rotate(360deg) scale(1.05); }
+}
+
+/* ── Stat card count-up feel ── */
+.stat-card {
+  transition: transform .3s var(--ease-spring), box-shadow .3s var(--ease);
+}
+.stat-card:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 12px 32px rgba(124,58,237,0.15);
+}
+
+/* ── Timeline dots pulse ── */
+.timeline-dot {
+  animation: dotPulse 2.5s ease-in-out infinite;
+}
+@keyframes dotPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(124,58,237,0.4); }
+  50%      { box-shadow: 0 0 0 6px rgba(124,58,237,0); }
+}
+
+/* ── Button shine sweep ── */
+.btn-primary { overflow: hidden; }
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -75%;
+  width: 50%; height: 200%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
+  transform: skewX(-20deg);
+  transition: left .6s var(--ease);
+}
+.btn-primary:hover::after { left: 125%; }
+
+/* ── Social btn spin on hover ── */
+.social-btn { transition: transform .3s var(--ease-spring), background .2s, box-shadow .2s; }
+.social-btn:hover { transform: translateY(-3px) rotate(-5deg) scale(1.1); }
+
+/* ── Contact item left slide ── */
+.contact-item {
+  transition: transform .3s var(--ease-spring), background .2s;
+}
+.contact-item:hover { transform: translateX(6px); }
+
+/* ── Footer logo glitch on hover ── */
+.footer-logo {
+  position: relative;
+  transition: color .2s;
+}
+.footer-logo:hover {
+  animation: glitch .4s steps(2) forwards;
+}
+@keyframes glitch {
+  0%   { text-shadow: 2px 0 #7c3aed, -2px 0 #06b6d4; }
+  25%  { text-shadow: -3px 0 #7c3aed, 3px 0 #06b6d4; }
+  50%  { text-shadow: 3px 0 #06b6d4, -3px 0 #7c3aed; }
+  75%  { text-shadow: -2px 0 #06b6d4, 2px 0 #7c3aed; }
+  100% { text-shadow: none; }
+}
+
+/* ── Chip hover float ── */
+.chip {
+  transition: transform .2s var(--ease-spring), box-shadow .2s, background .2s;
+}
+.chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(124,58,237,0.2);
+}
+
+/* ── Project tag hover ── */
+.project-tag {
+  transition: background .2s, transform .2s var(--ease-spring), color .2s;
+}
+.project-tag:hover {
+  background: rgba(124,58,237,0.25);
+  transform: translateY(-1px);
+  color: #c4b5fd;
+}
+
+/* ── Admin btn glow ── */
+.admin-btn:hover {
+  box-shadow: 0 0 20px rgba(124,58,237,0.4);
+}
+
+/* ── Back-to-top pulse ring ── */
+.back-top.show {
+  animation: backPulse 2s ease-in-out infinite;
+}
+@keyframes backPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(124,58,237,0.4), 0 4px 20px rgba(124,58,237,0.3); }
+  50%      { box-shadow: 0 0 0 8px rgba(124,58,237,0), 0 4px 20px rgba(124,58,237,0.3); }
+}
+
+/* ── Drawer project row hover ── */
+.drawer-project-row {
+  transition: background .2s, transform .2s var(--ease-spring), border-color .2s;
+}
+.drawer-project-row:hover {
+  background: rgba(124,58,237,0.06);
+  transform: translateX(4px);
+}
+
+/* ── Project page back button hover ── */
+.proj-page-back:hover svg {
+  animation: backArrow .4s var(--ease-spring);
+}
+@keyframes backArrow {
+  0%   { transform: translateX(0); }
+  40%  { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+/* ── Reveal animation improvement ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity .8s var(--ease), transform .8s var(--ease);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Stagger children of reveal ── */
+.reveal > * { transition-delay: calc(var(--i, 0) * 0.07s); }
+
+/* ── Glass card shimmer border on hover ── */
+.glass {
+  position: relative;
+}
+.glass::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(124,58,237,0.4), rgba(6,182,212,0.2), rgba(124,58,237,0.1));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .35s var(--ease);
+  pointer-events: none;
+}
+.glass:hover::before { opacity: 1; }
+
+/* ── Hero typewriter cursor blink fix ── */
+.tw-cursor {
+  display: inline-block;
+  animation: blink .7s step-end infinite;
+  color: var(--violet);
+  font-weight: 300;
+}
+
+/* ── Mobile: smaller hero name ── */
+@media (max-width: 480px) {
+  .hero-name { font-size: clamp(2.8rem, 14vw, 4rem); }
+  .hero-sub { font-size: 0.88rem; }
+}
+
+/* ── Smooth page transitions ── */
+.project-page {
+  transition: opacity .35s var(--ease), transform .35s var(--ease);
+}
+
+/* ── Proj-page content fade-in blocks ── */
+.proj-page-content > * {
+  animation: blockFadeIn .4s var(--ease) both;
+}
+@keyframes blockFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Stagger content blocks ── */
+.proj-page-content > *:nth-child(1)  { animation-delay: .05s; }
+.proj-page-content > *:nth-child(2)  { animation-delay: .10s; }
+.proj-page-content > *:nth-child(3)  { animation-delay: .15s; }
+.proj-page-content > *:nth-child(4)  { animation-delay: .18s; }
+.proj-page-content > *:nth-child(5)  { animation-delay: .21s; }
+.proj-page-content > *:nth-child(n+6){ animation-delay: .24s; }
+
+/* ── Hero scroll hint bounce ── */
+.scroll-hint { animation: scrollBounce 2.5s ease-in-out infinite; }
