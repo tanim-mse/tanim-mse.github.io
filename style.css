@@ -308,12 +308,14 @@ h1,h2,h3,h4 { font-family: var(--font-head); font-weight: 700; line-height: 1.2;
   font-size: clamp(3.5rem, 9vw, 6rem);
   font-weight: 800;
   margin: 14px 0 10px;
-  background: var(--grad-text);
+  background: linear-gradient(100deg, #a78bfa 0%, #60a5fa 30%, #22d3ee 50%, #a78bfa 70%, #60a5fa 100%);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   opacity: 0;
-  animation: heroIn .8s .4s var(--ease) forwards;
+  /* heroIn fades in, shimmer starts after name appears */
+  animation: heroIn .8s .4s var(--ease) forwards, shimmer 5s 1.4s linear infinite;
 }
 .hero-typewriter {
   font-size: clamp(1.1rem, 2.5vw, 1.45rem);
@@ -1390,15 +1392,7 @@ html { scroll-behavior: smooth; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(124,58,237,0.6); }
 
 /* ── Hero name shimmer ── */
-.hero-name {
-  background: linear-gradient(100deg,
-    #a78bfa 0%, #60a5fa 30%, #22d3ee 50%, #a78bfa 70%, #60a5fa 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer 4s linear infinite;
-}
+
 @keyframes shimmer {
   0%   { background-position: 0% center; }
   100% { background-position: 200% center; }
@@ -1627,9 +1621,7 @@ html { scroll-behavior: smooth; }
 
 /* ── Mobile: smaller hero name ── */
 @media (max-width: 480px) {
-  .hero-name { font-size: clamp(2.8rem, 14vw, 4rem); }
-  .hero-sub { font-size: 0.88rem; }
-}
+  
 
 /* ── Smooth page transitions ── */
 .project-page {
@@ -1655,3 +1647,103 @@ html { scroll-behavior: smooth; }
 
 /* ── Hero scroll hint bounce ── */
 .scroll-hint { animation: scrollBounce 2.5s ease-in-out infinite; }
+
+
+/* ══════════════════════════════════════════════════════
+   MOBILE TOUCH — animations that work on phones
+══════════════════════════════════════════════════════ */
+
+/* Touch devices: replace hover animations with active states */
+@media (pointer: coarse) {
+  /* Cards respond to tap */
+  .project-card:active { transform: scale(0.97); transition: transform .15s; }
+  .skill-card:active { transform: scale(0.97); }
+  .stat-card:active { transform: scale(0.97); }
+  .btn-primary:active { transform: scale(0.96); }
+  .btn-ghost:active { transform: scale(0.96); }
+  .social-btn:active { transform: scale(0.9); }
+  .chip:active { transform: scale(0.95); }
+  .project-tag:active { background: rgba(124,58,237,0.25); }
+  .drawer-project-row:active { background: rgba(124,58,237,0.08); }
+
+  /* Disable hover-only effects that feel broken on touch */
+  .glass::before { display: none; }
+  .project-card::after { display: none; }
+  .btn-primary::after { display: none; }
+}
+
+/* ── Mobile hero name: restore font size ── */
+@media (max-width: 480px) {
+  
+
+/* ── Mobile project page ── */
+@media (max-width: 640px) {
+  .proj-page-topbar { gap: 8px; padding: 0 12px; }
+  .proj-page-back { padding: 6px 10px; font-size: 0.78rem; }
+  .proj-page-copy-btn { padding: 5px 10px; font-size: 0.74rem; }
+  .proj-page-title { font-size: clamp(1.25rem, 5vw, 1.6rem); }
+  .proj-page-content { font-size: 0.95rem; line-height: 1.8; }
+  .proj-page-content h2 { font-size: 1.05rem; padding: 10px 14px; }
+  .proj-page-content h1 { font-size: 1.3rem; }
+  .proj-page-content .formula-block { padding: 16px 12px; font-size: 0.85em; }
+  .proj-toc-inline { padding: 12px 14px; }
+  .proj-page-inner { padding: 20px 14px 60px; }
+}
+
+/* ── Mobile drawer ── */
+@media (max-width: 640px) {
+  .projects-drawer { width: 100%; max-width: 100%; }
+  .drawer-search { font-size: 0.85rem; }
+}
+
+/* ── Mobile section padding ── */
+@media (max-width: 600px) {
+  .section { padding: 64px 0; }
+  .section-title { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+  .about-grid { gap: 28px; }
+  .skills-grid { gap: 12px; }
+  .projects-grid { gap: 14px; }
+  .contact-grid { gap: 24px; }
+}
+
+/* ── Mobile skill card ── */
+@media (max-width: 480px) {
+  .skill-card { padding: 18px; }
+  .skill-icon { font-size: 1.8rem; }
+  .skill-title { font-size: 0.92rem; }
+  .chip { font-size: 0.72rem; padding: 4px 10px; }
+}
+
+/* ── Mobile about stats ── */
+@media (max-width: 480px) {
+  .about-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stat-card { padding: 14px; }
+  .stat-val { font-size: 0.85rem; }
+}
+
+/* ── Mobile navbar improvements ── */
+@media (max-width: 640px) {
+  .nav-container { padding: 0 14px; }
+  .admin-btn { padding: 6px 10px; font-size: 0.78rem; }
+}
+
+/* ── Mobile hero buttons ── */
+@media (max-width: 480px) {
+  .hero-btns { gap: 10px; }
+  .btn-primary, .btn-ghost { padding: 12px 20px; font-size: 0.88rem; }
+}
+
+/* ── Mobile footer ── */
+@media (max-width: 480px) {
+  .footer-tagline { font-size: 0.78rem; text-align: center; }
+  .footer-top { flex-direction: column; align-items: center; gap: 10px; }
+}
+
+/* ── Reduce motion for accessibility ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
