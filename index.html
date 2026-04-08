@@ -865,7 +865,7 @@ footer{position:relative;z-index:1;padding:48px 0 32px}
       <div class="contact-info">
         <a href="#" class="contact-item" id="emailLink" data-cur>
           <div class="contact-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-          <div><div class="contact-lbl">Email</div><div class="contact-val" id="emailVal">tanim97@proton.me</div></div>
+          <div><div class="contact-lbl">Email</div><div class="contact-val" id="emailVal"><span class="__cf_email__" data-cfemail="e69287888f8bdfd1a6969489928988c88b83">[email&#160;protected]</span></div></div>
         </a>
         <div class="social-row">
           <a href="#" class="social-btn" id="ghLink" title="GitHub" data-cur><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></a>
@@ -899,6 +899,9 @@ footer{position:relative;z-index:1;padding:48px 0 32px}
     <p class="footer-copy">© <span id="footerYear"></span> Tanim. Built with passion &amp; code.</p>
   </div>
 </footer>
+
+<!-- Section transition flash overlay -->
+<div id="secFlash" style="position:fixed;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity 0.6s ease;will-change:opacity,background;"></div>
 
 <button class="btt" id="btt" onclick="smoothTo('home')" aria-label="Back to top">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
@@ -968,7 +971,7 @@ footer{position:relative;z-index:1;padding:48px 0 32px}
 </div>
 
 <!-- Scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
@@ -1103,32 +1106,54 @@ footer{position:relative;z-index:1;padding:48px 0 32px}
   ];
   nebulae.forEach(n => scene.add(n));
 
-  /* ── Milky Way band ── */
+  /* ── Milky Way band — on a large sphere to avoid flat-edge cuts ── */
   const mwCanvas = document.createElement('canvas');
-  mwCanvas.width = 1024; mwCanvas.height = 512;
+  mwCanvas.width = 2048; mwCanvas.height = 1024;
   const mc = mwCanvas.getContext('2d');
-  const mwGrad = mc.createLinearGradient(0, 0, 1024, 512);
-  mwGrad.addColorStop(0,    'rgba(0,0,0,0)');
-  mwGrad.addColorStop(0.2,  'rgba(60,40,120,0.08)');
-  mwGrad.addColorStop(0.45, 'rgba(140,120,200,0.12)');
-  mwGrad.addColorStop(0.5,  'rgba(180,160,240,0.15)');
-  mwGrad.addColorStop(0.55, 'rgba(140,120,200,0.12)');
-  mwGrad.addColorStop(0.8,  'rgba(60,40,120,0.08)');
-  mwGrad.addColorStop(1,    'rgba(0,0,0,0)');
-  mc.save(); mc.translate(512,256); mc.rotate(-0.28); mc.translate(-512,-256);
-  mc.fillStyle = mwGrad; mc.fillRect(0,0,1024,512);
-  mc.restore();
-  /* dust lanes */
-  for (let i = 0; i < 5; i++) {
-    const dl = mc.createLinearGradient(0, 180+i*18, 1024, 280+i*18);
-    dl.addColorStop(0,'rgba(0,0,0,0)'); dl.addColorStop(0.5,'rgba(0,0,0,0.06)'); dl.addColorStop(1,'rgba(0,0,0,0)');
-    mc.fillStyle = dl; mc.fillRect(0, 180+i*18, 1024, 16);
+  mc.clearRect(0, 0, 2048, 1024);
+  /* Main band — feathered edges, no hard lines */
+  for (let pass = 0; pass < 4; pass++) {
+    const bandY = 512 + (pass - 1.5) * 60;
+    const bandH = 280 - pass * 40;
+    mc.save();
+    mc.translate(1024, 512); mc.rotate(-0.22); mc.translate(-1024, -512);
+    const bg = mc.createRadialGradient(1024, bandY, 0, 1024, bandY, bandH * 2.5);
+    const a = [0.10, 0.08, 0.06, 0.04][pass];
+    bg.addColorStop(0,   `rgba(160,140,220,${a})`);
+    bg.addColorStop(0.35,`rgba(100,80,180,${a * 0.7})`);
+    bg.addColorStop(0.7, `rgba(60,40,120,${a * 0.3})`);
+    bg.addColorStop(1,   'rgba(0,0,0,0)');
+    mc.fillStyle = bg;
+    mc.beginPath(); mc.ellipse(1024, bandY, 1600, bandH * 2.5, 0, 0, Math.PI*2); mc.fill();
+    mc.restore();
   }
-  const mwTex    = new THREE.CanvasTexture(mwCanvas);
-  const mwGeo    = new THREE.PlaneGeometry(1400, 700);
-  const mwMat    = new THREE.MeshBasicMaterial({ map: mwTex, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide });
-  const mwMesh   = new THREE.Mesh(mwGeo, mwMat);
-  mwMesh.position.set(0, 0, -500); mwMesh.rotation.z = -0.28;
+  /* Galactic centre — warm bright core */
+  const gc = mc.createRadialGradient(820, 490, 0, 820, 490, 280);
+  gc.addColorStop(0,   'rgba(255,220,140,0.07)');
+  gc.addColorStop(0.4, 'rgba(180,140,220,0.04)');
+  gc.addColorStop(1,   'rgba(0,0,0,0)');
+  mc.fillStyle = gc; mc.fillRect(0,0,2048,1024);
+  /* Dust lanes — also feathered */
+  for (let i = 0; i < 6; i++) {
+    mc.save();
+    mc.translate(1024,512); mc.rotate(-0.22); mc.translate(-1024,-512);
+    const dy = 480 + (i - 3) * 28;
+    const dg = mc.createRadialGradient(1024, dy, 0, 1024, dy, 320);
+    dg.addColorStop(0,   'rgba(0,0,0,0.045)');
+    dg.addColorStop(0.5, 'rgba(0,0,0,0.02)');
+    dg.addColorStop(1,   'rgba(0,0,0,0)');
+    mc.fillStyle = dg; mc.beginPath(); mc.ellipse(1024, dy, 1400, 80, 0, 0, Math.PI*2); mc.fill();
+    mc.restore();
+  }
+  const mwTex  = new THREE.CanvasTexture(mwCanvas);
+  /* Use a large sphere — no hard edges visible from inside */
+  const mwGeo  = new THREE.SphereGeometry(900, 64, 32);
+  const mwMat  = new THREE.MeshBasicMaterial({
+    map: mwTex, transparent: true, side: THREE.BackSide,
+    blending: THREE.AdditiveBlending, depthWrite: false, opacity: 0.9
+  });
+  const mwMesh = new THREE.Mesh(mwGeo, mwMat);
+  mwMesh.rotation.x = 0.1;
   scene.add(mwMesh);
 
   /* ── Giant planet (right edge, half-visible) ── */
@@ -1281,12 +1306,30 @@ footer{position:relative;z-index:1;padding:48px 0 32px}
   const NEBULA_BASE_OPACITIES = [0.55, 0.45, 0.40, 0.50, 0.35, 0.45];
   let moodT = [0.55, 0.22, 0.12], targetMood = [0.55, 0.22, 0.12];
   let lastSec = 'home';
+  /* Per-section camera target positions — dramatic shifts */
+  const CAM_TARGETS = {
+    home:     { x:  0,   y:  0,  z: 60,  fovOffset: 0,   rotY:  0,    rotX: 0    },
+    about:    { x: -18,  y:  8,  z: 55,  fovOffset: 4,   rotY:  0.12, rotX: 0.04 },
+    skills:   { x:  22,  y: -6,  z: 50,  fovOffset: 8,   rotY: -0.15, rotX: 0.06 },
+    projects: { x:  0,   y:  14, z: 58,  fovOffset: -4,  rotY:  0.08, rotX:-0.05 },
+    research: { x: -20,  y: -10, z: 45,  fovOffset: 12,  rotY:  0.18, rotX: 0.08 },
+    contact:  { x:  12,  y:  6,  z: 52,  fovOffset: 6,   rotY: -0.10, rotX:-0.03 },
+  };
+  let camTarget = { x:0, y:0, z:60, fovOffset:0, rotY:0, rotX:0 };
+  let sectionTransitionT = 0; /* 0-1 progress of current transition */
+
   window.addEventListener('scroll', () => {
     const ids = ['contact','research','projects','skills','about','home'];
     for (const id of ids) {
       const el = document.getElementById(id);
       if (el && window.scrollY >= el.offsetTop - window.innerHeight * 0.45) {
-        if (id !== lastSec) { lastSec = id; targetMood = MOODS[id] || MOODS.home; }
+        if (id !== lastSec) {
+          lastSec = id;
+          targetMood = MOODS[id] || MOODS.home;
+          camTarget  = CAM_TARGETS[id] || CAM_TARGETS.home;
+          /* Trigger shockwave on all nebulae */
+          window.__sectionShockwave = { t: 1.0, id };
+        }
         return;
       }
     }
@@ -1313,10 +1356,39 @@ footer{position:relative;z-index:1;padding:48px 0 32px}
       camera.updateProjectionMatrix();
       if (pct >= 1) introActive = false;
     } else {
-      /* Post-intro: mouse parallax + scroll */
-      camera.position.x += (targetCamX - camera.position.x) * 0.04;
-      camera.position.y += (targetCamY + scrollCamY * 5 - camera.position.y) * 0.04;
-      camera.position.z  = 60;
+      /* Post-intro: blend between section target + mouse parallax */
+      /* Smooth lerp to section camera target (VERY slow = cinematic feel) */
+      const lerpSpd = 0.022;
+      camera.position.x += (camTarget.x + targetCamX - camera.position.x) * lerpSpd;
+      camera.position.y += (camTarget.y + targetCamY  - camera.position.y) * lerpSpd;
+      camera.position.z += (camTarget.z - camera.position.z) * lerpSpd;
+
+      /* FOV shift per section — feels like switching lenses */
+      const targetFov = 75 + camTarget.fovOffset;
+      camera.fov += (targetFov - camera.fov) * 0.025;
+      camera.updateProjectionMatrix();
+
+      /* Slowly rotate entire star field toward section target */
+      nearStars.rotation.y += (camTarget.rotY - nearStars.rotation.y + time * 0.008) * 0.02;
+      midStars.rotation.y  += (camTarget.rotY * 0.7 - midStars.rotation.y  + time * 0.005) * 0.02;
+
+      /* Shockwave effect on section change — briefly brightens + warps nebulae */
+      const sw = window.__sectionShockwave;
+      if (sw && sw.t > 0) {
+        sw.t = Math.max(0, sw.t - dt * 0.55);
+        const burst = Math.pow(Math.max(0, sw.t * 2 - 1), 2);
+        nebulae.forEach((n, ni) => {
+          const extra = burst * 0.25 * (ni % 2 === 0 ? 1.4 : 0.8);
+          const mi = ni < 2 ? moodT[0] : ni < 4 ? moodT[1] : moodT[2];
+          n.material.opacity = (NEBULA_BASE_OPACITIES[ni] * mi * 8) + extra;
+          /* Also briefly scale nebulae outward */
+          const scaleBoost = 1 + burst * 0.35;
+          n.scale.setScalar(scaleBoost);
+        });
+      } else {
+        /* Normal nebula scale */
+        nebulae.forEach(n => { n.scale.setScalar(1 + (n.scale.x - 1) * 0.92); });
+      }
     }
 
     const time = t * 0.001;
@@ -1332,12 +1404,20 @@ footer{position:relative;z-index:1;padding:48px 0 32px}
     for (let i = 0; i < 3; i++) moodT[i] += (targetMood[i] - moodT[i]) * 0.018;
     nebulae.forEach((n, ni) => {
       const u = n.userData;
-      const ox = Math.sin(time * u.spd * 80 + u.phase) * 15;
-      const oy = Math.cos(time * u.spd * 60 + u.phase * 1.3) * 10;
+      /* More dramatic organic movement — faster, bigger range */
+      const ox = Math.sin(time * u.spd * 90 + u.phase) * 22
+               + Math.cos(time * u.spd * 40 + u.phase * 0.7) * 12;
+      const oy = Math.cos(time * u.spd * 70 + u.phase * 1.4) * 18
+               + Math.sin(time * u.spd * 30 + u.phase * 1.1) * 8;
       n.position.x = u.ox + ox;
       n.position.y = u.oy + oy;
-      const mi = ni < 2 ? moodT[0] : ni < 4 ? moodT[1] : moodT[2];
-      n.material.opacity = NEBULA_BASE_OPACITIES[ni] * mi * 8;
+      /* Opacity driven by mood — only update if no shockwave active */
+      const sw = window.__sectionShockwave;
+      if (!sw || sw.t <= 0) {
+        const mi = ni < 2 ? moodT[0] : ni < 4 ? moodT[1] : moodT[2];
+        n.material.opacity = NEBULA_BASE_OPACITIES[ni] * mi * 8;
+        n.scale.setScalar(1 + (n.scale.x - 1) * 0.95);
+      }
     });
 
     /* Planet slow rotation */
@@ -1353,7 +1433,8 @@ footer{position:relative;z-index:1;padding:48px 0 32px}
     updateMeteors(dt);
 
     /* Milky Way slow drift */
-    mwMesh.rotation.z = -0.28 + Math.sin(time * 0.04) * 0.01;
+    mwMesh.rotation.y = time * 0.006;
+    mwMesh.rotation.z = Math.sin(time * 0.04) * 0.008;
 
     renderer.render(scene, camera);
   }
@@ -1443,70 +1524,114 @@ gsap.registerPlugin(ScrollTrigger);
 
 /* Section titles */
 function initReveal() {
-  /* Sec titles */
+  /* ── Section titles: dramatic clip-path sweep ── */
   document.querySelectorAll('.sec-title').forEach(el => {
-    gsap.fromTo(el, { y:35, autoAlpha:0 },
-      { y:0, autoAlpha:1, duration:0.95, ease:'power3.out',
+    gsap.set(el, { clipPath:'inset(0 100% 0 0)', autoAlpha:1 });
+    gsap.to(el, {
+      clipPath:'inset(0 0% 0 0)', duration:1.1, ease:'power4.inOut',
+      scrollTrigger:{ trigger:el, start:'top 88%', once:true }
+    });
+  });
+  /* Section tag pops in with spring */
+  document.querySelectorAll('.sec-tag').forEach(el => {
+    gsap.fromTo(el, { scale:0, autoAlpha:0 },
+      { scale:1, autoAlpha:1, duration:0.6, ease:'back.out(2)',
         scrollTrigger:{ trigger:el, start:'top 88%', once:true } });
   });
   /* sec-sub */
   document.querySelectorAll('.sec-sub').forEach(el => {
-    gsap.fromTo(el, { y:20, autoAlpha:0 },
-      { y:0, autoAlpha:1, duration:0.75, ease:'power2.out',
+    gsap.fromTo(el, { y:24, autoAlpha:0 },
+      { y:0, autoAlpha:1, duration:0.8, ease:'power3.out',
         scrollTrigger:{ trigger:el, start:'top 90%', once:true } });
   });
-  /* Stat cards */
+
+  /* ── About: avatar rotates in from left ── */
+  gsap.fromTo('.avatar-frame',
+    { x:-80, rotateY:-25, autoAlpha:0 },
+    { x:0, rotateY:0, autoAlpha:1, duration:1.1, ease:'power3.out', transformPerspective:800,
+      scrollTrigger:{ trigger:'.avatar-frame', start:'top 85%', once:true } });
+  gsap.fromTo('.about-bio', { y:28, autoAlpha:0 },
+    { y:0, autoAlpha:1, duration:0.9, ease:'power3.out',
+      scrollTrigger:{ trigger:'.about-bio', start:'top 88%', once:true } });
+
+  /* ── Stat cards: flip in like playing cards ── */
   document.querySelectorAll('.stat').forEach((el, i) => {
     ScrollTrigger.create({
-      trigger: el, start:'top 92%', once:true,
-      onEnter: () => {
-        gsap.to(el, { autoAlpha:1, y:0, scale:1, duration:0.6, ease:'back.out(1.7)', delay:i*0.12 });
+      trigger:el, start:'top 93%', once:true,
+      onEnter:() => {
+        gsap.fromTo(el,
+          { rotateY:90, autoAlpha:0, scale:0.8 },
+          { rotateY:0, autoAlpha:1, scale:1, duration:0.7, ease:'back.out(1.5)',
+            delay:i*0.13, transformPerspective:600 });
         el.classList.add('visible');
       }
     });
   });
-  /* About avatar */
-  gsap.fromTo('.avatar-frame', { x:-50, autoAlpha:0 },
-    { x:0, autoAlpha:1, duration:0.9, ease:'power3.out',
-      scrollTrigger:{ trigger:'.avatar-frame', start:'top 88%', once:true } });
-  gsap.fromTo('.about-bio', { y:20, autoAlpha:0 },
-    { y:0, autoAlpha:1, duration:0.8, ease:'power2.out',
-      scrollTrigger:{ trigger:'.about-bio', start:'top 88%', once:true } });
-  /* Skill cards */
+
+  /* ── Skill cards: fly in from alternating sides ── */
   document.querySelectorAll('.skill-card').forEach((el, i) => {
-    const dir = i % 2 === 0 ? -35 : 35;
+    const fromX = i%2===0 ? -60 : 60;
     ScrollTrigger.create({
       trigger:el, start:'top 93%', once:true,
-      onEnter: () => {
-        gsap.to(el, { autoAlpha:1, x:0, y:0, scale:1, duration:0.75, ease:'back.out(1.4)', delay:i*0.09 });
+      onEnter:() => {
+        gsap.fromTo(el,
+          { x:fromX, y:20, autoAlpha:0, scale:0.88, rotateZ:i%2===0?-3:3 },
+          { x:0, y:0, autoAlpha:1, scale:1, rotateZ:0,
+            duration:0.85, ease:'back.out(1.3)', delay:i*0.1 });
         el.classList.add('visible');
       }
     });
   });
-  /* Project cards */
+
+  /* ── Project cards: materialize from blur ── */
   document.querySelectorAll('.proj-card').forEach((el, i) => {
     ScrollTrigger.create({
       trigger:el, start:'top 93%', once:true,
-      onEnter: () => {
-        gsap.to(el, { autoAlpha:1, y:0, scale:1, duration:0.75, ease:'power3.out', delay:i*0.1 });
+      onEnter:() => {
+        gsap.fromTo(el,
+          { y:70, autoAlpha:0, scale:0.9, filter:'blur(8px)' },
+          { y:0, autoAlpha:1, scale:1, filter:'blur(0px)',
+            duration:0.9, ease:'power3.out', delay:i*0.12 });
         el.classList.add('visible');
       }
     });
   });
-  /* Timeline items */
+
+  /* ── Timeline: draw connector then items slide in ── */
+  const timeline = document.querySelector('.timeline');
+  if (timeline) {
+    gsap.fromTo(timeline,
+      { '--pseudo-height':'0%' },
+      { '--pseudo-height':'100%', duration:1.5, ease:'power2.inOut',
+        scrollTrigger:{ trigger:timeline, start:'top 80%', end:'bottom 60%', scrub:1 } });
+  }
   document.querySelectorAll('.tl-item').forEach((el, i) => {
     ScrollTrigger.create({
       trigger:el, start:'top 93%', once:true,
       onEnter:() => {
-        gsap.to(el, { autoAlpha:1, x:0, duration:0.65, ease:'power3.out', delay:i*0.1 });
+        gsap.fromTo(el,
+          { x:-50, autoAlpha:0, scale:0.9 },
+          { x:0, autoAlpha:1, scale:1, duration:0.7, ease:'back.out(1.4)', delay:i*0.12 });
         el.classList.add('visible');
       }
     });
   });
-  /* Contact items */
-  document.querySelectorAll('.contact-item,.social-btn,.fg').forEach((el, i) => {
-    gsap.fromTo(el, { autoAlpha:0, y:20 },
-      { autoAlpha:1, y:0, duration:0.5, ease:'power2.out', delay:i*0.07,
+
+  /* ── Contact items: stagger in from left ── */
+  document.querySelectorAll('.contact-item').forEach((el, i) => {
+    gsap.fromTo(el,
+      { x:-40, autoAlpha:0, rotateY:8 },
+      { x:0, autoAlpha:1, rotateY:0, duration:0.75, ease:'power3.out', delay:i*0.15, transformPerspective:600,
+        scrollTrigger:{ trigger:el, start:'top 93%', once:true } });
+  });
+  document.querySelectorAll('.social-btn').forEach((el, i) => {
+    gsap.fromTo(el, { scale:0, autoAlpha:0, rotation:180 },
+      { scale:1, autoAlpha:1, rotation:0, duration:0.55, ease:'back.out(2)', delay:i*0.08,
+        scrollTrigger:{ trigger:el, start:'top 95%', once:true } });
+  });
+  document.querySelectorAll('.fg').forEach((el, i) => {
+    gsap.fromTo(el, { y:24, autoAlpha:0 },
+      { y:0, autoAlpha:1, duration:0.55, ease:'power2.out', delay:i*0.09,
         scrollTrigger:{ trigger:el, start:'top 95%', once:true } });
   });
 }
@@ -1576,6 +1701,17 @@ window.addEventListener('scroll', () => {
   const ids = ['contact','research','projects','skills','about','home'];
   let cur = 'home';
   ids.forEach(id => { const el=document.getElementById(id); if(el&&s>=el.offsetTop-140) cur=id; });
+  if (cur !== window.__lastNavSec) {
+    window.__lastNavSec = cur;
+    const flash = document.getElementById('secFlash');
+    if (flash) {
+      const cols = {home:'rgba(124,58,237,0.08)',about:'rgba(6,182,212,0.06)',skills:'rgba(16,185,129,0.06)',
+                    projects:'rgba(37,99,235,0.06)',research:'rgba(124,58,237,0.09)',contact:'rgba(6,182,212,0.07)'};
+      flash.style.background = cols[cur]||'transparent';
+      flash.style.opacity='1';
+      setTimeout(()=>{flash.style.opacity='0';},700);
+    }
+  }
   document.querySelectorAll('.nav-link').forEach(a => {
     a.classList.toggle('active', a.getAttribute('onclick') && a.getAttribute('onclick').includes("'"+cur+"'"));
   });
@@ -1863,6 +1999,7 @@ function render() {
   const m = window.location.hash.match(/^#project-(\d+)$/);
   if(m){const i=parseInt(m[1]);if(_allProj[i])setTimeout(()=>openProj(i),600);}
 
+  /* Kic
   /* Kick off all scroll animations AFTER DOM render */
   requestAnimationFrame(() => {
     initReveal();
