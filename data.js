@@ -55,6 +55,282 @@ const DEFAULT_DATA = {
   ],
   "projects": [
     {
+      "title": "",
+      "excerpt": "Date of Experiment: April 12, 2026",
+      "featuredImage": "",
+      "tags": "",
+      "link": "#",
+      "date": "",
+      "status": "Ongoing",
+      "orderNum": 3,
+      "blocks": [
+        {
+          "type": "heading2",
+          "id": "1s4m5hyvzh6mnxbzepn",
+          "content": "Measurement of Chemical Resistivity of Glass Sample"
+        },
+        {
+          "type": "paragraph",
+          "id": "kdihlycjaoqmnxbzepn",
+          "content": "Date of Experiment: April 12, 2026"
+        },
+        {
+          "type": "heading2",
+          "id": "kkg5hv399zlmnxbzepn",
+          "content": "1. Objective"
+        },
+        {
+          "type": "paragraph",
+          "id": "201azifx0e4mnxbzepn",
+          "content": "To determine the chemical resistivity (chemical durability) of glass samples by measuring their weight change after immersion in three different corrosive media: neutral, acidic, and basic, over a period of 24 hours, using the gravimetric method."
+        },
+        {
+          "type": "heading2",
+          "id": "tdeo8qofxv9mnxbzepn",
+          "content": "2. Introduction"
+        },
+        {
+          "type": "paragraph",
+          "id": "6z77tvflzrlmnxbzepn",
+          "content": "Chemical durability is one of the most critical engineering properties of glass. It refers to the ability of glass to resist attack or dissolution when exposed to water, acids, alkalis, and other chemical agents. In practical applications, such as pharmaceutical containers, laboratory glassware, architectural glass, and food packaging, glass must maintain structural and chemical integrity even when in contact with corrosive environments. The most commonly used glass, soda-lime silicate glass (Na ₂ O – CaO – SiO ₂ ), is known to be susceptible to both acid and alkaline attack, though through entirely different mechanisms. In water and acidic media, the primary attack mechanism is leaching: hydrogen ions (H ⁺ ) from the solution exchange with sodium ions (Na ⁺ ) within the glass network, selectively removing the modifier ions without completely destroying the silicate network. In alkaline media, the attack is more aggressive and proceeds by network dissolution, where hydroxyl ions (OH ⁻ ) break the Si – O – Si bonds of the glass network itself, leading to significantly higher weight loss. This experiment employs the gravimetric method, comparing the weight of a glass sample before and after chemical exposure, to quantify the degree of attack by three media: distilled water (neutral), 30% hydrochloric acid (HCl, acidic), and 30% sodium hydroxide (NaOH, basic). Results from all six experimental groups are compared to identify trends across different samples and media."
+        },
+        {
+          "type": "heading2",
+          "id": "djyrce4ywzvmnxbzepn",
+          "content": "3. Materials & Equipment"
+        },
+        {
+          "type": "paragraph",
+          "id": "ysrqk602b1mnxbzepn",
+          "content": "• Glass samples (soda-lime glass)\n• Three corrosive media: Distilled water (H ₂ O), 30% HCl solution (acidic medium), 30% NaOH solution (basic medium)\n• Analytical balance (for accurate mass measurement to ±0.01 g precision)\n• Immersion containers (beakers/trays) for each medium\n"
+        },
+        {
+          "type": "heading2",
+          "id": "386bw6wy7jdmnxbzepo",
+          "content": "4. Methodology"
+        },
+        {
+          "type": "paragraph",
+          "id": "pfkgo3gniumnxbzepo",
+          "content": "The experiment was conducted using the standard gravimetric procedure for chemical durability testing. Each glass sample was first weighed accurately on an analytical balance to record its initial weight (W ₁ ). The samples were then individually immersed in three separate corrosive media: distilled water (neutral), 30% HCl (acidic), and 30% NaOH (basic), and left undisturbed for a duration of 24 hours at ambient temperature. After 24 hours, the samples were carefully removed from the solutions, gently rinsed with distilled water, dried, and reweighed to obtain the final weight (W ₂ ). The weight change (ΔW = W ₂ − W ₁ ) was calculated for each medium to assess the degree of chemical attack. A positive ΔW indicates weight gain (possible surface deposition), while a negative ΔW indicates material dissolution (weight loss due to corrosion)."
+        },
+        {
+          "type": "heading2",
+          "id": "i29ushxysmimnxbzeq8",
+          "content": "5. Results"
+        },
+        {
+          "type": "heading3",
+          "id": "4rnerw77vpf",
+          "content": " 5.1 Group Data:"
+        },
+        {
+          "type": "paragraph",
+          "id": "kv0dfyit63cmnxbzeq8",
+          "content": "The following table presents the initial weight, final weight, and weight change for the three glass samples of Group 5 after 24 hours of immersion in each medium."
+        },
+        {
+          "type": "table",
+          "id": "5ulzloup4bk",
+          "rows": 4,
+          "cols": 4,
+          "data": [
+            [
+              "Medium",
+              " Initial Wt. W ₁ (g)",
+              " Final Wt. W ₂ (g)",
+              "ΔW (g)"
+            ],
+            [
+              "Neutral (H ₂ O)",
+              "2.49",
+              "2.55",
+              "0.06"
+            ],
+            [
+              "Acid (30% HCl)",
+              "4.99",
+              "5.00",
+              "0.01"
+            ],
+            [
+              "Base (30% NaOH)",
+              "3.49",
+              "3.61",
+              "0.12"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "id": "i8bwoldta58mnxbzeq8",
+          "content": "Table 1: Weight measurements for Group 5 samples (N = Neutral, A = Acid, B = Base)."
+        },
+        {
+          "type": "heading3",
+          "id": "muyf5htnuf",
+          "content": "5.2 Comparison Across All Groups"
+        },
+        {
+          "type": "paragraph",
+          "id": "ocucw04h59",
+          "content": "The table below compares the initial weight (W ₁ ), final weight (W ₂ ), and weight change (ΔW) across all six experimental groups for all three media. All weights are in grams. Column headers: N = Neutral, A = Acid, B = Base."
+        },
+        {
+          "type": "table",
+          "id": "z8qg7gt4yhd",
+          "rows": 7,
+          "cols": 10,
+          "data": [
+            [
+              "Group",
+              "N -W₁ (g)",
+              "N -W₂ (g)",
+              "N -ΔW (g)",
+              "A -W₁ (g)",
+              "A -W₂ (g)",
+              "A -ΔW (g)",
+              "B -W₁ (g)",
+              "B -W₂ (g)",
+              "B -ΔW (g)"
+            ],
+            [
+              "1",
+              "4.34",
+              "4.38",
+              "0.04",
+              "6.31",
+              "6.33",
+              "0.02",
+              "4.41",
+              "4.43",
+              "0.02"
+            ],
+            [
+              "2",
+              "2.61",
+              "2.63",
+              "0.02",
+              "5.47",
+              "5.48",
+              "0.01",
+              "4.85",
+              "4.90",
+              "0.05"
+            ],
+            [
+              "3",
+              "2.79",
+              "2.81",
+              "0.02",
+              "5.95",
+              "5.94",
+              "-0.01",
+              "4.10",
+              "4.09",
+              "-0.01"
+            ],
+            [
+              "4",
+              "3.54",
+              "3.56",
+              "0.02",
+              "4.79",
+              "4.83",
+              "0.04",
+              "2.89",
+              "2.90",
+              "0.01"
+            ],
+            [
+              "5 (Mine)",
+              "2.49",
+              "2.55",
+              "0.06",
+              "4.99",
+              "5.00",
+              "0.01",
+              "3.49",
+              "3.61",
+              "0.12"
+            ],
+            [
+              "6",
+              "2.33",
+              "2.74",
+              "0.41",
+              "2.93",
+              "3.26",
+              "0.33",
+              "3.43",
+              "3.83",
+              "0.40"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "id": "x5sz9evaozmnxbzeq8",
+          "content": "Table 2: All groups comparison: W ₁ (Initial), W ₂ (Final), ΔW (Change) in grams."
+        },
+        {
+          "type": "heading2",
+          "id": "7xul81spaosmnxbzeq8",
+          "content": "6. Discussion"
+        },
+        {
+          "type": "heading3",
+          "id": "ym0puye89yd",
+          "content": "Effect of Neutral Medium (Distilled Water):"
+        },
+        {
+          "type": "paragraph",
+          "id": "lyptv3mexrmnxbzeq8",
+          "content": "All groups showed very small but positive weight changes in neutral water, indicating minimal chemical attack. For Group 5, the neutral sample gained +0.06 g. This minor weight gain in water is attributed to the ion exchange process, where H ⁺ or H₃O ⁺ ions from water exchange with network modifier cations (primarily Na ⁺ ) near the glass surface. This forms a silica rich gel layer that may trap small amounts of water, slightly increasing the apparent weight. The overall effect is minimal, confirming that silicate g lass has good durability in neutral aqueous environments."
+        },
+        {
+          "type": "heading3",
+          "id": "6ylg78i6l4u",
+          "content": " Effect of Acidic Medium (30% HCl):"
+        },
+        {
+          "type": "paragraph",
+          "id": "gcbul4tqtyfmnxbzeqk",
+          "content": "The acidic medium produced consistently small weight changes across most groups, indicating a moderate level of attack. Group 5 showed only a +0.01 g change. In acid, the dominant mechanism is selective leaching: H ⁺ ions replace Na ⁺ ions in the glass network without breaking the Si – O – Si backbone. The resulting hydrated silica gel layer is relatively protective and slows further attack. HF is the only acid that attacks silica glass directly; HCl attacks the modifier phase but leaves the silica network largely intact. The small weight change aligns with this mechanism. "
+        },
+        {
+          "type": "heading3",
+          "id": "s0wvvqb2ji",
+          "content": "Effect of Basic Medium (30% NaOH):"
+        },
+        {
+          "type": "paragraph",
+          "id": "sfsb2ey1sq",
+          "content": "The basic medium produced the largest weight changes across most groups. Group 5 recorded a +0.12 g change. This is because OH ⁻ ions attack and break the Si – O – Si bonds of the glass network itself — a process known as network dissolution. Unlike the protective silica gel formed in acid, the alkali attack continuously erodes the glass network. Group 6 showed the highest weight gain in base (+0.40 g), suggesting either a more porous or less durable glass composition. The trend of base causing more damage than acid or water is consistent with the known chemistry of glass corrosion. "
+        },
+        {
+          "type": "heading3",
+          "id": "dstqm160x38",
+          "content": "Observations Across Groups:"
+        },
+        {
+          "type": "paragraph",
+          "id": "y7hvaf30i1p",
+          "content": "\n Groups 1–5 show relatively modest weight changes overall, while Group 6 shows notably larger changes, especially in acid and base, which may indicate a compositionally different or less durable glass sample. In most groups, the base medium caused the greatest weight change, followed by neutral water, then acid, a pattern that is consistent with the expected corrosion chemistry of soda-lime silicate glass."
+        },
+        {
+          "type": "heading2",
+          "id": "ldtw4t58xrmnxbzeqk",
+          "content": "7. Conclusion"
+        },
+        {
+          "type": "paragraph",
+          "id": "63gple3kzhmnxbzeqk",
+          "content": "This experiment successfully demonstrated the chemical durability of glass samples against three corrosive media using the gravimetric method. The results confirm the expected pattern: alkaline solutions (30% NaOH) cause the greatest material damage due to direct network dissolution, while acidic solutions (30% HCl) cause moderate attack through selective leaching, and neutral water causes the least damage. For Group 5 specifically, the weight change was smallest in the acid medium (+0.01 g), moderate in neutral water (+0.06 g), and highest in the basic medium (+0.12 g). These findings are consistent with the established understanding of glass corrosion mecha nisms and confirm that glass is most vulnerable to strongly alkaline environments. Comparisons across all six groups also reveal variation in glass durability, suggesting potential differences in composition or sample preparation."
+        }
+      ]
+    },
+    {
       "title": "An Overview of the Raw Materials Used for Ceramic Bodies",
       "excerpt": "This experiment presented a comprehensive study of the commonly used raw materials for ceramic body preparation. Various cerami…",
       "featuredImage": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775414881/h98zhmsrjfhuir1c0unp.jpg",
