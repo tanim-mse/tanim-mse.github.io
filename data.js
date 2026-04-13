@@ -55,25 +55,15 @@ const DEFAULT_DATA = {
   ],
   "projects": [
     {
-      "title": "",
-      "excerpt": "Date of Experiment: April 12, 2026",
+      "title": "Measurement of Chemical Resistivity of Glass Sample",
+      "excerpt": "To determine the chemical resistivity (chemical durability) of glass samples by measuring their weight change after immersion i…",
       "featuredImage": "",
-      "tags": "",
+      "tags": "Glass, Academic, Gravimetric Method",
       "link": "#",
-      "date": "",
-      "status": "Ongoing",
+      "date": "April 2026",
+      "status": "Completed",
       "orderNum": 3,
       "blocks": [
-        {
-          "type": "heading2",
-          "id": "1s4m5hyvzh6mnxbzepn",
-          "content": "Measurement of Chemical Resistivity of Glass Sample"
-        },
-        {
-          "type": "paragraph",
-          "id": "kdihlycjaoqmnxbzepn",
-          "content": "Date of Experiment: April 12, 2026"
-        },
         {
           "type": "heading2",
           "id": "kkg5hv399zlmnxbzepn",
