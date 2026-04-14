@@ -55,6 +55,490 @@ const DEFAULT_DATA = {
   ],
   "projects": [
     {
+      "title": "Electrodeposition of Nickel on a Metal Substrate",
+      "excerpt": "To deposit a uniform nickel (Ni) coating on a mild steel substrate using an aqueous nickel sulfate-based electrolyte (Watts bat…",
+      "featuredImage": "",
+      "tags": "Surface, Microstructure, Roughness, Pb, Mild Steel, Anode, Cathode",
+      "link": "#",
+      "date": "April 2026",
+      "status": "Ongoing",
+      "orderNum": 3,
+      "blocks": [
+        {
+          "type": "heading2",
+          "id": "gja6bzj97jimny8xp91",
+          "content": "1. Objective"
+        },
+        {
+          "type": "paragraph",
+          "id": "ptxgv7ebu8hmny8xp91",
+          "content": "To deposit a uniform nickel (Ni) coating on a mild steel substrate using an aqueous nickel sulfate-based electrolyte (Watts bath), and to study the effect of deposition parameters on coating thickness, surface morphology, and deposition efficiency."
+        },
+        {
+          "type": "heading2",
+          "id": "8llvvqb3kl9mny8xp91",
+          "content": "2. Theory"
+        },
+        {
+          "type": "paragraph",
+          "id": "pld43os9nlmny8xp91",
+          "content": "Nickel electrodeposition is an electrochemical reduction process in which Ni² ⁺ ions present in the electrolyte solution are reduced at the cathode (substrate) and deposited as solid metallic nickel. This process requires an external DC power source, an ele ctrolyte bath, a cathode (the substrate to be coated), and an anode."
+        },
+        {
+          "type": "heading3",
+          "id": "2q8mdatsl9w",
+          "content": "2.1 Electrochemical Reactions"
+        },
+        {
+          "type": "paragraph",
+          "id": "fxlt4nrlfd6mny8xp91",
+          "content": "The half-reactions occurring at each electrode are: "
+        },
+        {
+          "type": "formula",
+          "id": "l6zqge27kd",
+          "latex": "Cathode (Reduction): Ni² ⁺ + 2e ⁻ → Ni(s)",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "ssvf1i4wxnl",
+          "latex": "Anode (Oxidation): 2H ₂ O → O ₂ + 4H ⁺ + 4e ⁻ ",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "4rw60aa128f",
+          "latex": "Lead-Anode-Surface: Pb + SO ₄ ² ⁻ → PbSO ₄ (passive-layer)",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "9new1wrsx9mny8xp91",
+          "content": "At the cathode, Ni² ⁺ ions gain electrons from the power supply and are deposited as solid nickel metal onto the substrate surface. At the lead (Pb) anode, water is oxidized to produce oxygen gas (O ₂ ), protons (H ⁺ ), and electrons. The lead anode itself form s a thin, protective PbSO ₄ passive layer, which prevents it from dissolving into the electrolyte."
+        },
+        {
+          "type": "heading3",
+          "id": "jee08xy128",
+          "content": "2.2 The Watts Bath"
+        },
+        {
+          "type": "paragraph",
+          "id": "5qqqpqrnpebmny8xp9d",
+          "content": "The standard electrolyte used for nickel electrodeposition is called the Watts Bath. It consists of three key components:"
+        },
+        {
+          "type": "paragraph",
+          "id": "cz76d96jmlhmny8xp9d",
+          "content": "• Nickel Sulfate Hexahydrate (NiSO ₄ ·6H ₂ O): the primary source of Ni² ⁺ ions for deposition. Concentration: 240 – 300 g/L.\n• Nickel Chloride Hexahydrate (NiCl ₂ ·6H ₂ O): improves anode dissolution and enhances conductivity. Concentration: 30 – 60 g/L.\n• Boric Acid (H ₃ BO ₃ ): acts as a pH buffer near the cathode surface to maintain stable deposition conditions. Concentration: 30 – 40 g/L."
+        },
+        {
+          "type": "paragraph",
+          "id": "rmbopmwqvmsmny8xp9d",
+          "content": "The bath pH is maintained between 3.5 and 4.5 using HCl (to lower pH) or NH ₄ OH (to raise pH). Operating temperature is maintained at 45 – 60°C for optimal deposition kinetics."
+        },
+        {
+          "type": "heading3",
+          "id": "4ln3stm2js6",
+          "content": "2.3 Coating Thickness from Weight Gain "
+        },
+        {
+          "type": "paragraph",
+          "id": "f1oa7wx08hmny8xp9d",
+          "content": "Since the Positector instrument was unavailable during this experiment, the coating thickness was calculated analytically from the mass difference before and after deposition, using the known density of nickel: "
+        },
+        {
+          "type": "formula",
+          "id": "4durc4b1z0l",
+          "latex": "ρ (Ni) = m (deposited) / V (deposited)",
+          "notes": " Where,\nρ (Ni) = 8900 kg/m³ (density of nickel), m (deposited) = mass gained (g)"
+        },
+        {
+          "type": "formula",
+          "id": "vbsdqvt7re",
+          "latex": "Thickness (h) = V (deposited) / [2 × A (one-side)]",
+          "notes": "Where, \nA (one-side) = One-sided area of the substrate (m²)"
+        },
+        {
+          "type": "heading2",
+          "id": "d4dxlz8xk1bmny8xp9d",
+          "content": "3. Materials and Chemicals"
+        },
+        {
+          "type": "heading3",
+          "id": "rhna9s84k1p",
+          "content": "3.1 Substrate"
+        },
+        {
+          "type": "paragraph",
+          "id": "2jwhd9xp52smny8xp9d",
+          "content": "• Material: Mild Steel plate\n• Initial Weight: 3.860 g\n• Dimensions : Length: 28.83 mm, Width: 25.80 mm"
+        },
+        {
+          "type": "heading3",
+          "id": "9yxtxmch8zj",
+          "content": "3.2 Electrolyte Components (Watts Bath)"
+        },
+        {
+          "type": "paragraph",
+          "id": "18zjtfhvonpmny8xp9d",
+          "content": "• Nickel Sulfate Hexahydrate : NiSO ₄ ·6H ₂ O (3% solution)\n• Nickel Chloride Hexahydrate : NiCl ₂ ·6H ₂ O (3 g in 300 mL)\n• Boric Acid : H ₃ BO ₃ (10 g in 300 mL)\n• Distilled water"
+        },
+        {
+          "type": "heading3",
+          "id": "4i0hzzx9mha",
+          "content": "3.3 Other Materials and Equipment"
+        },
+        {
+          "type": "paragraph",
+          "id": "6na2rgc00yumny8xp9d",
+          "content": "• Anode: Lead (Pb) plate\n• Degreasing agent: Acetone\n• Abrasive: SiC emery paper (180 grit, up to 1200 grit)\n• Roughness Tester: SRT -6200S\n• Thickness Gauge: Posi T ector 6000, Model FN51 (machine problem encountered)\n• Thermometer (for temperature monitoring)\n• DC Power Supply\n• Analytical balance, beaker, oven (40°C)"
+        },
+        {
+          "type": "heading2",
+          "id": "cdyotijvnhmmny8xp9r",
+          "content": "4. Working Procedure"
+        },
+        {
+          "type": "heading3",
+          "id": "a70txe2esfb",
+          "content": "4.1 Substrate Preparation"
+        },
+        {
+          "type": "paragraph",
+          "id": "hsk2itwn4dumny8xp9r",
+          "content": "• The mild steel substrate surface was rubbed with SiC emery paper of 180 grit to remove surface oxide layers and produce a clean, roughened surface for better adhesion."
+        },
+        {
+          "type": "paragraph",
+          "id": "ora1p678w1mny8xp9r",
+          "content": "• The substrate was washed thoroughly with distilled water and detergent to remove loose abrasive particles and contaminants."
+        },
+        {
+          "type": "paragraph",
+          "id": "y11xqq1udimny8xp9r",
+          "content": "• The substrate surface was dried using acetone to ensure complete removal of surface moisture and organic residues."
+        },
+        {
+          "type": "paragraph",
+          "id": "8x8l0kh1983mny8xp9r",
+          "content": "• The substrate dimensions were measured and recorded: Length = 28.83 mm, Width = 25.80 mm, and initial weight = 3.860 g."
+        },
+        {
+          "type": "heading3",
+          "id": "6m2tkksrhtl",
+          "content": "4.2 Electrolyte (Watts Bath) Preparation"
+        },
+        {
+          "type": "paragraph",
+          "id": "nxf2seqeivamny8xp9r",
+          "content": "• The required quantity of NiSO ₄ ·6H ₂ O was dissolved in approximately 70% of the total distilled water volume.\n• NiCl ₂ ·6H ₂ O (3 g) was added and stirred until fully dissolved.\n• Boric acid (10 g) was added, and the solution was heated gently to ~50°C to aid dissolution.\n• The final volume was made up to 300 mL with distilled water and filtered if necessary."
+        },
+        {
+          "type": "heading3",
+          "id": "2jaxhlpxg41",
+          "content": "4.3 Electrodeposition"
+        },
+        {
+          "type": "paragraph",
+          "id": "5au5g6j6kqtmny8xp9r",
+          "content": "• The electrolyte bath was maintained at 45 – 50°C using a water bath with a thermometer for continuous monitoring.\n• The prepared mild steel substrate was connected as the cathode and the lead (Pb) plate as the anode to the DC power supply.\n• The area of the substrate (both sides = 0.14876 dm²) was calculated and set the current to 1 A/dm². Applied current = 1 × 0.14876 = 0.14876 A (with the machine, the current was applied 198 mA) at a voltage of 2.1 V.\n• Both electrodes were immersed in the Watts bath and the deposition for 10 minutes."
+        },
+        {
+          "type": "heading3",
+          "id": "u34e7zye0j",
+          "content": "4.4 Post -Deposition"
+        },
+        {
+          "type": "paragraph",
+          "id": "ggpvww5rovmny8xp9r",
+          "content": "• The substrate was removed from the bath and rinsed with distilled water immediately. \n• The sample was air-dried in an oven at 40°C for 5 minutes.\n• The final weight of the coated substrate was measured and recorded: 3.880 g.\n• Surface roughness measurement was performed using the SRT -6200S roughness tester in both longitudinal and transverse directions with a cut -off length of 0.8 mm.\n• Thickness measurement was attempted using the PosiTector 6000 (Model FN51), but a machine problem was encountered; thickness was therefore calculated analytically from weight gain data.\n• Microstructure images were captured to observe the deposited nickel layer morphology and cross-sectional area of the coating."
+        },
+        {
+          "type": "heading2",
+          "id": "ypscxfv43ccmny8xp9s",
+          "content": "5. Calculations"
+        },
+        {
+          "type": "heading3",
+          "id": "bsogtdtcavd",
+          "content": "5.1 Substrate Area Calculation Area of one face of the substrate:"
+        },
+        {
+          "type": "formula",
+          "id": "5ayqh9hfgbomny8xp9s",
+          "latex": "A (one-side)= L × W = 28.83 mm × 25.80 mm = 743.814 mm²",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "6ipwlgqcdx5mny8xp9s",
+          "content": "Total electrodeposited area (both sides):"
+        },
+        {
+          "type": "formula",
+          "id": "gwxh2vr0vspmny8xpa4",
+          "latex": "A (total) = 2 × 743.814 = 1487.628 mm² = 0.14876 dm²",
+          "notes": ""
+        },
+        {
+          "type": "heading3",
+          "id": "6jh3n1pmieg",
+          "content": "5.2 Applied Current Calculation"
+        },
+        {
+          "type": "paragraph",
+          "id": "sbszbfbg35imny8xpa4",
+          "content": " Given current density: j = 1 A/dm²"
+        },
+        {
+          "type": "formula",
+          "id": "aw3kbk8ml3smny8xpa4",
+          "latex": "Applied-Current, I = j × A (total) = 1 A/dm² × 0.14876 dm² = 0.14876 A",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "q85s9fxc9csmny8xpa4",
+          "content": "Applied voltage: V = 2.1 V"
+        },
+        {
+          "type": "heading3",
+          "id": "3w9oesszdm8",
+          "content": "5.3 Mass of Nickel Deposited"
+        },
+        {
+          "type": "formula",
+          "id": "hpf7y5hkdv5",
+          "latex": "m (deposited) = m (final) − m (initial) = 3.880 − 3.860 = 0.020 g",
+          "notes": ""
+        },
+        {
+          "type": "heading3",
+          "id": "iui6kln9jrj",
+          "content": "5.4 Coating Thickness Calculation (Density Method)"
+        },
+        {
+          "type": "paragraph",
+          "id": "wpculet4irnmny8xpa4",
+          "content": "Density of nickel: ρ (Ni) = 8900 kg/m³ = 8.9 g/cm³ \nVolume of deposited nickel:"
+        },
+        {
+          "type": "formula",
+          "id": "mfn9hank7comny8xpa4",
+          "latex": "V = m / ρ = 0.020 g / 8.9 g/cm³ = 2.247 × 10 ⁻ ³ cm³",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "w5hqrdtumemny8xpa4",
+          "content": "Converting substrate one-sided area: 743.814 mm² = 7.438 cm² \nThickness (assuming deposition on both faces):"
+        },
+        {
+          "type": "formula",
+          "id": "f51tfvsiokmny8xpa4",
+          "latex": "h = V /[2 × A (one)] = 2.247 × 10 ⁻ ³ / (2 × 7.438) = 1.51 × 10 ⁻⁴ cm",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "48f9weuazebmny8xpa4",
+          "latex": "h ≈ 1.51 × 10 ⁻ ³ mm ≈ 1.51 μm (per-face)",
+          "notes": ""
+        },
+        {
+          "type": "heading2",
+          "id": "oh8iwvflodpmny8xpa4",
+          "content": "6. Observations and Results"
+        },
+        {
+          "type": "heading3",
+          "id": "127ujcvvilga",
+          "content": "6.1 Weight Measurement Summary "
+        },
+        {
+          "type": "table",
+          "id": "lr87ro52ru8",
+          "rows": 8,
+          "cols": 3,
+          "data": [
+            [
+              "Parameter",
+              "Value",
+              "Unit"
+            ],
+            [
+              "Initial Weight (m_i)",
+              " 3.860 ",
+              "g "
+            ],
+            [
+              "Final Weight (m_f)",
+              "3.880",
+              "g"
+            ],
+            [
+              "Mass of Ni Deposited",
+              "0.020",
+              "g"
+            ],
+            [
+              "Coating Thickness (calculated)",
+              "1.51 × 10 ⁻ ³ ",
+              "mm (per face)"
+            ],
+            [
+              "  Voltage Applied",
+              " 2.1",
+              "v"
+            ],
+            [
+              "Current Applied",
+              "~198",
+              "mA"
+            ],
+            [
+              "Deposition Time",
+              "10",
+              "minutes"
+            ]
+          ]
+        },
+        {
+          "type": "heading3",
+          "id": "ywimbxclpya",
+          "content": "6.2 Surface Roughness Data (SRT -6200S)"
+        },
+        {
+          "type": "table",
+          "id": "vlac109gvf",
+          "rows": 3,
+          "cols": 6,
+          "data": [
+            [
+              "Direction",
+              " Ra (μm)",
+              " R z (μm)",
+              " R q ( μm)",
+              "R t (μm)",
+              "  Cut -off Length (mm)"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "id": "vdbi7ps4d0imny8xpa4",
+          "content": " Longitudinal 3.376 9.549 3.838 9.644 0.8 Transverse 3.097 8.758 3.862 8.845"
+        },
+        {
+          "type": "paragraph",
+          "id": "hn98i82621mny8xpaa",
+          "content": "Where: R a = Arithmetic mean roughness, R z = Mean peak -to -valley height, R q = Root mean square roughness, R t = Maximum total height of profile."
+        },
+        {
+          "type": "paragraph",
+          "id": "e84mc22w3v5mny8xpaa",
+          "content": "6.3 Microstructure Image The following microstructure image was captured after deposition to observe the surface morphology and estimate the cross -sectional area of the nickel coating layer:"
+        },
+        {
+          "type": "paragraph",
+          "id": "io3o4l8ywhomny8xpaa",
+          "content": "Figure 1: Microstructure of Ni -deposited mild steel substrate surface"
+        },
+        {
+          "type": "heading2",
+          "id": "edii5nc8b49mny8xpaa",
+          "content": "7. Discussion"
+        },
+        {
+          "type": "paragraph",
+          "id": "egg4c0ggnkwmny8xpaa",
+          "content": "The electrodeposition of nickel on the mild steel substrate was successfully carried out using the Watts bath electrolyte at a current density of 1 A/dm² for 10 minutes. A mass gain of 0.020 g was recorded, which corresponds to a calculated nickel coating thickness of approximately 1.51 μm per face."
+        },
+        {
+          "type": "paragraph",
+          "id": "ho8bnxebom7mny8xpaa",
+          "content": "During the experiment, oxygen gas (O ₂ ) was visibly evolved at the lead anode. This is consistent with the anodic half -reaction (2 H ₂ O → O ₂ + 4H ⁺ + 4e ⁻ ). The lead anode also formed a passive PbSO ₄ layer on its surface. The evolved O ₂ can theoretically be collected and utilized, though this was not performed in the present experiment."
+        },
+        {
+          "type": "paragraph",
+          "id": "3v0x2foarxkmny8xpaa",
+          "content": "The surface roughness measurements indicate that the deposited nickel coating has higher roughness values in the longitudinal direction (Ra = 3.376 μm) compared to the transverse direction (Ra = 3.097 μm). This directional anisotropy is likely due to the s urface scratches introduced during emery paper polishing, which was performed predominantly in one direction. The relatively higher roughness values suggest that using only 180 -grit emery paper for initial preparation (without progressing to finer grits su ch as 800 or 1200) resulted in a rougher substrate surface, which consequently led to a thinner and less uniform nickel deposition."
+        },
+        {
+          "type": "paragraph",
+          "id": "yr3ggvu2xxlmny8xpaa",
+          "content": "The Positector 6000 (Model FN51) thickness gauge could not be used due to a machine malfunction. The analytical thickness calculation based on the weight gain and nickel density (8900 kg/m³) gave a value of ~1.51 × 10 ⁻ ³ mm (1.51 μm), which is in reasonable agreement with"
+        },
+        {
+          "type": "paragraph",
+          "id": "lukgbzgsoemny8xpai",
+          "content": "the observed field value of 1.451 × 10 ⁻ ³ mm. The slight difference arises from the assumption of uniform deposition across both faces, whereas in practice, the deposition may be slightly non uniform."
+        },
+        {
+          "type": "paragraph",
+          "id": "3qdu838hr0kmny8xpai",
+          "content": "The surface of the sample was noted to not be perfectly parallel in the bath, which can cause non uniform current distribution and consequently non -uniform nickel deposition across the substrate surface."
+        },
+        {
+          "type": "heading2",
+          "id": "sivvjiup4wmny8xpai",
+          "content": "8. Conclusion"
+        },
+        {
+          "type": "paragraph",
+          "id": "pe33siycaq9mny8xpai",
+          "content": "Nickel was successfully electrodeposited on a mild steel substrate using a Watts bath electrolyte. A total nickel mass of 0.020 g was deposited over 10 minutes at 1 A/dm² and 2.1 V. The calculated coating thickness is approximately 1.51 μm per face (1.51 × 10 ⁻ ³ mm), closely matching the recorded value of 1.451 × 10 ⁻ ³ mm. Surface roughness values (Ra ≈ 3.1 – 3.4 μm) indicate a moderately rough surface, attributable primarily to the initial surface preparation using 180 -grit emery paper. Oxygen gas was evolved at the lead anode, consistent with the water oxidation reaction. The non -parallel alignment of the substrate in the bath and the use of only coarse emery paper contributed to the relatively rough and slightly non -uniform nickel deposit."
+        },
+        {
+          "type": "paragraph",
+          "id": "q2m2eelf2limny8xpai",
+          "content": "The experiment demonstrates the fundamental principles of electrodeposition and highlights the critical roles of surface preparation, bath chemistry, current density control, and electrode alignment on the quality and uniformity of the deposited coating."
+        },
+        {
+          "type": "heading2",
+          "id": "7t3eo97ukkomny8xpai",
+          "content": "References"
+        },
+        {
+          "type": "paragraph",
+          "id": "ha6vomi26wsmny8xpai",
+          "content": "• Schlesinger, M., & Paunovic, M. Modern Electroplating, Wiley."
+        },
+        {
+          "type": "paragraph",
+          "id": "bvjvueuvdrjmny8xpai",
+          "content": "• Lowenheim, F. A. Modern Electroplating Technology."
+        },
+        {
+          "type": "paragraph",
+          "id": "rplhewvhz8lmny8xpai",
+          "content": "• ASTM B689 – Standard Specification for Electroplated Engineering Nickel Coatings."
+        },
+        {
+          "type": "paragraph",
+          "id": "u9qhltjz3wmny8xpaj",
+          "content": "• Course Manual: MSE3132 Surface Engineering Sessional, Dept. of MSE, RUET."
+        }
+      ]
+    },
+    {
       "title": "Measurement of Chemical Resistivity of Glass Sample",
       "excerpt": "To determine the chemical resistivity (chemical durability) of glass samples by measuring their weight change after immersion i…",
       "featuredImage": "",
@@ -706,193 +1190,6 @@ const DEFAULT_DATA = {
           "type": "paragraph",
           "id": "v9g3hi0x7je",
           "content": "This experiment vividly illuminated the pivotal role of raw materials in the captivating realm of ceramic engineering. It revealed that the performance of a ceramic body is intricately tied to its mineralogical and chemical composition, which acts as a foundational cornerstone of its capabilities. Achieving the desired mechanical, thermal, and physical properties requires an artful balancing act of plastic materials, fluxes, and fillers, like conducting a symphony where each element plays a vital role. Even the most subtle variations in raw material proportions can lead to strikingly different outcomes in ceramic behavior, akin to a delicate dance where precision is key. Therefore, cultivating a deep and nuanced understanding of ceramic raw materials is essential for crafting efficient, resilient, and high-performance ceramic systems that meet the demands of modern applications."
-        }
-      ]
-    },
-    {
-      "title": "Modified Structural Design of Pit Furnace for Foundry: Mathematical Optimization for enhanced Performance",
-      "excerpt": "Pit furnaces are vertical crucible furnaces commonly used in foundries for melting non-ferrous metals such as aluminum. A typic…",
-      "featuredImage": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775470806/m4ump4gdqpeqnlqkdspr.jpg",
-      "tags": "Pit Furnace, Modified Design, Academics",
-      "link": "#",
-      "date": "Apr 2026",
-      "status": "Ongoing",
-      "blocks": [
-        {
-          "type": "heading1",
-          "id": "a8tq7sgsuo",
-          "content": "Introduction"
-        },
-        {
-          "type": "paragraph",
-          "content": "Pit furnaces are vertical crucible furnaces commonly used in foundries for melting non-ferrous metals such as aluminum. A typical design features a combustion chamber lined with refractory material, a cast-iron crucible with refractory material, a top lid with side or bottom burner(s), and a top lid with an exhaust flue. The goal of this modification is to improve thermal performance, fuel-related variables, heat transfer, operational parameters, and environmental sustainability.\nThe proposed design retains the core cylindrical geometry for uniform heat distribution but introduces multi-layer insulation, a reconfigurable refractory, and a reconfigurable refractory for waste-heat recovery, improving performance.\nscaling, and optimized dimensions. These changes are evaluated through heat balance equations and optimization to demonstrate quantifiable gains without excessive complexity.",
-          "id": "u2u58ukuifj"
-        },
-        {
-          "type": "heading1",
-          "id": "yl2ohx19sw9",
-          "content": "Standard vs. Proposed Design:"
-        },
-        {
-          "type": "paragraph",
-          "id": "1qh77mqfbnq",
-          "content": "Standard pit furnace (e.g., square/rectangular or basic cylindrical) often uses single-layer firebrick lining (~150mm), minimal insulation (for gas only), no heat recovery, and simple burner placement. This leads to too high a wall and exhaust losses (~40-60% of input energy)."
-        },
-        {
-          "type": "heading1",
-          "id": "iuzchypy0wj",
-          "content": "Proposed Modified Design (Cylindrical Pit Furnace)"
-        },
-        {
-          "type": "image",
-          "id": "m2ymva7gyk",
-          "src": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1775388336/ujnhu6jwwpnqihjtnhje.jpg",
-          "caption": "Fig. 1.1: Modified Pit Furnace with basic dimensioning. ",
-          "size": "small"
-        },
-        {
-          "type": "heading2",
-          "id": "r6f58r4uojj",
-          "content": "Shape and Dimension: "
-        },
-        {
-          "type": "paragraph",
-          "id": "nx8vq3m76p",
-          "content": "Cylindrical (internal combustion chamber dia. ≈0.3 m, height ≈1.35 m) for reduced surface-to-volume ratio and uniform heating. Overall external diameter ≈0.4 m, total height ≈1.5 m (suitable for ~20% aluminum change, matching common foundry scales)."
-        },
-        {
-          "type": "heading2",
-          "id": "aumbeo7nr4",
-          "content": "Multi-layer Lining:"
-        },
-        {
-          "type": "paragraph",
-          "id": "1lmzrh36e7d",
-          "content": "i. Inner refractory (firebrick, 100 mm, high K ≈ 1.2 Wm.K for durability)\nii. Outer insulation (ceramic fiber 100 mm, low K ≈ 0.3 Wm.K for reduced conduction).\niii. Thin steel shell (2 mm)."
-        },
-        {
-          "type": "heading2",
-          "id": "pb840lurjvj",
-          "content": "Recuperator:"
-        },
-        {
-          "type": "paragraph",
-          "id": "7ik1iqnba69",
-          "content": "Counter-flow gas-to-air heat exchanger on the flue (effectiveness ε ≈ 0.6-0.7) to preheat combustion air."
-        },
-        {
-          "type": "heading2",
-          "id": "9qmvwoy9c1n",
-          "content": "Sealing and Burner:"
-        },
-        {
-          "type": "paragraph",
-          "id": "e5unbo7xno",
-          "content": "Improved lid seal (ceramic fiber gasket) to minimize leakage; optimized side burner inlet for better flame distribution and controlled excess air."
-        },
-        {
-          "type": "heading2",
-          "id": "hgcochw4q5k",
-          "content": "Others: "
-        },
-        {
-          "type": "paragraph",
-          "id": "rj169nxquq",
-          "content": "Bottom base reinforced; flue positioned for efficient exhaust flow."
-        },
-        {
-          "type": "paragraph",
-          "id": "mj82vbp071e",
-          "content": "This cross-section illustrates the layered walls, crucible placement, sealed lid, burner inlet, recuperator, and integrated flue."
-        },
-        {
-          "type": "heading2",
-          "id": "ucjro1f4b4",
-          "content": "Mathematical Modeling of Key Variables"
-        },
-        {
-          "type": "heading3",
-          "id": "jzlanufldj",
-          "content": "Steady-state heat balance (energy conservation):"
-        },
-        {
-          "type": "formula",
-          "id": "x0l2mww4gjj",
-          "latex": " Q_{\\text{input}} = Q_{\\text{useful}} + Q_{\\text{wall}} + Q_{\\text{exhaust}} + Q_{\\text{other}} ",
-          "notes": ""
-        },
-        {
-          "type": "paragraph",
-          "id": "gh614br7jj",
-          "content": "Where "
-        },
-        {
-          "type": "formula",
-          "id": "22m4twffnnd",
-          "latex": " Q_{\\text{other}} = includes opening/radiation losses (minimized by sealing)",
-          "notes": ""
-        },
-        {
-          "type": "heading3",
-          "id": "4hyeyniz6a",
-          "content": "Thermal Performance:"
-        },
-        {
-          "type": "paragraph",
-          "id": "zj331ar7d9",
-          "content": "Furnace efficiency, "
-        },
-        {
-          "type": "formula",
-          "id": "r0ps63fbitr",
-          "latex": " \\eta = \\frac{Q_{\\text{useful}}}{Q_{\\text{input}}} \\times 100\\% ",
-          "notes": ""
-        },
-        {
-          "type": "formula",
-          "id": "gw9a2sxdow",
-          "latex": " Q_{\\text{useful}} = M_{\\text{metal}} \\times (C_p \\Delta T + L_f) = 20.06 \\text{ MJ} ",
-          "notes": ""
-        },
-        {
-          "type": "formula",
-          "id": "63skm4kqjfy",
-          "latex": "M_{\\text{metal}} = 20 \\text{ kg}",
-          "notes": ""
-        },
-        {
-          "type": "formula",
-          "id": "i8t70fpbt8",
-          "latex": "C_p \\approx 0.9 \\text{ J/kg.K} ",
-          "notes": ""
-        },
-        {
-          "type": "formula",
-          "id": "nhyozu98mi",
-          "latex": "\\Delta T = 670 \\text{ K}   ",
-          "notes": ""
-        },
-        {
-          "type": "formula",
-          "id": "xq1cjqtjngp",
-          "latex": " L_f = 400 \\text{ kJ/kg} ",
-          "notes": ""
-        },
-        {
-          "type": "paragraph",
-          "id": "4yhs5r9tojn",
-          "content": "Wall heat loss (cylindrical)"
-        },
-        {
-          "type": "formula",
-          "id": "w6mo6ex8mxi",
-          "latex": " Q_{\\text{wall}} = \\frac{\\Delta T}{R_{\\text{total}}} \\quad \\begin{cases} \\Delta T = 870 \\text{ K} \\\\ H = 1.35 \\text{ m} \\\\ h_0 = 15 \\text{ W/m}^2 \\text{ K} \\end{cases} ",
-          "notes": ""
-        },
-        {
-          "type": "heading1",
-          "id": "8l42swqu7rl",
-          "content": "Standard design (single layer):"
         }
       ]
     }
