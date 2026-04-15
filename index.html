@@ -228,47 +228,19 @@ html.lenis, html.lenis body { height: auto; }
   width: 55vw; height: 100vh;
   z-index: 1;
   pointer-events: none;
-  opacity: 0;       /* hidden during hero, faded in for sections 01-05 */
-  transition: opacity 1200ms cubic-bezier(0.65, 0, 0.35, 1);
   /* Soft mask on the left edge so content can sit safely under it */
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.4) 25%, #000 50%);
   mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.4) 25%, #000 50%);
 }
-.crystal-stage.show { opacity: 1; }
 .crystal-stage canvas { display: block; width: 100%; height: 100%; }
 
 /* On smaller screens the crystal becomes a faint backdrop */
 @media (max-width: 900px) {
-  .crystal-stage.show {
+  .crystal-stage {
     width: 100vw;
     opacity: 0.35;
     -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
     mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
-  }
-}
-
-/* ─── PARTICLE HERO CANVAS ─────────────────────────────────────
-   A breathing field of particles that organises into "Tanim".
-   Lives in the right half during HERO only; drifts off as you scroll. */
-#particleHero {
-  position: fixed;
-  top: 0; right: 0;
-  width: 60vw; height: 100vh;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 1;
-  transition: opacity 1200ms cubic-bezier(0.65, 0, 0.35, 1);
-  /* Same left mask so content sits cleanly under it */
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.5) 22%, #000 45%);
-  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.5) 22%, #000 45%);
-}
-#particleHero.gone { opacity: 0; }
-@media (max-width: 900px) {
-  #particleHero {
-    width: 100vw;
-    opacity: 0.65;
-    -webkit-mask-image: radial-gradient(ellipse at center, #000 35%, transparent 80%);
-    mask-image: radial-gradient(ellipse at center, #000 35%, transparent 80%);
   }
 }
 
@@ -286,10 +258,8 @@ html.lenis, html.lenis body { height: auto; }
   text-align: right;
   pointer-events: none;
   display: flex; flex-direction: column; gap: 4px; align-items: flex-end;
-  opacity: 0;
-  transition: opacity 600ms ease;
+  /* Don't overlap the coord readout; coord becomes hidden when label active */
 }
-.crystal-label.show { opacity: 1; }
 .crystal-label .phase {
   color: var(--accent);
   font-weight: 500;
@@ -822,134 +792,6 @@ html.lenis, html.lenis body { height: auto; }
   .proj-row .arrow { font-size: 20px; }
 }
 
-/* ─── Year divider — separates project clusters by year ──────── */
-.proj-year-divider {
-  display: grid;
-  grid-template-columns: 80px minmax(0, 1fr);
-  gap: clamp(20px, 4vw, 60px);
-  align-items: center;
-  padding: 28px 0 8px;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--paper-faint);
-}
-.proj-year-divider .y { color: var(--accent); }
-.proj-year-divider .ln {
-  display: block;
-  height: 1px;
-  background: linear-gradient(90deg, var(--hairline-2), transparent);
-}
-.proj-year-divider:first-child { padding-top: 0; }
-
-@media (max-width: 700px) {
-  .proj-year-divider { grid-template-columns: 50px 1fr; }
-}
-
-/* ─── Overflow handling — hide rows beyond initial visible count ──── */
-.projects-list .proj-overflow {
-  display: none;
-}
-.projects-list.show-overflow .proj-overflow {
-  display: grid;     /* matches both .proj-row and .proj-year-divider */
-  animation: projFadeIn 600ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
-}
-.projects-list.show-overflow .proj-overflow:nth-child(n+8) { animation-delay: 60ms; }
-.projects-list.show-overflow .proj-overflow:nth-child(n+12) { animation-delay: 120ms; }
-@keyframes projFadeIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* "Show all N projects" toggle */
-.proj-toggle {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 18px;
-  width: 100%;
-  margin-top: 36px;
-  padding: 14px 0;
-  background: none;
-  border: 0;
-  cursor: pointer;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--paper-mute);
-  transition: color 200ms;
-}
-.proj-toggle:hover { color: var(--paper); }
-.proj-toggle .proj-toggle-line {
-  height: 1px;
-  background: var(--hairline);
-  transition: background 200ms;
-}
-.proj-toggle:hover .proj-toggle-line { background: var(--hairline-2); }
-.proj-toggle .proj-toggle-label strong {
-  color: var(--accent);
-  font-weight: 500;
-  margin: 0 4px;
-}
-.proj-toggle .proj-toggle-label em {
-  font-style: italic;
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: 13px;
-  color: var(--paper-faint);
-  letter-spacing: 0;
-  text-transform: none;
-  margin-left: 6px;
-}
-
-/* ─── End-of-detail navigation — return to list ────────────── */
-.pd-end {
-  margin-top: 80px;
-  padding-top: 32px;
-  border-top: 1px solid var(--hairline);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
-.pd-end button, .pd-end a {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 22px 0;
-  background: none;
-  border: 0;
-  text-align: left;
-  cursor: pointer;
-  transition: padding 400ms cubic-bezier(0.65, 0, 0.35, 1);
-  font: inherit;
-  color: inherit;
-}
-.pd-end button:hover, .pd-end a:hover { padding-left: 8px; }
-.pd-end .lab {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--paper-faint);
-}
-.pd-end .val {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 22px;
-  color: var(--paper);
-  transition: color 200ms;
-}
-.pd-end button:hover .val, .pd-end a:hover .val { color: var(--accent); }
-.pd-end .right { text-align: right; align-items: flex-end; }
-.pd-end .right:hover { padding-left: 0; padding-right: 8px; }
-@media (max-width: 600px) {
-  .pd-end { grid-template-columns: 1fr; gap: 4px; }
-  .pd-end .right { text-align: left; align-items: flex-start; }
-}
-
 /* ─── PROJECT DETAIL VIEW ─────────────────────────────────────── */
 .proj-detail {
   display: none;
@@ -1369,13 +1211,6 @@ html.lenis, html.lenis body { height: auto; }
 /* Utility */
 .hidden { display: none !important; }
 .fade-out { opacity: 0; transition: opacity 400ms ease; }
-.visually-hidden {
-  position: absolute;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0, 0, 0, 0);
-  white-space: nowrap; border: 0;
-}
 </style>
 </head>
 <body>
@@ -1394,16 +1229,13 @@ html.lenis, html.lenis body { height: auto; }
 </div>
 
 <!-- ════════════════════════════════════════════════════════════════
-     CRYSTAL STAGE — fixed signature element (sections 01-05)
+     CRYSTAL STAGE — fixed signature element
      ════════════════════════════════════════════════════════════════ -->
 <div class="crystal-stage" id="crystalStage"></div>
 <div class="crystal-label" id="crystalLabel">
   <span class="phase" id="crystalPhase">FCC · γ-Iron</span>
   <span class="formula" id="crystalFormula">Face-Centered Cubic</span>
 </div>
-
-<!-- Particle hero — replaces the crystal during HERO section only -->
-<canvas id="particleHero"></canvas>
 
 <!-- ════════════════════════════════════════════════════════════════
      FIXED CHROME
@@ -1435,12 +1267,11 @@ html.lenis, html.lenis body { height: auto; }
   <section class="hero" id="hero" data-section="hero">
     <div class="hero-left">
       <div class="hero-eye" id="heroEye">Materials Science · Engineer in Becoming</div>
+      <h1 class="hero-name" id="heroName">Tanim<em>.</em></h1>
       <p class="hero-role" id="heroRole">Studying the science of what things are made of — at the intersection of materials, nanotechnology, and the things they could become.</p>
       <div class="hero-meta" id="heroMeta"></div>
-      <!-- Visually-hidden h1 for SEO/screen readers; the canvas is decorative -->
-      <h1 class="visually-hidden" id="heroNameSR">Tanim — Materials Science &amp; Engineering, RUET</h1>
     </div>
-    <div></div><!-- right column intentionally empty; particle "Tanim" lives here -->
+    <div></div><!-- right column intentionally empty; crystal lives here -->
     <div class="hero-scroll">
       <span>Scroll</span>
       <span class="arrow"></span>
@@ -1531,7 +1362,7 @@ html.lenis, html.lenis body { height: auto; }
 
   <!-- COLOPHON -->
   <footer class="colophon">
-    <div class="left">A small site about a curious mind.<br>Made of atoms, like everything else.</div>
+    <div class="left">Designed &amp; built in Rajshahi.<br>Made of atoms, like everything else.</div>
     <div>
       <div>© <span id="year"></span> · Tanim</div>
       <div style="margin-top:6px">Set in Fraunces &amp; Inter Tight</div>
@@ -1561,251 +1392,13 @@ function stripHtml(s) {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   PARTICLE HERO — the breathing field that assembles into "Tanim"
-   2D canvas. Curl-noise turbulence + soft cohesion to letterform
-   targets sampled from offscreen text. Mouse repulsion. Pure JS.
+   THE CRYSTAL — signature element
+   A real materials-science lattice that morphs between structures
+   as the user moves through sections. This is the only "wow."
+   Everything else is editorial restraint.
    ════════════════════════════════════════════════════════════════ */
-(() => {
-  const cv = document.getElementById('particleHero');
-  if (!cv) return;
-  const ctx = cv.getContext('2d');
-  let dpr = Math.min(window.devicePixelRatio || 1, 2);
-  let W = 0, H = 0;
-  let particles = [];
-  let targets = [];          // [{x, y}] sampled letterform pixels
-  let cohesion = 0;          // 0 = free drift, 1 = locked to text
-  let cohesionTarget = 0;
-  let mouseX = -9999, mouseY = -9999;
-  let lastTime = performance.now();
-  let textString = (DATA && DATA.name) ? DATA.name : 'Tanim';
-  const PARTICLE_COUNT = 2400;
 
-  /* ── Resize handling ─────────────────────────────────────────── */
-  function resize() {
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const rect = cv.getBoundingClientRect();
-    W = Math.max(1, rect.width);
-    H = Math.max(1, rect.height);
-    cv.width = W * dpr;
-    cv.height = H * dpr;
-    cv.style.width = W + 'px';
-    cv.style.height = H + 'px';
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    rebuildTargets();
-  }
-
-  /* ── Sample letterform pixels ──────────────────────────────────
-     Render the text to an offscreen canvas, scan for "ink" pixels,
-     return ~PARTICLE_COUNT random sample positions. */
-  function rebuildTargets() {
-    const off = document.createElement('canvas');
-    // Generous resolution for crisp letterforms
-    const tw = Math.floor(W);
-    const th = Math.floor(H);
-    if (tw <= 1 || th <= 1) return;
-    off.width = tw; off.height = th;
-    const octx = off.getContext('2d');
-    octx.clearRect(0, 0, tw, th);
-    octx.fillStyle = '#fff';
-    octx.textAlign = 'center';
-    octx.textBaseline = 'middle';
-    // Size text to fill ~75% of canvas width
-    const targetW = tw * 0.78;
-    let fontSize = Math.min(th * 0.42, targetW / Math.max(textString.length, 1) * 1.6);
-    // Use the loaded display serif, fall back to system serif
-    octx.font = `300 italic ${fontSize}px "Fraunces", "Times New Roman", serif`;
-    // Measure and re-fit if needed
-    const m = octx.measureText(textString);
-    if (m.width > targetW) {
-      fontSize = fontSize * (targetW / m.width);
-      octx.font = `300 italic ${fontSize}px "Fraunces", "Times New Roman", serif`;
-    }
-    octx.fillText(textString, tw / 2, th / 2);
-
-    // Sample
-    const data = octx.getImageData(0, 0, tw, th).data;
-    const candidates = [];
-    // Stride for performance — grab every 3rd pixel
-    const stride = 3;
-    for (let y = 0; y < th; y += stride) {
-      for (let x = 0; x < tw; x += stride) {
-        const idx = (y * tw + x) * 4;
-        // Alpha > threshold means the pixel is part of a letter
-        if (data[idx + 3] > 80) {
-          candidates.push([x, y]);
-        }
-      }
-    }
-    if (candidates.length === 0) return;
-
-    // Pick PARTICLE_COUNT random samples (with replacement if too few)
-    targets = [];
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      const c = candidates[Math.floor(Math.random() * candidates.length)];
-      // Tiny jitter so particles don't perfectly overlap
-      targets.push({
-        x: c[0] + (Math.random() - 0.5) * 1.2,
-        y: c[1] + (Math.random() - 0.5) * 1.2
-      });
-    }
-
-    // Assign each particle a target (re-shuffle existing assignments)
-    if (particles.length === 0) seedParticles();
-    else for (let i = 0; i < particles.length; i++) {
-      particles[i].tx = targets[i].x;
-      particles[i].ty = targets[i].y;
-    }
-  }
-
-  /* ── Initial particle seeding — drift in from the right edge ── */
-  function seedParticles() {
-    particles = [];
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      const t = targets[i] || { x: W / 2, y: H / 2 };
-      particles.push({
-        x: W + Math.random() * W * 0.5,             // start off-screen right
-        y: Math.random() * H,
-        vx: -Math.random() * 0.6 - 0.2,
-        vy: (Math.random() - 0.5) * 0.4,
-        tx: t.x,
-        ty: t.y,
-        // Each particle has a slight individual delay before cohesion kicks in
-        delay: Math.random() * 0.6,
-        // Per-particle properties for variety
-        baseAlpha: 0.55 + Math.random() * 0.4,
-        size: 0.7 + Math.random() * 1.0,
-        // Phase offset for breathing turbulence
-        phase: Math.random() * Math.PI * 2
-      });
-    }
-  }
-
-  /* ── Curl-noise approximation — fast 2D version ────────────────
-     Returns a divergence-free vector at (x,y,t). Uses simple
-     trig-based pseudo-noise for speed. */
-  function curl(x, y, t) {
-    const k = 0.0035;
-    const a = Math.sin(x * k * 1.3 + t * 0.9) * Math.cos(y * k * 1.7 - t * 0.6);
-    const b = Math.cos(x * k * 1.1 - t * 0.7) * Math.sin(y * k * 1.4 + t * 0.5);
-    return { x: a, y: b };
-  }
-
-  /* ── Animation loop ─────────────────────────────────────────── */
-  let elapsed = 0;
-  function frame(now) {
-    const dt = Math.min(0.05, (now - lastTime) / 1000);
-    lastTime = now;
-    elapsed += dt;
-
-    // Cohesion eases toward target
-    cohesion += (cohesionTarget - cohesion) * 0.025;
-
-    // Fading trail effect — composite a transparent dark rect over previous frame
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.fillStyle = 'rgba(10, 10, 20, 0.18)';
-    ctx.fillRect(0, 0, W, H);
-
-    // Draw particles
-    ctx.globalCompositeOperation = 'lighter';
-
-    for (let i = 0; i < particles.length; i++) {
-      const p = particles[i];
-
-      // Curl-noise turbulence — small swirling forces
-      const c = curl(p.x, p.y, elapsed);
-      const turbStr = 0.55 * (1.0 - cohesion * 0.55);    // turbulence reduces as cohesion rises
-      p.vx += c.x * turbStr;
-      p.vy += c.y * turbStr;
-
-      // Soft cohesion to target
-      const effCohesion = Math.max(0, cohesion - p.delay) * 0.06;
-      if (effCohesion > 0) {
-        const dx = p.tx - p.x;
-        const dy = p.ty - p.y;
-        p.vx += dx * effCohesion;
-        p.vy += dy * effCohesion;
-      }
-
-      // Mouse repulsion — gentle
-      if (mouseX > -9000) {
-        const mdx = p.x - mouseX;
-        const mdy = p.y - mouseY;
-        const md2 = mdx * mdx + mdy * mdy;
-        if (md2 < 14400) {     // ~120px radius
-          const md = Math.sqrt(md2) || 1;
-          const force = (1 - md / 120) * 1.5;
-          p.vx += (mdx / md) * force;
-          p.vy += (mdy / md) * force;
-        }
-      }
-
-      // Damping
-      p.vx *= 0.92;
-      p.vy *= 0.92;
-
-      // Integrate
-      p.x += p.vx;
-      p.y += p.vy;
-
-      // Wrap if drifting (only when not cohered)
-      if (cohesion < 0.3) {
-        if (p.x < -10) p.x = W + 10;
-        if (p.x > W + 10) p.x = -10;
-        if (p.y < -10) p.y = H + 10;
-        if (p.y > H + 10) p.y = -10;
-      }
-
-      // Render — bright violet core with subtle warmth variation
-      const breath = 0.85 + Math.sin(elapsed * 1.2 + p.phase) * 0.15;
-      const a = p.baseAlpha * breath * (0.3 + cohesion * 0.7);
-      ctx.fillStyle = `rgba(183, 148, 246, ${a})`;
-      ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
-    }
-
-    requestAnimationFrame(frame);
-  }
-
-  /* ── Public API ──────────────────────────────────────────────── */
-  window.particleAssemble = () => { cohesionTarget = 1; };
-  window.particleRelease  = () => { cohesionTarget = 0; };
-  window.particleSetText  = (txt) => {
-    if (typeof txt === 'string' && txt.trim()) {
-      textString = txt.trim();
-      rebuildTargets();
-    }
-  };
-
-  /* ── Mouse tracking ──────────────────────────────────────────── */
-  window.addEventListener('mousemove', e => {
-    const rect = cv.getBoundingClientRect();
-    if (e.clientX >= rect.left && e.clientX <= rect.right &&
-        e.clientY >= rect.top  && e.clientY <= rect.bottom) {
-      mouseX = e.clientX - rect.left;
-      mouseY = e.clientY - rect.top;
-    } else {
-      mouseX = -9999;
-    }
-  });
-  window.addEventListener('mouseout', () => { mouseX = -9999; });
-
-  /* ── Release particles when scrolling away from hero ─────────── */
-  // Set on window for the section-change handler to call
-  window.particleHeroOnSectionChange = (id) => {
-    if (id === 'hero') window.particleAssemble();
-    else window.particleRelease();
-  };
-
-  /* ── Init ────────────────────────────────────────────────────── */
-  window.addEventListener('resize', resize);
-  resize();
-  // Wait one tick for fonts to be ready, then resample
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(() => rebuildTargets());
-  }
-  requestAnimationFrame(frame);
-})();
-
-
+const STAGE = $('#crystalStage');
 const W = () => STAGE.clientWidth || window.innerWidth;
 const H = () => STAGE.clientHeight || window.innerHeight;
 
@@ -2245,23 +1838,14 @@ function observeSections() {
 }
 
 function onSectionChange(id) {
-  const isHero = (id === 'hero');
-  // Toggle particle hero vs crystal lattice
-  const stage = $('#crystalStage');
-  const lab = $('#crystalLabel');
-  const part = $('#particleHero');
-  if (stage) stage.classList.toggle('show', !isHero);
-  if (lab)   lab.classList.toggle('show', !isHero);
-  if (part)  part.classList.toggle('gone', !isHero);
-
-  // Morph crystal (only meaningful for non-hero sections)
-  if (!isHero) morphTo(STRUCTURES[id]);
-
+  // Morph crystal
+  morphTo(STRUCTURES[id]);
   // Update nav
   $$('#chromeNav button').forEach(b => {
     b.classList.toggle('active', b.dataset.nav === id);
   });
   // Update rail marker
+  const sec = sections.indexOf(id) + 1;
   const labels = {
     hero: 'HERO', about: '01 · ABOUT', skills: '02 · SKILLS',
     projects: '03 · WORK', research: '04 · RESEARCH', contact: '05 · CONTACT'
@@ -2305,15 +1889,12 @@ function endIntro() {
   introEl.classList.add('gone');
   setTimeout(() => {
     introEl.remove();
-    // We start in HERO — particles visible, crystal hidden
-    // Pre-morph crystal to FCC (for when user scrolls into About; small distance)
-    morphTo(STRUCTURES.about);
+    // Once intro is gone, build the initial lattice
+    morphTo(STRUCTURES.hero);
     observeSections();
     // Reveal hero
     document.body.classList.add('intro-done');
     revealOnLoad();
-    // Kick the particle field into "assemble" mode
-    if (window.particleAssemble) window.particleAssemble();
   }, 1100);
 }
 
@@ -2363,14 +1944,10 @@ staggerWatcher.observe(document.body, { attributes: true, subtree: true, attribu
 function renderHero() {
   const d = DATA;
   $('#heroEye').textContent = (d.heroLabel || 'Materials Science') + ' · Engineer in Becoming';
+  // Name with italic period
+  const name = d.name || 'Tanim';
+  $('#heroName').innerHTML = `${esc(name)}<em>.</em>`;
   $('#heroRole').textContent = d.subtitle || 'Studying the science of what things are made of.';
-  // Screen-reader name for accessibility
-  const sr = $('#heroNameSR');
-  if (sr) sr.textContent = `${d.name || 'Tanim'} — ${d.heroLabel || 'Materials Science'}, ${d.university || 'RUET'}`;
-  // Update particle text target if name has changed
-  if (window.particleSetText && d.name) {
-    window.particleSetText(d.name);
-  }
   // Meta
   const meta = $('#heroMeta');
   meta.innerHTML = `
@@ -2416,15 +1993,7 @@ function renderSkills() {
   `).join('');
 }
 
-// PROJECTS — list view, grouped by year, collapses after threshold
-const PROJ_INITIAL_VISIBLE = 6;
-
-function projectYear(p) {
-  if (!p.date) return null;
-  const m = String(p.date).match(/(19|20)\d{2}/);
-  return m ? m[0] : null;
-}
-
+// PROJECTS — list view
 function renderProjects() {
   const list = $('#projectsList');
   const projects = DATA.projects || [];
@@ -2432,43 +2001,12 @@ function renderProjects() {
     list.innerHTML = `<div style="padding: 40px 0; color: var(--paper-faint); font-style: italic; font-family: var(--serif);">No projects yet — coming soon.</div>`;
     return;
   }
-
-  const total = projects.length;
-
-  // Build a flat sequence with year-divider markers inserted when the year changes.
-  // Order is preserved (newest first).
-  const items = [];
-  let lastYear = '__none__';
-  projects.forEach((p, i) => {
-    const y = projectYear(p) || '—';
-    if (y !== lastYear) {
-      items.push({ kind: 'divider', year: y });
-      lastYear = y;
-    }
-    items.push({ kind: 'project', project: p, idx: i });
-  });
-
-  // Render every item; mark items beyond the visible threshold so we can hide them.
-  // Counting projects only (not dividers) for the threshold.
-  let projCount = 0;
-  const html = items.map(it => {
-    if (it.kind === 'divider') {
-      const isOverflow = projCount >= PROJ_INITIAL_VISIBLE;
-      return `<div class="proj-year-divider${isOverflow ? ' proj-overflow' : ''}">
-        <span class="y">${esc(it.year)}</span>
-        <span class="ln"></span>
-      </div>`;
-    }
-    const p = it.project;
-    const i = it.idx;
-    const isOverflow = projCount >= PROJ_INITIAL_VISIBLE;
-    projCount++;
+  list.innerHTML = projects.map((p, i) => {
     const status = p.status || 'Ongoing';
     const statusClass = status === 'Completed' ? '' : status === 'Paused' ? 'paused' : 'ongoing';
-    const num = total - i;
     return `
-      <div class="proj-row${isOverflow ? ' proj-overflow' : ''}" data-idx="${i}" onclick="openProject(${i})">
-        <div class="num">${String(num).padStart(2, '0')} / ${String(total).padStart(2, '0')}</div>
+      <div class="proj-row" data-idx="${i}" onclick="openProject(${i})">
+        <div class="num">${String(i + 1).padStart(2, '0')} / ${String(projects.length).padStart(2, '0')}</div>
         <div class="body">
           <div class="title">${esc(p.title || 'Untitled')}</div>
           <div class="meta">
@@ -2481,32 +2019,7 @@ function renderProjects() {
       </div>
     `;
   }).join('');
-
-  // Toggle row at the end if there are overflow projects
-  const overflowCount = total - PROJ_INITIAL_VISIBLE;
-  const toggle = (overflowCount > 0)
-    ? `<button class="proj-toggle" id="projToggle" onclick="toggleProjOverflow()">
-         <span class="proj-toggle-line"></span>
-         <span class="proj-toggle-label">Show all <strong>${total}</strong> projects · <em>+${overflowCount} more</em></span>
-         <span class="proj-toggle-line"></span>
-       </button>`
-    : '';
-
-  list.innerHTML = html + toggle;
 }
-
-function toggleProjOverflow() {
-  const btn = document.getElementById('projToggle');
-  const expanded = $('#projectsList').classList.toggle('show-overflow');
-  if (btn) {
-    const total = (DATA.projects || []).length;
-    const overflow = total - PROJ_INITIAL_VISIBLE;
-    btn.querySelector('.proj-toggle-label').innerHTML = expanded
-      ? `Show fewer projects · <em>collapse list</em>`
-      : `Show all <strong>${total}</strong> projects · <em>+${overflow} more</em>`;
-  }
-}
-window.toggleProjOverflow = toggleProjOverflow;
 
 // PROJECT DETAIL — same page, swap content
 let prevScrollY = 0;
@@ -2526,46 +2039,24 @@ function openProject(idx) {
     ? renderBlocksToHTML(p.blocks)
     : (p.desc || '<p>No content yet.</p>');
 
-  // Next project — wrap around to the end of the list (oldest) when at idx 0
-  const projects = DATA.projects || [];
-  const nextIdx = (idx + 1) % projects.length;
-  const hasNext = projects.length > 1;
-  const nextProj = hasNext ? projects[nextIdx] : null;
-
   $('#projDetailContent').innerHTML = `
     <div class="pd-meta">
       <span class="status ${statusClass}">${esc(status)}</span>
       ${p.date ? `<span>${esc(p.date)}</span>` : ''}
-      <span>Project ${String(DATA.projects.length - idx).padStart(2, '0')} of ${String(DATA.projects.length).padStart(2, '0')}</span>
+      <span>Project ${String(idx + 1).padStart(2, '0')} of ${String(DATA.projects.length).padStart(2, '0')}</span>
     </div>
     <h1 class="pd-title">${esc(p.title || 'Untitled')}</h1>
     <div class="pd-tags">${tags.map(t => `<span>${esc(t)}</span>`).join('')}</div>
     ${featHTML}
     <div class="pd-body">${bodyHTML}</div>
-    <div class="pd-end">
-      <button onclick="closeProject()">
-        <span class="lab">← Back</span>
-        <span class="val">All work</span>
-      </button>
-      ${hasNext ? `
-        <button class="right" onclick="openProject(${nextIdx})">
-          <span class="lab">Next project →</span>
-          <span class="val">${esc(nextProj.title || 'Untitled')}</span>
-        </button>
-      ` : ''}
-    </div>
   `;
 
   // Hide the projects list, show the detail
   $('#projects').style.display = 'none';
   $('#projDetail').classList.add('show');
-  // Scroll to the top of the detail view
+  // Scroll to the projects anchor
   if (lenis) lenis.scrollTo($('#projDetail'), { offset: -60, duration: 0.8 });
   else $('#projDetail').scrollIntoView({ behavior: 'smooth' });
-  // For wrap-around (next-project click while already in detail), force scroll up
-  setTimeout(() => {
-    if (lenis) lenis.scrollTo($('#projDetail'), { offset: -60, immediate: false, duration: 0.6 });
-  }, 50);
 
   // Re-render KaTeX if needed
   if (window.katex) {
