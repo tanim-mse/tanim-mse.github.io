@@ -422,6 +422,12 @@
             Add New Project
           </button>
         </div>
+        <div class="proj-bulk-actions" id="projBulkActions" style="display:none">
+          <span class="proj-count-display"><strong id="projCountNum">0</strong>projects</span>
+          <span class="spacer"></span>
+          <button onclick="expandAllProjects()">Expand all</button>
+          <button onclick="collapseAllProjects()">Collapse all</button>
+        </div>
         <div id="projectsEditor"></div>
       </div>
 
@@ -743,38 +749,61 @@ function loadProjects(skipCollect) {
     p.blocks = projectBlocks[i];
     pe.appendChild(buildProjectCard(p, i));
   });
+  // Update bulk actions visibility + count
+  const total = (adminData.projects || []).length;
+  const bulkBar = document.getElementById('projBulkActions');
+  const countEl = document.getElementById('projCountNum');
+  if (bulkBar) bulkBar.style.display = total > 1 ? 'flex' : 'none';
+  if (countEl) countEl.textContent = total;
 }
 
 function buildProjectCard(p, i) {
   const card = document.createElement('div');
-  card.className = 'editor-card';
+  card.className = 'editor-card project-card-wrap collapsed';
   card.id = `pcard_${i}`;
+  card.dataset.projIdx = i;
   const trashSVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>`;
   const eyeSVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+  const chevSVG = `<svg class="card-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`;
+
+  // Total project count for numbering display (newest gets highest number)
+  const total = (adminData.projects || []).length;
+  const displayNum = total - i;
+
+  // Show a status pip and date in the collapsed header for context
+  const status = p.status || 'Ongoing';
+  const statusColor = status === 'Completed' ? '#22c55e' : status === 'Paused' ? '#94a3b8' : '#fbbf24';
+  const dateLabel = p.date ? esc(p.date) : 'Undated';
 
   card.innerHTML = `
-    <div class="editor-card-header">
+    <div class="editor-card-header card-toggle" onclick="toggleProjectCard(${i}, event)">
       <span class="card-index">
-        <span id="pcard_title_${i}" class="proj-card-title-live">${p.title && p.title !== 'New Project' ? p.title : 'Project ' + (i+1)}</span>
+        <span class="card-num-pill">${String(displayNum).padStart(2, '0')}</span>
+        <span id="pcard_title_${i}" class="proj-card-title-live">${p.title && p.title !== 'New Project' ? esc(p.title) : 'Project ' + (i+1)}</span>
+        <span class="card-meta-pip">
+          <span class="status-pip" style="background:${statusColor}"></span>
+          <span class="card-date-label">${dateLabel}</span>
+        </span>
       </span>
-      <div style="display:flex;gap:6px">
+      <div class="card-header-actions" onclick="event.stopPropagation()">
         <button class="preview-btn" onclick="openPreview(${i})" title="Preview this project">${eyeSVG} Preview</button>
         <button class="card-delete-btn" onclick="deleteProject(${i})" title="Delete project">${trashSVG}</button>
+        <button class="card-collapse-btn" onclick="toggleProjectCard(${i}, event)" title="Expand / collapse">${chevSVG}</button>
       </div>
     </div>
 
-    <div class="fields-grid" style="padding:0;gap:14px">
+    <div class="fields-grid card-collapsible-body" style="padding:0;gap:14px">
       <div class="field-group full">
         <label class="field-label">Title</label>
         <input type="text" class="field-input" id="pt_${i}" value="${esc(p.title||'')}" oninput="markUnsaved();updateCardTitle(${i},this.value)">
       </div>
       <div class="field-group">
         <label class="field-label">Date <span class="field-hint">e.g. Jan 2025</span></label>
-        <input type="text" class="field-input" id="pdate_${i}" value="${esc(p.date||'')}" placeholder="Jan 2025" oninput="markUnsaved()">
+        <input type="text" class="field-input" id="pdate_${i}" value="${esc(p.date||'')}" placeholder="Jan 2025" oninput="markUnsaved();updateCardDate(${i},this.value)">
       </div>
       <div class="field-group">
         <label class="field-label">Status</label>
-        <select class="field-select" id="pstatus_${i}" onchange="markUnsaved()">
+        <select class="field-select" id="pstatus_${i}" onchange="markUnsaved();updateCardStatus(${i},this.value)">
           <option value="Ongoing" ${(p.status||'Ongoing')==='Ongoing'?'selected':''}>Ongoing</option>
           <option value="Completed" ${p.status==='Completed'?'selected':''}>Completed</option>
           <option value="Paused" ${p.status==='Paused'?'selected':''}>Paused</option>
@@ -828,6 +857,37 @@ function buildProjectCard(p, i) {
   // Render blocks after appending to DOM (need IDs)
   setTimeout(() => renderBlockList(i), 0);
   return card;
+}
+
+/* ── Collapse / expand individual project cards ─────────────────────────── */
+function toggleProjectCard(i, ev) {
+  if (ev) ev.stopPropagation();
+  const card = document.getElementById(`pcard_${i}`);
+  if (!card) return;
+  card.classList.toggle('collapsed');
+}
+
+function expandAllProjects() {
+  document.querySelectorAll('.project-card-wrap').forEach(c => c.classList.remove('collapsed'));
+}
+function collapseAllProjects() {
+  document.querySelectorAll('.project-card-wrap').forEach(c => c.classList.add('collapsed'));
+}
+
+/* ── Update collapsed-header pips when status / date change ─────────────── */
+function updateCardStatus(i, val) {
+  const card = document.getElementById(`pcard_${i}`);
+  if (!card) return;
+  const pip = card.querySelector('.status-pip');
+  if (pip) {
+    pip.style.background = val === 'Completed' ? '#22c55e' : val === 'Paused' ? '#94a3b8' : '#fbbf24';
+  }
+}
+function updateCardDate(i, val) {
+  const card = document.getElementById(`pcard_${i}`);
+  if (!card) return;
+  const lab = card.querySelector('.card-date-label');
+  if (lab) lab.textContent = val.trim() || 'Undated';
 }
 
 function updateCardTitle(i, val) {
@@ -1557,6 +1617,9 @@ function addProject() {
   setTimeout(() => {
     const pe = document.getElementById('projectsEditor');
     if (pe) pe.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Auto-expand the brand-new card so user can edit immediately
+    const newCard = document.getElementById('pcard_0');
+    if (newCard) newCard.classList.remove('collapsed');
     const firstTitle = document.getElementById('pt_0');
     if (firstTitle) firstTitle.focus();
   }, 100);
