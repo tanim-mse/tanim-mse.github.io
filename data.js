@@ -546,7 +546,7 @@ const DEFAULT_DATA = {
       "featuredImage": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1776159835/obgvoytrctaykbylaeel.jpg",
       "tags": "Surface, Microstructure, Roughness, Pb, Mild Steel, Anode, Cathode",
       "link": "#",
-      "date": "April 2026",
+      "date": "Apr 2026",
       "status": "Completed",
       "orderNum": 3,
       "blocks": [
@@ -1012,7 +1012,7 @@ const DEFAULT_DATA = {
       "featuredImage": "",
       "tags": "Glass, Academic, Gravimetric Method",
       "link": "#",
-      "date": "April 2026",
+      "date": "Apr 2026",
       "status": "Completed",
       "orderNum": 3,
       "blocks": [
