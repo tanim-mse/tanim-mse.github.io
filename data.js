@@ -61,7 +61,7 @@ const DEFAULT_DATA = {
       "tags": "Cu, Metal substrate, Electrodepostion",
       "link": "#",
       "date": "Apr 2026",
-      "status": "Ongoing",
+      "status": "Completed",
       "orderNum": 6,
       "blocks": [
         {
