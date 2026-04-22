@@ -55,6 +55,93 @@ const DEFAULT_DATA = {
   ],
   "projects": [
     {
+      "title": "Study of the General Metallurgical Steps Involved in Metal Extraction",
+      "excerpt": "1. To understand the basic steps involved in the extraction of metals from their ores.\n2. To relate ore type and metal reactivi…",
+      "featuredImage": "https://res.cloudinary.com/dr2b6pzux/image/upload/v1776826470/lwxhetn7yh4x6vv31jnf.jpg",
+      "tags": "Study, Metallurgy, Metal Extraction",
+      "link": "#",
+      "date": "Jan 2026",
+      "status": "Ongoing",
+      "orderNum": 5,
+      "blocks": [
+        {
+          "type": "heading1",
+          "id": "h2yeghnragq",
+          "content": "Objectives"
+        },
+        {
+          "type": "paragraph",
+          "id": "fv1uncelc7e",
+          "content": "1. To understand the basic steps involved in the extraction of metals from their ores.\n2. To relate ore type and metal reactivity to the choice of extraction route.\n3. Explain the need for concentration, oxide formation, reduction, and refining in metal extraction."
+        },
+        {
+          "type": "heading1",
+          "id": "p8svbgn7eg",
+          "content": "Introduction"
+        },
+        {
+          "type": "paragraph",
+          "id": "moh9p39fuaa",
+          "content": "Most metals occur in nature as ores, which are minerals containing the metal chemically combined with other elements and mixed with impurities called gangue. Metallurgy is the branch of science and technology that deals with the extraction of metals from their ores and their subsequent refining. "
+        },
+        {
+          "type": "paragraph",
+          "id": "aioi2kzj6aa",
+          "content": "The overall extraction route usually follows a sequence: crushing and grinding, concentration, conversion to oxide, reduction, and refining. Concentration is necessary because it removes a large fraction of gangue, making later high-temperature and chemical steps more efficient and more economical. "
+        },
+        {
+          "type": "paragraph",
+          "id": "f4n4tsmbrg",
+          "content": "Ores are often converted to oxides by roasting or calcination, because metal oxides are generally easier to reduce than sulfides or carbonates. Reduction then produces an impure metal, which must be refined to achieve the purity needed for engineering applications, using methods such as electrolytic refining, distillation, or zone refining, depending on the metal and required purity."
+        },
+        {
+          "type": "heading1",
+          "id": "ns05e5dgig",
+          "content": "Discussion"
+        },
+        {
+          "type": "heading3",
+          "id": "ugifgzsqx2",
+          "content": "Why is the concentration of the ore necessary before metal extraction?"
+        },
+        {
+          "type": "paragraph",
+          "id": "rlt0khhh9iq",
+          "content": "Concentration removes a large fraction of gangue so that the charge fed to the furnace or electrolytic cell is richer in the desired mineral. This reduces energy and reagent consumption, increases metal yield, and makes subsequent roasting, reduction, and refining more efficient and economical. "
+        },
+        {
+          "type": "heading3",
+          "id": "jwd85j376h",
+          "content": "How do physical and chemical properties of ores determine the choice of concentration method?"
+        },
+        {
+          "type": "paragraph",
+          "id": "v33vo7g0j5d",
+          "content": "The separation method is chosen by exploiting differences between ore and gangue. For example, froth flotation uses surface chemistry to float hydrophobic sulfide particles, magnetic separation uses differences in magnetic behavior, hydraulic washing uses density differences, and leaching uses selective chemical solubility of the ore in a suitable reagent. "
+        },
+        {
+          "type": "heading3",
+          "id": "d6x30kginqp",
+          "content": "Why are metal oxides generally easier to reduce than sulfides or carbonates?"
+        },
+        {
+          "type": "paragraph",
+          "id": "z6emrxlafhd",
+          "content": "Metal oxides usually have lower thermodynamic stability against common reducing agents such as carbon and CO, so they can be reduced at practical temperatures. Sulfides and carbonates must first be converted to oxides by reasting or calcination to remove sulfur or carbon dioxide, making direct reduction of sulfies ore carbonates more difficult and less efficient."
+        },
+        {
+          "type": "heading3",
+          "id": "oelktmkgw4d",
+          "content": "Why is refining necessary even after the metal has been extracted?"
+        },
+        {
+          "type": "paragraph",
+          "id": "8zhfwrpjics",
+          "content": "The crude metal obtained after reduction still contains dissolved gases, slag particles, and other metallic and non-metallic impurities that deteriorate mechanical, electrical, and corrosion properties. Refining steps such as electrolytic refining, distillation, zone refining, or liquation are therefore needed to reach the purity level required for engineering and industrial applications. "
+        }
+      ]
+    },
+    {
       "title": "Kinetics of Oxidation of Copper",
       "excerpt": "To study the rate of oxidation of copper specimens at two elevated temperatures (550°C and 650°C) and to determine the effect o…",
       "featuredImage": "",
