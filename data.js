@@ -61,7 +61,7 @@ const DEFAULT_DATA = {
       "tags": "True Density, Bulk Density, Porosity, Refractory, Academic",
       "link": "#",
       "date": "Apr 2026",
-      "status": "Ongoing",
+      "status": "Completed",
       "orderNum": 7,
       "blocks": [
         {
