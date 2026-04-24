@@ -125,6 +125,10 @@ const DEFAULT_DATA = {
           "content": "i. The bulk volume V_0 of the refractory material and the bulk mass W_0 were measured.\nii. The refractory material was crushed, and it was ground into fine powder.\niii. An empty pycnometer bottle with a stopper as W1 was weighted.\niv. 10-15g refractory powder whose density is to be determined in the pycnometer bottle, and the bottle containing powder with a stopper as W2 was weighed.\nv. The bottle was filled with distilled water to its capacity, and the bottle containing refractory powder and water with a stopper, as W3 was weighed.\nvi. The suspension from the bottle was removed, the bottle was filled with distilled water again, and the bottle was weighed with a stopper as W4."
         },
         {
+          "type": "divider",
+          "id": "5z2xtcyr3i8"
+        },
+        {
           "type": "heading1",
           "id": "qnplhzbh25",
           "content": "Calculation"
@@ -247,6 +251,10 @@ const DEFAULT_DATA = {
           "notes": ""
         },
         {
+          "type": "divider",
+          "id": "2f76rvtyji1"
+        },
+        {
           "type": "heading1",
           "id": "nu9qzz2x1z",
           "content": "Result"
@@ -254,13 +262,18 @@ const DEFAULT_DATA = {
         {
           "type": "callout",
           "id": "4huudc34l6g",
-          "icon": "💡",
+          "icon": "📌",
           "content": "True density = 2.5371 g/cc\nBulk density = 0.624 g/cc\nPercentages of porosity = 75.43"
+        },
+        {
+          "type": "heading1",
+          "id": "nhj72efhlw",
+          "content": "Discussion"
         },
         {
           "type": "paragraph",
           "id": "l9dc97q9y4",
-          "content": ""
+          "content": "True density is the density of the solid material itself, excluding all pores and voids. Bulk density, on the other hand, includes the volume of both solid material and the pores present in the refractory. Since proes add volume without adding mass, the bulk density becomes lower. Therefore, true density is always higher than the bulk density for refractory materials.\nPorosity is important because it strongly affects thermal insulation, thermal shock resistance, strength, and corrosion resistance of refractory materials. Controlled porosity reduces heat loss by lowering thermal conductivity and allows the refractory to accommodate thermal expansion at high temperatures. However, excessive porosity can reduce mechanical strength and chemical resistance, so an optimum level is essential for high-temperature applications.\nOpen pores are interconnected and allow gases or molten slag to penetrate the refractory, which can reduce chemical resistance and mechanical strength but improve insulation. Closed pores are isolated within the material and do not allow fluid penetration. They help reduce thermal conductivity while maintaining better strength and corrosion resistance. Thus, the balance between open and closed pores determines insulation efficiency, durability, and resistance to slag.\nAn increase in porosity generally decreases the mechanical strength of a refractory. This happens because pores act as stress concentrators and reduce the effective load-bearing area. As porosity increases, the material becomes weaker and more prone to cracking and fracture under mechanical & thermal stress. "
         }
       ]
     },
