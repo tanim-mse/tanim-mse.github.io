@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="robots" content="noindex, nofollow">
 <title>Admin Panel — Tanim Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -450,13 +453,18 @@
 
       <!-- CONTACT -->
       <div class="tab-pane" id="tab-contact">
-        <div class="pane-header"><h2 class="pane-title">Contact</h2><p class="pane-desc">Update contact info and social links.</p></div>
+        <div class="pane-header"><h2 class="pane-title">Contact</h2><p class="pane-desc">Update contact info and social links. The Formspree form handles messages sent from the site.</p></div>
         <div class="fields-grid">
-          <div class="field-group full"><label class="field-label">Contact Message</label><textarea class="field-textarea" id="f_contactMsg" rows="3" oninput="markUnsaved()"></textarea></div>
-          <div class="field-group"><label class="field-label">Email</label><input type="email" class="field-input" id="f_email" oninput="markUnsaved()"></div>
-          <div class="field-group"><label class="field-label">GitHub URL</label><input type="url" class="field-input" id="f_github" oninput="markUnsaved()"></div>
-          <div class="field-group"><label class="field-label">LinkedIn URL</label><input type="url" class="field-input" id="f_linkedin" oninput="markUnsaved()"></div>
-          <div class="field-group"><label class="field-label">ResearchGate URL</label><input type="url" class="field-input" id="f_rg" oninput="markUnsaved()"></div>
+          <div class="field-group full"><label class="field-label">Contact Message <span class="field-hint">the headline above the form on the site</span></label><textarea class="field-textarea" id="f_contactMsg" rows="3" oninput="markUnsaved()"></textarea></div>
+          <div class="field-group"><label class="field-label">Email</label><input type="email" class="field-input" id="f_email" placeholder="you@example.com" oninput="markUnsaved()"></div>
+          <div class="field-group"><label class="field-label">Formspree ID <span class="field-hint">e.g. xlgowqby — from your Formspree form URL</span></label><input type="text" class="field-input" id="f_formspree" placeholder="xlgowqby" oninput="markUnsaved()"></div>
+          <div class="field-group"><label class="field-label">GitHub URL</label><input type="url" class="field-input" id="f_github" placeholder="https://github.com/..." oninput="markUnsaved()"></div>
+          <div class="field-group"><label class="field-label">LinkedIn URL</label><input type="url" class="field-input" id="f_linkedin" placeholder="https://linkedin.com/in/..." oninput="markUnsaved()"></div>
+          <div class="field-group"><label class="field-label">ResearchGate URL</label><input type="url" class="field-input" id="f_rg" placeholder="https://researchgate.net/..." oninput="markUnsaved()"></div>
+          <div class="field-group"><label class="field-label">ORCID URL <span class="field-hint">optional</span></label><input type="url" class="field-input" id="f_orcid" placeholder="https://orcid.org/..." oninput="markUnsaved()"></div>
+          <div class="field-group"><label class="field-label">Google Scholar URL <span class="field-hint">optional</span></label><input type="url" class="field-input" id="f_scholar" placeholder="https://scholar.google.com/..." oninput="markUnsaved()"></div>
+          <div class="field-group"><label class="field-label">Twitter / X URL <span class="field-hint">optional</span></label><input type="url" class="field-input" id="f_twitter" placeholder="https://x.com/..." oninput="markUnsaved()"></div>
+          <div class="field-group"><label class="field-label">Personal Website <span class="field-hint">optional</span></label><input type="url" class="field-input" id="f_website" placeholder="https://..." oninput="markUnsaved()"></div>
         </div>
       </div>
 
@@ -598,21 +606,72 @@ async function saveToken() {
 document.getElementById('tokenInput').addEventListener('keydown', e => { if(e.key==='Enter') saveToken(); });
 
 /* ══ Login ══ */
+// Security: brute-force rate limit (5 tries per 10 min) + session expiry
+const ADMIN_MAX_ATTEMPTS = 5;
+const ADMIN_LOCKOUT_MS   = 10 * 60 * 1000;   // 10 minutes
+const ADMIN_SESSION_MS   = 60 * 60 * 1000;   // 1 hour
+
+function getLoginAttempts() {
+  try { return JSON.parse(localStorage.getItem('adminLoginAttempts') || '{"count":0,"lockedUntil":0}'); }
+  catch { return { count: 0, lockedUntil: 0 }; }
+}
+function setLoginAttempts(v) { try { localStorage.setItem('adminLoginAttempts', JSON.stringify(v)); } catch {} }
+
 async function attemptLogin() {
+  const attempts = getLoginAttempts();
+  const now = Date.now();
+  if (attempts.lockedUntil && attempts.lockedUntil > now) {
+    const minutesLeft = Math.ceil((attempts.lockedUntil - now) / 60000);
+    const err = document.getElementById('loginError');
+    err.textContent = `Too many attempts. Try again in ${minutesLeft} min.`;
+    return;
+  }
   const pw = document.getElementById('pwInput').value;
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
   const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
   const D = getData();
   if (hash === D.adminPassword) {
+    // Reset attempts, start session
+    setLoginAttempts({ count: 0, lockedUntil: 0 });
+    try { sessionStorage.setItem('adminSessionExpiry', String(Date.now() + ADMIN_SESSION_MS)); } catch {}
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('dashboard').style.display = 'flex';
     initDashboard();
+    startSessionWatchdog();
   } else {
-    const err = document.getElementById('loginError');
-    err.textContent = 'Incorrect password.';
-    document.getElementById('pwInput').classList.add('shake');
-    setTimeout(() => { document.getElementById('pwInput').classList.remove('shake'); err.textContent=''; }, 1500);
+    attempts.count = (attempts.count || 0) + 1;
+    if (attempts.count >= ADMIN_MAX_ATTEMPTS) {
+      attempts.lockedUntil = now + ADMIN_LOCKOUT_MS;
+      attempts.count = 0;
+      setLoginAttempts(attempts);
+      const err = document.getElementById('loginError');
+      err.textContent = 'Too many failed attempts. Locked for 10 minutes.';
+    } else {
+      setLoginAttempts(attempts);
+      const err = document.getElementById('loginError');
+      err.textContent = `Incorrect password. ${ADMIN_MAX_ATTEMPTS - attempts.count} attempts remaining.`;
+      document.getElementById('pwInput').classList.add('shake');
+      setTimeout(() => { document.getElementById('pwInput').classList.remove('shake'); err.textContent=''; }, 1500);
+    }
   }
+}
+
+function startSessionWatchdog() {
+  // Check every minute; auto-logout on expiry or tab-inactivity-plus-expiry
+  setInterval(() => {
+    const exp = parseInt(sessionStorage.getItem('adminSessionExpiry') || '0');
+    if (exp && Date.now() > exp) {
+      try { sessionStorage.removeItem('adminSessionExpiry'); } catch {}
+      alert('Session expired. Please log in again.');
+      location.reload();
+    }
+  }, 60000);
+  // Refresh expiry on user activity
+  ['click', 'keydown'].forEach(ev => {
+    document.addEventListener(ev, () => {
+      try { sessionStorage.setItem('adminSessionExpiry', String(Date.now() + ADMIN_SESSION_MS)); } catch {}
+    }, { passive: true });
+  });
 }
 document.getElementById('pwInput').addEventListener('keydown', e => { if(e.key==='Enter') attemptLogin(); });
 function togglePw() { const i=document.getElementById('pwInput'); i.type=i.type==='password'?'text':'password'; }
@@ -707,8 +766,12 @@ const BLOCK_TYPES = [
   { group:'Text', type:'heading1', icon:'H1', label:'Heading 1', desc:'Large title' },
   { group:'Text', type:'heading2', icon:'H2', label:'Heading 2', desc:'Section title' },
   { group:'Text', type:'heading3', icon:'H3', label:'Heading 3', desc:'Subsection' },
+  { group:'Text', type:'quote', icon:'❝', label:'Quote', desc:'Blockquote / pull-quote' },
+  { group:'Text', type:'list', icon:'≡', label:'List', desc:'Bulleted or numbered' },
   { group:'Media', type:'image', icon:'🖼', label:'Image', desc:'Upload or URL' },
-  { group:'Science', type:'formula', icon:'∑', label:'Formula', desc:'LaTeX math' },
+  { group:'Media', type:'video', icon:'▶', label:'Video', desc:'YouTube / Vimeo embed' },
+  { group:'Media', type:'button', icon:'▭', label:'Button', desc:'Call-to-action link' },
+  { group:'Science', type:'formula', icon:'∑', label:'Formula', desc:'LaTeX math / chemistry' },
   { group:'Science', type:'code', icon:'<>', label:'Code', desc:'Code block' },
   { group:'Structure', type:'divider', icon:'—', label:'Divider', desc:'Horizontal line' },
   { group:'Structure', type:'callout', icon:'💡', label:'Note', desc:'Highlighted box' },
@@ -719,12 +782,22 @@ function newBlock(type) {
   const b = { type, id: Math.random().toString(36).slice(2) };
   if (type === 'paragraph') b.content = '';
   else if (type.startsWith('heading')) b.content = '';
+  else if (type === 'quote') { b.content = ''; b.attribution = ''; }
+  else if (type === 'list') { b.style = 'bullet'; b.items = ['']; }
   else if (type === 'image') { b.src = ''; b.caption = ''; b.size = 'medium'; }
-  else if (type === 'formula') { b.latex = ''; }
+  else if (type === 'video') { b.url = ''; b.caption = ''; }
+  else if (type === 'button') { b.label = 'Learn more'; b.url = ''; b.style = 'primary'; }
+  else if (type === 'formula') { b.latex = ''; b.notes = ''; b.display = 'block'; }
   else if (type === 'code') { b.language = ''; b.content = ''; }
   else if (type === 'divider') {}
   else if (type === 'callout') { b.icon = '💡'; b.content = ''; }
-  else if (type === 'table') { b.rows = 3; b.cols = 3; b.data = Array.from({length:3},()=>Array(3).fill('')); }
+  else if (type === 'table') {
+    b.rows = 3; b.cols = 3;
+    b.data = Array.from({length:3},()=>Array(3).fill(''));
+    b.merges = [];  // [{r, c, rowspan, colspan}]
+    b.headerRow = true;
+    b.headerCol = false;
+  }
   return b;
 }
 
@@ -890,6 +963,9 @@ function updateCardTitle(i, val) {
 function renderBlockList(i) {
   const container = document.getElementById(`block_list_${i}`);
   if (!container) return;
+  // Preserve scroll position so the page doesn't jump after block re-renders
+  // (triggered by delete, add-row/col, image add/remove, etc.)
+  const savedScrollY = window.scrollY || document.documentElement.scrollTop;
   const blocks = projectBlocks[i] || [];
   container.innerHTML = '';
   // Add-block row at top
@@ -897,6 +973,10 @@ function renderBlockList(i) {
   blocks.forEach((block, bi) => {
     container.appendChild(makeBlockItem(i, bi, block));
     container.appendChild(makeAddBlockRow(i, bi + 1));
+  });
+  // Restore scroll on next frame (after layout settles)
+  requestAnimationFrame(() => {
+    window.scrollTo({ top: savedScrollY, behavior: 'instant' });
   });
 }
 
@@ -1173,42 +1253,87 @@ function buildBlockContent(pi, bi, block) {
     wrap.appendChild(imgWrap);
 
   } else if (block.type === 'formula') {
-    const fWrap = document.createElement('div');
-    fWrap.className = 'block-formula-wrap';
-    const inputRow = document.createElement('div');
-    inputRow.className = 'block-formula-input-row';
-    inputRow.innerHTML = `<span class="block-formula-label">∑ LaTeX</span>`;
+    wrap.appendChild(buildFormulaBlock(pi, bi, block));
+
+  } else if (block.type === 'quote') {
+    const qWrap = document.createElement('div');
+    qWrap.className = 'block-quote-wrap';
+    const ta = document.createElement('textarea');
+    ta.className = 'block-quote-text';
+    ta.placeholder = 'Write a quote or pull-quote…';
+    ta.value = block.content || '';
+    ta.oninput = () => { autoResize(ta); markUnsaved(); };
+    setTimeout(() => autoResize(ta), 0);
+    const attrib = document.createElement('input');
+    attrib.className = 'block-quote-attrib';
+    attrib.placeholder = '— Attribution (optional)';
+    attrib.value = block.attribution || '';
+    attrib.oninput = () => markUnsaved();
+    qWrap.appendChild(ta);
+    qWrap.appendChild(attrib);
+    wrap.appendChild(qWrap);
+
+  } else if (block.type === 'list') {
+    wrap.appendChild(buildListBlock(pi, bi, block));
+
+  } else if (block.type === 'video') {
+    const vWrap = document.createElement('div');
+    vWrap.className = 'block-video-wrap';
+    vWrap.innerHTML = `
+      <div class="block-video-header">
+        <span class="block-video-label">▶ VIDEO</span>
+        <span class="block-video-hint">YouTube or Vimeo URL</span>
+      </div>`;
     const inp = document.createElement('input');
-    inp.className = 'block-formula-input';
-    inp.placeholder = 'e.g.  E = mc^2  or  \\frac{a}{b}';
-    inp.value = block.latex || '';
+    inp.className = 'block-video-url';
+    inp.placeholder = 'https://youtube.com/watch?v=... or https://vimeo.com/...';
+    inp.value = block.url || '';
     const preview = document.createElement('div');
-    preview.className = 'block-formula-preview';
-    preview.id = `formula_preview_${pi}_${bi}`;
-    renderFormulaPreview(block.latex || '', preview);
-    inp.oninput = () => {
-      markUnsaved();
-      renderFormulaPreview(inp.value, preview);
-    };
-    inputRow.appendChild(inp);
-    fWrap.appendChild(inputRow);
-    fWrap.appendChild(preview);
-    // Notes/variable definitions field
-    const notesRow = document.createElement('div');
-    notesRow.style.cssText = 'padding:0 12px 10px;border-top:1px solid rgba(124,58,237,0.1)';
-    const notesLabel = document.createElement('div');
-    notesLabel.style.cssText = 'font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#475569;padding:8px 0 4px';
-    notesLabel.textContent = 'Variable definitions (optional)';
-    const notesInp = document.createElement('textarea');
-    notesInp.className = 'block-formula-notes';
-    notesInp.placeholder = 'e.g. Where Q = heat input (kW), T = temperature (°C), η = efficiency';
-    notesInp.value = block.notes || '';
-    notesInp.rows = 2;
-    notesInp.oninput = () => markUnsaved();
-    notesRow.appendChild(notesLabel);
-    notesRow.appendChild(notesInp);
-    fWrap.appendChild(notesRow);
-    wrap.appendChild(fWrap);
+    preview.className = 'block-video-preview';
+    preview.id = `video_preview_${pi}_${bi}`;
+    renderVideoPreview(inp.value, preview);
+    inp.oninput = () => { markUnsaved(); renderVideoPreview(inp.value, preview); };
+    const cap = document.createElement('input');
+    cap.className = 'block-video-caption';
+    cap.placeholder = 'Caption (optional)…';
+    cap.value = block.caption || '';
+    cap.oninput = () => markUnsaved();
+    vWrap.appendChild(inp);
+    vWrap.appendChild(preview);
+    vWrap.appendChild(cap);
+    wrap.appendChild(vWrap);
+
+  } else if (block.type === 'button') {
+    const bWrap = document.createElement('div');
+    bWrap.className = 'block-button-wrap';
+    bWrap.innerHTML = `
+      <div class="block-button-header">
+        <span class="block-button-label">▭ BUTTON</span>
+      </div>`;
+    const row = document.createElement('div');
+    row.className = 'block-button-row';
+    const labelInp = document.createElement('input');
+    labelInp.className = 'block-button-text-input';
+    labelInp.placeholder = 'Button label';
+    labelInp.value = block.label || '';
+    labelInp.oninput = () => markUnsaved();
+    const urlInp = document.createElement('input');
+    urlInp.className = 'block-button-url-input';
+    urlInp.placeholder = 'https://…';
+    urlInp.value = block.url || '';
+    urlInp.oninput = () => markUnsaved();
+    const styleSel = document.createElement('select');
+    styleSel.className = 'block-button-style-select';
+    styleSel.innerHTML = `
+      <option value="primary" ${(block.style||'primary')==='primary'?'selected':''}>Primary (filled)</option>
+      <option value="ghost" ${block.style==='ghost'?'selected':''}>Ghost (outline)</option>
+      <option value="link" ${block.style==='link'?'selected':''}>Text link</option>`;
+    styleSel.onchange = () => markUnsaved();
+    row.appendChild(labelInp);
+    row.appendChild(urlInp);
+    row.appendChild(styleSel);
+    bWrap.appendChild(row);
+    wrap.appendChild(bWrap);
 
   } else if (block.type === 'code') {
     const cWrap = document.createElement('div');
@@ -1247,6 +1372,11 @@ function buildBlockContent(pi, bi, block) {
   } else if (block.type === 'table') {
     const tWrap = document.createElement('div');
     tWrap.className = 'block-table-wrap';
+    // Ensure merges field exists (backward compat)
+    if (!Array.isArray(block.merges)) block.merges = [];
+    if (typeof block.headerRow !== 'boolean') block.headerRow = true;
+    if (typeof block.headerCol !== 'boolean') block.headerCol = false;
+
     const toolbar = document.createElement('div');
     toolbar.className = 'block-table-toolbar';
     toolbar.innerHTML = `<span>Table</span>
@@ -1257,8 +1387,21 @@ function buildBlockContent(pi, bi, block) {
     const scroll = document.createElement('div');
     scroll.className = 'block-table-scroll';
     scroll.appendChild(buildTableEl(pi, bi, block));
+
+    // Options row: header toggles + merge controls
+    const options = document.createElement('div');
+    options.className = 'block-table-options';
+    options.innerHTML = `
+      <label><input type="checkbox" ${block.headerRow?'checked':''} onchange="toggleTableHeader(${pi},${bi},'row',this.checked)"> Header row</label>
+      <label><input type="checkbox" ${block.headerCol?'checked':''} onchange="toggleTableHeader(${pi},${bi},'col',this.checked)"> Header column</label>
+      <div class="block-table-cell-actions">
+        <button onclick="mergeSelectedCells(${pi},${bi})" id="tbl_merge_btn_${pi}_${bi}" disabled title="Select a cell range first">Merge cells</button>
+        <button onclick="unmergeSelectedCell(${pi},${bi})" title="Split the merged cell at your selection">Unmerge</button>
+      </div>`;
+
     tWrap.appendChild(toolbar);
     tWrap.appendChild(scroll);
+    tWrap.appendChild(options);
     wrap.appendChild(tWrap);
   }
 
@@ -1275,6 +1418,264 @@ function renderFormulaPreview(latex, el) {
   } catch(e) {
     el.innerHTML = '<span class="block-formula-error">⚠ Invalid formula — check your LaTeX syntax</span>';
   }
+}
+
+/* ── Enhanced formula block with chem + math toolbars ─────────── */
+const FORMULA_CHEM_BUTTONS = [
+  { label: 'x²', latex: '^{}', caret: -1, title: 'Superscript — select & click for group' },
+  { label: 'x₂', latex: '_{}', caret: -1, title: 'Subscript' },
+  { label: '²⁺', latex: '^{2+}', caret: 0, title: 'Charge +2 (use this, not ^2+)' },
+  { label: '³⁺', latex: '^{3+}', caret: 0 },
+  { label: '⁻', latex: '^{-}', caret: 0, title: 'Negative charge' },
+  { label: '⇌', latex: '\\rightleftharpoons ', caret: 0, title: 'Equilibrium arrow' },
+  { label: '→', latex: '\\to ', caret: 0, title: 'Reaction arrow' },
+  { label: '↑', latex: '\\uparrow ', caret: 0, title: 'Gas' },
+  { label: '↓', latex: '\\downarrow ', caret: 0, title: 'Precipitate' },
+  { label: '°C', latex: '^\\circ\\text{C}', caret: 0 },
+  { label: 'Δ', latex: '\\Delta ', caret: 0 },
+  { label: 'text', latex: '\\text{ }', caret: -1, title: 'Plain text inside formula (fixes spacing!)' },
+];
+const FORMULA_MATH_BUTTONS = [
+  { label: 'a/b', latex: '\\frac{a}{b}', title: 'Fraction' },
+  { label: '√', latex: '\\sqrt{}', caret: -1, title: 'Square root' },
+  { label: '∫', latex: '\\int_{}^{} ', caret: -3 },
+  { label: '∑', latex: '\\sum_{i=1}^{n} ', caret: 0 },
+  { label: '∏', latex: '\\prod_{}^{} ', caret: -3 },
+  { label: '∂', latex: '\\partial ', caret: 0 },
+  { label: '∇', latex: '\\nabla ', caret: 0 },
+  { label: '∞', latex: '\\infty ', caret: 0 },
+  { label: '≈', latex: '\\approx ', caret: 0 },
+  { label: '≠', latex: '\\neq ', caret: 0 },
+  { label: '≤', latex: '\\leq ', caret: 0 },
+  { label: '≥', latex: '\\geq ', caret: 0 },
+  { label: '±', latex: '\\pm ', caret: 0 },
+  { label: '×', latex: '\\times ', caret: 0 },
+  { label: '·', latex: '\\cdot ', caret: 0 },
+];
+const FORMULA_GREEK = ['\\alpha','\\beta','\\gamma','\\delta','\\epsilon','\\theta','\\lambda','\\mu','\\pi','\\rho','\\sigma','\\tau','\\phi','\\omega','\\Gamma','\\Delta','\\Theta','\\Lambda','\\Pi','\\Sigma','\\Phi','\\Omega'];
+
+function buildFormulaBlock(pi, bi, block) {
+  const fWrap = document.createElement('div');
+  fWrap.className = 'block-formula-wrap';
+
+  // Toolbar — tabbed: Chem · Math · Greek
+  const toolbar = document.createElement('div');
+  toolbar.className = 'block-formula-toolbar';
+  toolbar.innerHTML = `
+    <div class="block-formula-tabs">
+      <button class="block-formula-tab active" data-tab="chem">Chemistry</button>
+      <button class="block-formula-tab" data-tab="math">Math</button>
+      <button class="block-formula-tab" data-tab="greek">Greek</button>
+      <button class="block-formula-tab" data-tab="help">?</button>
+    </div>
+    <div class="block-formula-tab-body"></div>`;
+  fWrap.appendChild(toolbar);
+
+  const body = toolbar.querySelector('.block-formula-tab-body');
+  function renderTab(which) {
+    body.innerHTML = '';
+    if (which === 'chem') {
+      FORMULA_CHEM_BUTTONS.forEach(btn => {
+        const b = document.createElement('button');
+        b.className = 'block-formula-btn';
+        b.textContent = btn.label;
+        if (btn.title) b.title = btn.title;
+        b.onmousedown = e => e.preventDefault();
+        b.onclick = () => insertLatex(inp, btn.latex, btn.caret || 0);
+        body.appendChild(b);
+      });
+    } else if (which === 'math') {
+      FORMULA_MATH_BUTTONS.forEach(btn => {
+        const b = document.createElement('button');
+        b.className = 'block-formula-btn';
+        b.textContent = btn.label;
+        if (btn.title) b.title = btn.title;
+        b.onmousedown = e => e.preventDefault();
+        b.onclick = () => insertLatex(inp, btn.latex, btn.caret || 0);
+        body.appendChild(b);
+      });
+    } else if (which === 'greek') {
+      FORMULA_GREEK.forEach(g => {
+        const b = document.createElement('button');
+        b.className = 'block-formula-btn greek';
+        // Render the actual symbol via KaTeX for clarity
+        try { b.innerHTML = window.katex.renderToString(g, { throwOnError: false }); }
+        catch(e) { b.textContent = g; }
+        b.title = g;
+        b.onmousedown = e => e.preventDefault();
+        b.onclick = () => insertLatex(inp, g + ' ', 0);
+        body.appendChild(b);
+      });
+    } else if (which === 'help') {
+      body.innerHTML = `
+        <div class="block-formula-help">
+          <strong>Quick tips for formulas:</strong>
+          <ul>
+            <li>For <code>Cu²⁺</code> write <code>Cu^{2+}</code> — the braces keep "2+" together in the superscript. Just <code>Cu^2+</code> only lifts the 2.</li>
+            <li>For plain text inside a formula (e.g. units, labels), wrap it in <code>\\text{...}</code>. Spaces inside <code>\\text{}</code> are preserved.</li>
+            <li>To leave a gap, use <code>\\,</code> (small) or <code>\\;</code> (medium).</li>
+            <li>Subscripts with <code>_{}</code>, superscripts with <code>^{}</code>. Always use braces.</li>
+            <li>Chemical equations: <code>2H_2 + O_2 \\to 2H_2O</code></li>
+          </ul>
+        </div>`;
+    }
+  }
+
+  // Tab switching
+  toolbar.querySelectorAll('.block-formula-tab').forEach(t => {
+    t.onmousedown = e => e.preventDefault();
+    t.onclick = () => {
+      toolbar.querySelectorAll('.block-formula-tab').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      renderTab(t.dataset.tab);
+    };
+  });
+
+  const inputRow = document.createElement('div');
+  inputRow.className = 'block-formula-input-row';
+  inputRow.innerHTML = `<span class="block-formula-label">∑ LaTeX</span>`;
+  const inp = document.createElement('input');
+  inp.className = 'block-formula-input';
+  inp.placeholder = 'e.g.  Cu^{2+} + 2e^{-} \\to Cu   or   E = mc^2';
+  inp.value = block.latex || '';
+  const preview = document.createElement('div');
+  preview.className = 'block-formula-preview';
+  preview.id = `formula_preview_${pi}_${bi}`;
+  renderFormulaPreview(block.latex || '', preview);
+  inp.oninput = () => { markUnsaved(); renderFormulaPreview(inp.value, preview); };
+  inputRow.appendChild(inp);
+  fWrap.appendChild(inputRow);
+  fWrap.appendChild(preview);
+
+  // Notes/variable definitions
+  const notesRow = document.createElement('div');
+  notesRow.style.cssText = 'padding:0 12px 10px;border-top:1px solid rgba(124,58,237,0.1)';
+  const notesLabel = document.createElement('div');
+  notesLabel.style.cssText = 'font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#475569;padding:8px 0 4px';
+  notesLabel.textContent = 'Variable definitions (optional)';
+  const notesInp = document.createElement('textarea');
+  notesInp.className = 'block-formula-notes';
+  notesInp.placeholder = 'e.g. Where Q = heat input (kW), T = temperature (°C), η = efficiency';
+  notesInp.value = block.notes || '';
+  notesInp.rows = 2;
+  notesInp.oninput = () => markUnsaved();
+  notesRow.appendChild(notesLabel);
+  notesRow.appendChild(notesInp);
+  fWrap.appendChild(notesRow);
+
+  renderTab('chem');
+  return fWrap;
+}
+
+function insertLatex(inp, snippet, caretOffset) {
+  const start = inp.selectionStart || 0;
+  const end = inp.selectionEnd || 0;
+  const before = inp.value.slice(0, start);
+  const after = inp.value.slice(end);
+  const selected = inp.value.slice(start, end);
+  let inserted = snippet;
+  // If user selected text, try to wrap it in the first {} if snippet has one
+  if (selected && snippet.includes('{}')) {
+    inserted = snippet.replace('{}', '{' + selected + '}');
+  }
+  inp.value = before + inserted + after;
+  inp.focus();
+  const newCaret = before.length + inserted.length + (caretOffset || 0);
+  inp.setSelectionRange(newCaret, newCaret);
+  inp.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
+/* ── List block with add/remove items ─────────────────────────── */
+function buildListBlock(pi, bi, block) {
+  const lWrap = document.createElement('div');
+  lWrap.className = 'block-list-wrap';
+
+  const header = document.createElement('div');
+  header.className = 'block-list-header';
+  const sel = document.createElement('select');
+  sel.className = 'block-list-style-select';
+  sel.innerHTML = `
+    <option value="bullet" ${(block.style||'bullet')==='bullet'?'selected':''}>• Bullet list</option>
+    <option value="number" ${block.style==='number'?'selected':''}>1. Numbered</option>`;
+  sel.onchange = () => { block.style = sel.value; markUnsaved(); renderList(); };
+  header.appendChild(sel);
+  lWrap.appendChild(header);
+
+  const listEl = document.createElement('div');
+  listEl.className = 'block-list-items';
+  lWrap.appendChild(listEl);
+
+  function renderList() {
+    listEl.innerHTML = '';
+    (block.items || ['']).forEach((text, idx) => {
+      const row = document.createElement('div');
+      row.className = 'block-list-row';
+      const marker = document.createElement('span');
+      marker.className = 'block-list-marker';
+      marker.textContent = block.style === 'number' ? `${idx + 1}.` : '•';
+      const inp = document.createElement('input');
+      inp.className = 'block-list-item-input';
+      inp.placeholder = 'List item…';
+      inp.value = text;
+      inp.oninput = () => { block.items[idx] = inp.value; markUnsaved(); };
+      inp.onkeydown = e => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          block.items.splice(idx + 1, 0, '');
+          renderList();
+          setTimeout(() => listEl.querySelectorAll('input')[idx + 1]?.focus(), 30);
+          markUnsaved();
+        } else if (e.key === 'Backspace' && inp.value === '' && block.items.length > 1) {
+          e.preventDefault();
+          block.items.splice(idx, 1);
+          renderList();
+          setTimeout(() => listEl.querySelectorAll('input')[Math.max(0, idx - 1)]?.focus(), 30);
+          markUnsaved();
+        }
+      };
+      const del = document.createElement('button');
+      del.className = 'block-list-del';
+      del.textContent = '✕';
+      del.title = 'Remove item';
+      del.onclick = () => {
+        if (block.items.length <= 1) { block.items = ['']; renderList(); markUnsaved(); return; }
+        block.items.splice(idx, 1); renderList(); markUnsaved();
+      };
+      row.appendChild(marker);
+      row.appendChild(inp);
+      row.appendChild(del);
+      listEl.appendChild(row);
+    });
+    const addBtn = document.createElement('button');
+    addBtn.className = 'block-list-add';
+    addBtn.textContent = '+ Add item';
+    addBtn.onclick = () => { block.items = block.items || []; block.items.push(''); renderList(); markUnsaved(); };
+    listEl.appendChild(addBtn);
+  }
+  renderList();
+  return lWrap;
+}
+
+/* ── Video preview ─────────────────────────────────────────────── */
+function parseVideoEmbed(url) {
+  if (!url) return null;
+  url = url.trim();
+  // YouTube
+  let m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([A-Za-z0-9_-]{11})/);
+  if (m) return { provider: 'youtube', id: m[1], embed: `https://www.youtube.com/embed/${m[1]}` };
+  // Vimeo
+  m = url.match(/vimeo\.com\/(\d+)/);
+  if (m) return { provider: 'vimeo', id: m[1], embed: `https://player.vimeo.com/video/${m[1]}` };
+  return null;
+}
+
+function renderVideoPreview(url, el) {
+  const v = parseVideoEmbed(url);
+  if (!v) {
+    el.innerHTML = '<div class="block-video-placeholder">Paste a YouTube or Vimeo URL above to preview</div>';
+    return;
+  }
+  el.innerHTML = `<div class="block-video-embed"><iframe src="${v.embed}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
 }
 
 function autoResize(ta) {
@@ -1468,16 +1869,55 @@ function buildTableEl(pi, bi, block) {
   const rows = block.rows || 3;
   const cols = block.cols || 3;
   const data = block.data || Array.from({length:rows},()=>Array(cols).fill(''));
+  const merges = block.merges || [];
+  const headerRow = block.headerRow !== false;
+  const headerCol = !!block.headerCol;
+
+  // Build a "covered" map — cells hidden because a merged cell spans them
+  const covered = new Set();
+  merges.forEach(m => {
+    for (let r = m.r; r < m.r + m.rowspan; r++) {
+      for (let c = m.c; c < m.c + m.colspan; c++) {
+        if (r === m.r && c === m.c) continue;
+        covered.add(`${r}:${c}`);
+      }
+    }
+  });
+
   const table = document.createElement('table');
   table.className = 'block-table-el';
+  table.dataset.pi = pi;
+  table.dataset.bi = bi;
+
   for (let r = 0; r < rows; r++) {
     const tr = document.createElement('tr');
     for (let c = 0; c < cols; c++) {
-      const cell = r === 0 ? document.createElement('th') : document.createElement('td');
+      if (covered.has(`${r}:${c}`)) continue;
+      const isHeader = (headerRow && r === 0) || (headerCol && c === 0);
+      const cell = isHeader ? document.createElement('th') : document.createElement('td');
+      cell.dataset.r = r;
+      cell.dataset.c = c;
+      // Apply merge spans
+      const merge = merges.find(m => m.r === r && m.c === c);
+      if (merge) {
+        if (merge.rowspan > 1) cell.rowSpan = merge.rowspan;
+        if (merge.colspan > 1) cell.colSpan = merge.colspan;
+      }
       const inp = document.createElement('input');
       inp.type = 'text';
       inp.value = (data[r] && data[r][c]) || '';
       inp.oninput = () => markUnsaved();
+      // Cell selection on click (for merge)
+      cell.onmousedown = (e) => {
+        if (e.target === inp) return;
+        e.preventDefault();
+        tableStartSelect(pi, bi, r, c);
+      };
+      cell.onmouseenter = (e) => {
+        if (e.buttons === 1 && window._tblSelStart && window._tblSelStart.pi === pi && window._tblSelStart.bi === bi) {
+          tableUpdateSelect(pi, bi, r, c);
+        }
+      };
       cell.appendChild(inp);
       tr.appendChild(cell);
     }
@@ -1485,6 +1925,82 @@ function buildTableEl(pi, bi, block) {
   }
   return table;
 }
+
+/* ── Table cell selection state ─────────────────────────────── */
+window._tblSelStart = null;
+window._tblSelEnd = null;
+
+function tableStartSelect(pi, bi, r, c) {
+  window._tblSelStart = { pi, bi, r, c };
+  window._tblSelEnd = { pi, bi, r, c };
+  updateTableSelection(pi, bi);
+}
+function tableUpdateSelect(pi, bi, r, c) {
+  if (!window._tblSelStart) return;
+  window._tblSelEnd = { pi, bi, r, c };
+  updateTableSelection(pi, bi);
+}
+document.addEventListener('mouseup', () => { /* selection persists until another cell click */ });
+
+function updateTableSelection(pi, bi) {
+  const table = document.querySelector(`#block_item_${pi}_${bi} .block-table-el`);
+  if (!table) return;
+  table.querySelectorAll('td.selected-cell, th.selected-cell').forEach(el => el.classList.remove('selected-cell'));
+  const s = window._tblSelStart, e = window._tblSelEnd;
+  if (!s || !e) return;
+  const r0 = Math.min(s.r, e.r), r1 = Math.max(s.r, e.r);
+  const c0 = Math.min(s.c, e.c), c1 = Math.max(s.c, e.c);
+  table.querySelectorAll('td, th').forEach(cell => {
+    const r = parseInt(cell.dataset.r), c = parseInt(cell.dataset.c);
+    if (r >= r0 && r <= r1 && c >= c0 && c <= c1) cell.classList.add('selected-cell');
+  });
+  const btn = document.getElementById(`tbl_merge_btn_${pi}_${bi}`);
+  if (btn) btn.disabled = (r0 === r1 && c0 === c1);
+}
+
+function mergeSelectedCells(pi, bi) {
+  const s = window._tblSelStart, e = window._tblSelEnd;
+  if (!s || !e || s.pi !== pi || s.bi !== bi) return;
+  const r0 = Math.min(s.r, e.r), r1 = Math.max(s.r, e.r);
+  const c0 = Math.min(s.c, e.c), c1 = Math.max(s.c, e.c);
+  if (r0 === r1 && c0 === c1) return;
+  collectBlocksFromDOM(pi);
+  const b = projectBlocks[pi][bi];
+  if (!Array.isArray(b.merges)) b.merges = [];
+  // Remove any existing merges overlapping the new range
+  b.merges = b.merges.filter(m => {
+    const mr1 = m.r + m.rowspan - 1, mc1 = m.c + m.colspan - 1;
+    return (m.r > r1 || mr1 < r0 || m.c > c1 || mc1 < c0);
+  });
+  b.merges.push({ r: r0, c: c0, rowspan: r1 - r0 + 1, colspan: c1 - c0 + 1 });
+  window._tblSelStart = null; window._tblSelEnd = null;
+  renderBlockList(pi);
+  markUnsaved();
+}
+
+function unmergeSelectedCell(pi, bi) {
+  const s = window._tblSelStart;
+  if (!s || s.pi !== pi || s.bi !== bi) return;
+  collectBlocksFromDOM(pi);
+  const b = projectBlocks[pi][bi];
+  if (!Array.isArray(b.merges)) b.merges = [];
+  b.merges = b.merges.filter(m => !(m.r === s.r && m.c === s.c));
+  window._tblSelStart = null; window._tblSelEnd = null;
+  renderBlockList(pi);
+  markUnsaved();
+}
+
+function toggleTableHeader(pi, bi, which, val) {
+  collectBlocksFromDOM(pi);
+  const b = projectBlocks[pi][bi];
+  if (which === 'row') b.headerRow = val;
+  else if (which === 'col') b.headerCol = val;
+  renderBlockList(pi);
+  markUnsaved();
+}
+window.toggleTableHeader = toggleTableHeader;
+window.mergeSelectedCells = mergeSelectedCells;
+window.unmergeSelectedCell = unmergeSelectedCell;
 
 function addTableRow(pi, bi) {
   collectBlocksFromDOM(pi);
@@ -1506,6 +2022,12 @@ function removeTableRow(pi, bi) {
   if (b.rows <= 1) return;
   b.rows--;
   b.data.pop();
+  // Clean up merges that extend into the removed row
+  if (Array.isArray(b.merges)) {
+    b.merges = b.merges.filter(m => m.r < b.rows).map(m => ({
+      ...m, rowspan: Math.min(m.rowspan, b.rows - m.r)
+    })).filter(m => m.rowspan >= 1);
+  }
   renderBlockList(pi);
 }
 function removeTableCol(pi, bi) {
@@ -1514,6 +2036,11 @@ function removeTableCol(pi, bi) {
   if (b.cols <= 1) return;
   b.cols--;
   b.data.forEach(r => r.pop());
+  if (Array.isArray(b.merges)) {
+    b.merges = b.merges.filter(m => m.c < b.cols).map(m => ({
+      ...m, colspan: Math.min(m.colspan, b.cols - m.c)
+    })).filter(m => m.colspan >= 1);
+  }
   renderBlockList(pi);
 }
 
@@ -1548,16 +2075,43 @@ function collectBlocksFromDOM(pi) {
     } else if (block.type === 'image') {
       const cap = item.querySelector('.block-image-caption');
       if (cap) block.caption = cap.value;
-      // src and size already updated via handlers
+    } else if (block.type === 'quote') {
+      const text = item.querySelector('.block-quote-text');
+      const attrib = item.querySelector('.block-quote-attrib');
+      if (text) block.content = text.value;
+      if (attrib) block.attribution = attrib.value;
+    } else if (block.type === 'list') {
+      // items are kept in sync by the row inputs directly via block.items
+      // style via the select
+      const sel = item.querySelector('.block-list-style-select');
+      if (sel) block.style = sel.value;
+      const inputs = item.querySelectorAll('.block-list-item-input');
+      block.items = Array.from(inputs).map(i => i.value);
+      if (!block.items.length) block.items = [''];
+    } else if (block.type === 'video') {
+      const url = item.querySelector('.block-video-url');
+      const cap = item.querySelector('.block-video-caption');
+      if (url) block.url = url.value;
+      if (cap) block.caption = cap.value;
+    } else if (block.type === 'button') {
+      const lab = item.querySelector('.block-button-text-input');
+      const url = item.querySelector('.block-button-url-input');
+      const sty = item.querySelector('.block-button-style-select');
+      if (lab) block.label = lab.value;
+      if (url) block.url = url.value;
+      if (sty) block.style = sty.value;
     } else if (block.type === 'table') {
-      const inputs = item.querySelectorAll('.block-table-el input');
-      let idx = 0;
-      for (let r = 0; r < block.rows; r++) {
-        for (let c = 0; c < block.cols; c++) {
-          if (inputs[idx]) block.data[r][c] = inputs[idx].value;
-          idx++;
+      // Read cell values from the DOM — the number of <input>s can be fewer
+      // than rows*cols due to cell merges. Each input sits inside a cell
+      // that carries data-r / data-c attributes.
+      const cells = item.querySelectorAll('.block-table-el td, .block-table-el th');
+      cells.forEach(cell => {
+        const r = parseInt(cell.dataset.r), c = parseInt(cell.dataset.c);
+        const inp = cell.querySelector('input');
+        if (!isNaN(r) && !isNaN(c) && inp && block.data[r]) {
+          block.data[r][c] = inp.value;
         }
-      }
+      });
     }
   });
 }
@@ -1724,16 +2278,149 @@ function collectAllProjects() {
 }
 
 /* ══ Research, Contact, Appearance ══ */
-function loadResearch() {
-  const re=document.getElementById('researchEditor'); re.innerHTML='';
-  (adminData.researchInterests||[]).forEach((r,i)=>{const row=document.createElement('div');row.className='list-row';row.innerHTML=`<input type="text" class="field-input" id="ri_${i}" value="${esc(r)}" oninput="markUnsaved()" style="flex:1"><button class="row-delete-btn" onclick="deleteResearch(${i})">×</button>`;re.appendChild(row);});
-  const pe=document.getElementById('pubEditor'); pe.innerHTML='';
-  (adminData.publications||[]).forEach((p,i)=>{const row=document.createElement('div');row.className='list-row';row.innerHTML=`<textarea class="field-textarea" id="pub_${i}" rows="2" oninput="markUnsaved()" style="flex:1">${esc(p)}</textarea><button class="row-delete-btn" onclick="deletePublication(${i})">×</button>`;pe.appendChild(row);});
+
+// Migrate publications from string format to object format (back-compat)
+function migratePublications() {
+  if (!Array.isArray(adminData.publications)) { adminData.publications = []; return; }
+  adminData.publications = adminData.publications.map(p => {
+    if (typeof p === 'string') {
+      // Best-effort parse: "Title. Venue, Year"
+      const yearMatch = p.match(/(19|20)\d{2}/);
+      const year = yearMatch ? yearMatch[0] : '';
+      let rest = p;
+      if (year) rest = p.replace(year, '').replace(/,\s*$/, '').trim();
+      const parts = rest.split(/\.\s+|\. /);
+      const title = parts[0] || p;
+      const venue = parts.slice(1).join('. ').trim();
+      return { title, authors: '', venue, year, link: '', brief: '' };
+    }
+    // Already an object — ensure all fields exist
+    return {
+      title: p.title || '',
+      authors: p.authors || '',
+      venue: p.venue || '',
+      year: p.year || '',
+      link: p.link || '',
+      brief: p.brief || ''
+    };
+  });
 }
-function addResearchInterest(){collectCurrentTab();adminData.researchInterests.push('New Research Interest');loadResearch();markUnsaved();}
-function deleteResearch(i){collectCurrentTab();adminData.researchInterests.splice(i,1);loadResearch();markUnsaved();}
-function addPublication(){collectCurrentTab();adminData.publications.push('Publication title. Journal, Year.');loadResearch();markUnsaved();}
-function deletePublication(i){collectCurrentTab();adminData.publications.splice(i,1);loadResearch();markUnsaved();}
+
+function loadResearch() {
+  // Research interests (unchanged, simple strings)
+  const re = document.getElementById('researchEditor');
+  re.innerHTML = '';
+  (adminData.researchInterests || []).forEach((r, i) => {
+    const row = document.createElement('div');
+    row.className = 'list-row';
+    row.innerHTML = `<input type="text" class="field-input" id="ri_${i}" value="${esc(r)}" oninput="markUnsaved()" style="flex:1"><button class="row-delete-btn" onclick="deleteResearch(${i})">×</button>`;
+    re.appendChild(row);
+  });
+
+  // Publications — rich card editor
+  migratePublications();
+  const pe = document.getElementById('pubEditor');
+  pe.innerHTML = '';
+  (adminData.publications || []).forEach((p, i) => {
+    pe.appendChild(buildPublicationCard(p, i));
+  });
+}
+
+function buildPublicationCard(p, i) {
+  const card = document.createElement('div');
+  card.className = 'editor-card pub-card-wrap collapsed';
+  card.id = `pubcard_${i}`;
+  const chevSVG = `<svg class="card-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`;
+  const trashSVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>`;
+
+  const displayTitle = p.title && p.title.trim() ? p.title : `Publication ${i + 1}`;
+
+  card.innerHTML = `
+    <div class="editor-card-header card-toggle" onclick="togglePubCard(${i}, event)">
+      <span class="card-index">
+        <span class="card-num-pill">${String(i + 1).padStart(2, '0')}</span>
+        <span class="proj-card-title-live pub-title-live${p.title ? ' has-title' : ''}" id="pubcard_title_${i}">${esc(displayTitle)}</span>
+        ${p.year ? `<span class="card-meta-pip"><span class="card-date-label">${esc(p.year)}</span></span>` : ''}
+      </span>
+      <div class="card-header-actions" onclick="event.stopPropagation()">
+        <button class="card-delete-btn" onclick="deletePublication(${i})" title="Delete publication">${trashSVG}</button>
+        <button class="card-collapse-btn" onclick="togglePubCard(${i}, event)" title="Expand / collapse">${chevSVG}</button>
+      </div>
+    </div>
+    <div class="fields-grid card-collapsible-body" style="padding:0;gap:14px">
+      <div class="field-group full">
+        <label class="field-label">Title</label>
+        <input type="text" class="field-input" id="pubt_${i}" value="${esc(p.title || '')}" placeholder="Publication title" oninput="markUnsaved();updatePubCardTitle(${i},this.value)">
+      </div>
+      <div class="field-group full">
+        <label class="field-label">Authors <span class="field-hint">optional — e.g. T. Ahmed, J. Smith, et al.</span></label>
+        <input type="text" class="field-input" id="puba_${i}" value="${esc(p.authors || '')}" placeholder="Comma-separated authors" oninput="markUnsaved()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Venue / Journal</label>
+        <input type="text" class="field-input" id="pubv_${i}" value="${esc(p.venue || '')}" placeholder="e.g. Journal of Materials Research" oninput="markUnsaved()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Year</label>
+        <input type="text" class="field-input" id="puby_${i}" value="${esc(p.year || '')}" placeholder="e.g. 2026" oninput="markUnsaved()">
+      </div>
+      <div class="field-group full">
+        <label class="field-label">Link <span class="field-hint">optional — DOI, arXiv, or journal page</span></label>
+        <input type="url" class="field-input" id="publ_${i}" value="${esc(p.link || '')}" placeholder="https://doi.org/..." oninput="markUnsaved()">
+      </div>
+      <div class="field-group full">
+        <label class="field-label">Brief <span class="field-hint">optional — 1–2 sentence summary</span></label>
+        <textarea class="field-textarea" id="pubb_${i}" rows="3" placeholder="A short summary of what this work is about…" oninput="markUnsaved()">${esc(p.brief || '')}</textarea>
+      </div>
+    </div>`;
+  return card;
+}
+
+function togglePubCard(i, ev) {
+  if (ev) ev.stopPropagation();
+  const c = document.getElementById(`pubcard_${i}`);
+  if (c) c.classList.toggle('collapsed');
+}
+function updatePubCardTitle(i, val) {
+  const el = document.getElementById(`pubcard_title_${i}`);
+  if (!el) return;
+  el.textContent = val.trim() || `Publication ${i + 1}`;
+  el.classList.toggle('has-title', !!val.trim());
+}
+
+function addResearchInterest() {
+  collectCurrentTab();
+  adminData.researchInterests.push('New Research Interest');
+  loadResearch();
+  markUnsaved();
+}
+function deleteResearch(i) {
+  collectCurrentTab();
+  adminData.researchInterests.splice(i, 1);
+  loadResearch();
+  markUnsaved();
+}
+function addPublication() {
+  collectCurrentTab();
+  adminData.publications.push({ title: '', authors: '', venue: '', year: '', link: '', brief: '' });
+  loadResearch();
+  markUnsaved();
+  // Auto-expand the new one for immediate editing
+  setTimeout(() => {
+    const newCard = document.getElementById(`pubcard_${adminData.publications.length - 1}`);
+    if (newCard) newCard.classList.remove('collapsed');
+    const titleInput = document.getElementById(`pubt_${adminData.publications.length - 1}`);
+    if (titleInput) titleInput.focus();
+  }, 80);
+}
+function deletePublication(i) {
+  collectCurrentTab();
+  adminData.publications.splice(i, 1);
+  loadResearch();
+  markUnsaved();
+}
+window.togglePubCard = togglePubCard;
+window.updatePubCardTitle = updatePubCardTitle;
 
 function loadContact() {
   const D=adminData;
@@ -1761,8 +2448,32 @@ function collectCurrentTab() {
   else if(currentTab==='about'){if(g('f_bio')!==null){adminData.bio=g('f_bio');adminData.university=g('f_uni');adminData.department=g('f_dept');adminData.year=g('f_year');}}
   else if(currentTab==='skills'){document.querySelectorAll('#skillsEditor .editor-card').forEach((card,i)=>{const t=card.querySelector('.card-title-input');if(t&&adminData.skills[i])adminData.skills[i].title=t.value;});}
   else if(currentTab==='projects'){ collectAllProjects(); }
-  else if(currentTab==='research'){adminData.researchInterests=adminData.researchInterests.map((_,i)=>g('ri_'+i)??_);adminData.publications=adminData.publications.map((_,i)=>g('pub_'+i)??_);}
-  else if(currentTab==='contact'){if(g('f_email')!==null){adminData.contactMessage=g('f_contactMsg');adminData.email=g('f_email');adminData.github=g('f_github');adminData.linkedin=g('f_linkedin');adminData.researchgate=g('f_rg');}}
+  else if(currentTab==='research'){
+    adminData.researchInterests = (adminData.researchInterests||[]).map((_,i) => g('ri_'+i) ?? _);
+    // Publications are now objects; read all fields
+    adminData.publications = (adminData.publications||[]).map((p, i) => ({
+      title:   g('pubt_'+i) ?? (p && p.title) ?? '',
+      authors: g('puba_'+i) ?? (p && p.authors) ?? '',
+      venue:   g('pubv_'+i) ?? (p && p.venue) ?? '',
+      year:    g('puby_'+i) ?? (p && p.year) ?? '',
+      link:    g('publ_'+i) ?? (p && p.link) ?? '',
+      brief:   g('pubb_'+i) ?? (p && p.brief) ?? ''
+    }));
+  }
+  else if(currentTab==='contact'){
+    if(g('f_email')!==null){
+      adminData.contactMessage=g('f_contactMsg');
+      adminData.email=g('f_email');
+      adminData.github=g('f_github');
+      adminData.linkedin=g('f_linkedin');
+      adminData.researchgate=g('f_rg');
+      if(g('f_orcid')!==null) adminData.orcid=g('f_orcid');
+      if(g('f_scholar')!==null) adminData.scholar=g('f_scholar');
+      if(g('f_twitter')!==null) adminData.twitter=g('f_twitter');
+      if(g('f_website')!==null) adminData.website=g('f_website');
+      if(g('f_formspree')!==null) adminData.formspreeID=g('f_formspree');
+    }
+  }
   else if(currentTab==='appearance'){adminData.appearance=adminData.appearance||{};adminData.appearance.accentColor=g('f_accentColor');adminData.appearance.fontSize=g('f_fontSize');}
 }
 
