@@ -55,6 +55,239 @@ const DEFAULT_DATA = {
   ],
   "projects": [
     {
+      "title": "Determination of True Density, Bulk Density, and Porosity of the Refractory Material",
+      "excerpt": "i. To determine the bulk density of the refractory material.ii. To determine the bulk density of the refractory material.iii.…",
+      "featuredImage": "",
+      "tags": "True Density, Bulk Density, Porosity, Refractory, Academic",
+      "link": "#",
+      "date": "Jan 2026",
+      "status": "Completed",
+      "orderNum": 7,
+      "blocks": [
+        {
+          "type": "heading1",
+          "id": "udslxg4t60q",
+          "content": "Objectives"
+        },
+        {
+          "type": "paragraph",
+          "id": "7vbtq4k95to",
+          "content": "i. To determine the bulk density of the refractory material.\nii. To determine the bulk density of the refractory material.\niii. To determine the porosity of the refractory material."
+        },
+        {
+          "type": "heading1",
+          "id": "ji5c0revif",
+          "content": "Introduction"
+        },
+        {
+          "type": "paragraph",
+          "id": "vp01l7kidhn",
+          "content": "In the study of refractory materials, understanding the relationship between mass and volume is critical for predicting thermal performance and structural integrity. This experiment focuses on three fundamental physical properties."
+        },
+        {
+          "type": "heading2",
+          "id": "xlc2qmkpwa",
+          "content": "True Density:"
+        },
+        {
+          "type": "paragraph",
+          "id": "3811g1wbysa",
+          "content": "True density represents the pure density of the material's solid matter. It is calculated by taking the ratio of the sample's dry mass to its true volume, which is the volume occupied by the solid alone, excluding all internal pores and external cavities. To measure this accurately, the material is typically ground into a fine powder to eliminate any trapped air pocket beofre use a pycnometer and a reference liquid for displacement."
+        },
+        {
+          "type": "heading2",
+          "id": "0pse8hlitdg",
+          "content": "Bulk Density:"
+        },
+        {
+          "type": "paragraph",
+          "id": "xj5msjivw9d",
+          "content": "Unlike true density, bulk density considers the materials in its entirely. It is the ratio of material mass to its total bulk volume. \nThese volumes include:\n--> The solid material itself,\n--> Internal closed pores, \n--> Open surface pores, \n--> Inter-particle void space. Bulk density is a key indicator of how packed or dense the refractory brick or shape is in its final form."
+        },
+        {
+          "type": "heading2",
+          "id": "kzvf28krwu8",
+          "content": "Porosity"
+        },
+        {
+          "type": "paragraph",
+          "id": "fv6lvsihf8n",
+          "content": "Porosity is a measure of the emptiness within a material. It is defined as the fraction of the total bulk volume that consists of void spaces. In engineering, this is usually expressed as a percentage. Higher porosity generally improves thermal insulation but may reduce the mechanical strength and resistance to chemical corrosion of the refractory. "
+        },
+        {
+          "type": "heading1",
+          "id": "jxdmmjmt9k8",
+          "content": "Working Procedure"
+        },
+        {
+          "type": "paragraph",
+          "id": "da3nzdwd5bs",
+          "content": "i. The bulk volume V_0 of the refractory material and the bulk mass W_0 were measured.\nii. The refractory material was crushed, and it was ground into fine powder.\niii. An empty pycnometer bottle with a stopper as W1 was weighted.\niv. 10-15g refractory powder whose density is to be determined in the pycnometer bottle, and the bottle containing powder with a stopper as W2 was weighed.\nv. The bottle was filled with distilled water to its capacity, and the bottle containing refractory powder and water with a stopper, as W3 was weighed.\nvi. The suspension from the bottle was removed, the bottle was filled with distilled water again, and the bottle was weighed with a stopper as W4."
+        },
+        {
+          "type": "divider",
+          "id": "5z2xtcyr3i8"
+        },
+        {
+          "type": "heading1",
+          "id": "qnplhzbh25",
+          "content": "Calculation"
+        },
+        {
+          "type": "heading2",
+          "id": "2hlkbu1gug2",
+          "content": "Chalk Measurements"
+        },
+        {
+          "type": "formula",
+          "id": "6gz3u64gu66",
+          "latex": "D_{1} = 10.68 \\text{ mm}, D_{2} = 10.24 \\text{ mm}",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "37u778tmauv",
+          "latex": "\\to  D = \\frac{ (10.68 + 10.24) } {2}  = 10.46 \\text{ mm}",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "eihik7aoq78",
+          "latex": "L_{1} = 29.85 \\text{ mm}, L_{2} = 29.80 \\text{ mm}",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "xoxo1ww1cg",
+          "latex": "--> L = \\frac{(29.85+ 29.80)}{2} = 29.825 \\text{ mm}",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "ssybdf999g",
+          "latex": "\\text{ Sample weight, } W_{0} = 1g",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "afdumctvp6i",
+          "content": "Bulk volume, "
+        },
+        {
+          "type": "formula",
+          "id": "v9scmbcbx5f",
+          "latex": "V_{0} = \\frac{( \\pi D^2 h)}{4} = \\frac{ \\pi (10.46)^2 * 29.825}{4} = 2562.918 mm^3 = 2.5629 cm^3",
+          "notes": ""
+        },
+        {
+          "type": "heading2",
+          "id": "9rx47ltrpob",
+          "content": "Readings of Pycnometer"
+        },
+        {
+          "type": "formula",
+          "id": "iqou63v591",
+          "latex": "\\text{ Only powder, } W_{0} =1g",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "kkkm66ol2ms",
+          "latex": "\\text{ Bottle, } W_{1} =25.185g",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "lrtuck7cir",
+          "latex": "\\text{ Bottle+ Powder, } W_{2} =26.797g",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "8ffbmc2c9q7",
+          "latex": "W_{2} + water, W_{3} =80.276g",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "l5oxag8lo8a",
+          "latex": "\\text{ Bottle + water only, } W_{4 }= 79.293g",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "tpn5v5p75m",
+          "latex": "T = 18^\\circ\\text{C} , \\rho_{f} = 0.998",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "qbe6lddvk4d",
+          "latex": "\\text{ Total volume, }V = \\frac{(W_{4} - W_{1})}{\\rho_{f}} = 54.216",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "hn14njxbaqb",
+          "latex": "\\text{ True density }= \\frac{(W_{2} - W_{1})* \\rho_{f}}{(W_{4}​−W_{1}​)*(W_{3}​−W_{2​})} =2.5371 g/cc",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "9dim1bxlae",
+          "latex": "\\text{ Bulk density} = \\frac{W_{0}}{V_{0}}= \\frac{1.6}{2562.918*10^{-3}}  = 0.624g/cc",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "piqemtgjh1k",
+          "latex": "\\text{ True Volume} = V- \\frac{(W_{3} - W_{2})}{\\rho _{f}} = 0.6298cc",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "txicvj84ro",
+          "latex": "\\text{ Percentages of the Porosity } = \\frac{(2.5629-0.6298)}{2.5629} * 100 =75.43",
+          "notes": ""
+        },
+        {
+          "type": "divider",
+          "id": "2f76rvtyji1"
+        },
+        {
+          "type": "heading1",
+          "id": "nu9qzz2x1z",
+          "content": "Result"
+        },
+        {
+          "type": "callout",
+          "id": "4huudc34l6g",
+          "icon": "📌",
+          "content": "True density = 2.5371 g/cc, \nBulk density = 0.624 g/cc, \nPercentages of porosity = 75.43"
+        },
+        {
+          "type": "heading1",
+          "id": "nhj72efhlw",
+          "content": "Discussion"
+        },
+        {
+          "type": "paragraph",
+          "id": "l9dc97q9y4",
+          "content": "True density is the density of the solid material itself, excluding all pores and voids. Bulk density, on the other hand, includes the volume of both solid material and the pores present in the refractory. Since proes add volume without adding mass, the bulk density becomes lower. Therefore, true density is always higher than the bulk density for refractory materials.\nPorosity is important because it strongly affects thermal insulation, thermal shock resistance, strength, and corrosion resistance of refractory materials. Controlled porosity reduces heat loss by lowering thermal conductivity and allows the refractory to accommodate thermal expansion at high temperatures. However, excessive porosity can reduce mechanical strength and chemical resistance, so an optimum level is essential for high-temperature applications.\nOpen pores are interconnected and allow gases or molten slag to penetrate the refractory, which can reduce chemical resistance and mechanical strength but improve insulation. Closed pores are isolated within the material and do not allow fluid penetration. They help reduce thermal conductivity while maintaining better strength and corrosion resistance. Thus, the balance between open and closed pores determines insulation efficiency, durability, and resistance to slag.\nAn increase in porosity generally decreases the mechanical strength of a refractory. This happens because pores act as stress concentrators and reduce the effective load-bearing area. As porosity increases, the material becomes weaker and more prone to cracking and fracture under mechanical & thermal stress. \nLower bulk density indicates higher porosity, which traps air inside the material. Since air is a poor conductor of heat, such refractories have lower thermal conductivity. This makes them highly effective as insulating materials, reducing heat loss and improving energy efficiency in the furnace and kilns."
+        },
+        {
+          "type": "heading1",
+          "id": "6gvahc91sb",
+          "content": "Conclusion"
+        },
+        {
+          "type": "paragraph",
+          "id": "3wmhw07cnbi",
+          "content": "The refractory shows a high true density and low bulk density, resulting in a high porosity. This indicates a highly porous structure that provides good thermal insulation but lower mechanical strength. Hence, the material is suitable for high-temperature insulation applications rather than load-bearing uses."
+        }
+      ]
+    },
+    {
       "title": "Electrodeposition of Cu on a Metal Substrate",
       "excerpt": "1. To understand the principles of electrodeposition.2. To coat a metal substrate with Cu using electroplating.3. To study th…",
       "featuredImage": "",
@@ -70,13 +303,19 @@ const DEFAULT_DATA = {
           "content": "Objectives"
         },
         {
-          "type": "paragraph",
-          "id": "tg75gaw1dxk",
-          "content": "1. To understand the principles of electrodeposition.\n2. To coat a metal substrate with Cu using electroplating.\n3. To study the effect of plating parameters on coating thickness.\n4. To analyze surface properties after deposition."
+          "type": "list",
+          "id": "ywyepi9ugg8",
+          "style": "number",
+          "items": [
+            "To understand the principles of electrodeposition.",
+            "To coat a metal substrate with Cu using electroplating.",
+            "To study the effect of plating parameters on coating thickness.",
+            "To analyze surface properties after deposition."
+          ]
         },
         {
           "type": "heading1",
-          "id": "0o4hnt3opkvn",
+          "id": "989b3hxmsn",
           "content": "Theory"
         },
         {
@@ -94,18 +333,25 @@ const DEFAULT_DATA = {
         {
           "type": "formula",
           "id": "q2wdjxvs6g",
-          "latex": " ∆G = -EnF",
+          "latex": "\\Delta G = -EnF",
           "notes": "If ∆G is negative, the reaction will be spontaneous."
+        },
+        {
+          "type": "formula",
+          "id": "dlg2fgxxbjj",
+          "latex": "\\text{ A mixture of  } CuSO_{4}. 5H_{2}O \\text{ 200g/L and }  H_{2}SO_{4} \\text{ 40-60 g/L were made, and the process was held at room temperature. }",
+          "notes": "",
+          "display": "block"
         },
         {
           "type": "paragraph",
           "id": "ib1p0osthir",
-          "content": "A mixture of CuSO4. 5H2O 200g/L and H2SO4 40-60 g/L were made, and the process was held at room temperature. \nThe thickness of the deposited Cu is calculated by this formula:"
+          "content": "The thickness of the deposited Cu is calculated by this formula:"
         },
         {
           "type": "formula",
           "id": "qw99w105kve",
-          "latex": "t=\\frac{m}{\\rho  A}",
+          "latex": "t= \\frac{m}{\\rho A}",
           "notes": "Where, \nm = Weight of the deposited Cu\nρ = Density of Cu\nA = Area of the deposition"
         },
         {
@@ -210,9 +456,18 @@ const DEFAULT_DATA = {
           "content": "Working Procedure"
         },
         {
-          "type": "paragraph",
-          "id": "q3zfx8vxxg",
-          "content": "01. The sample surface was prepared for electroplating by removing oxide and contaminants using emery paper. \n02. The electroplating solution made for our group was 0.1 M.\n03. The experiment was done at room temperature.\n04. The immersion was done with the help of a thin rope.\n05. The immersion was about five minutes.\n06. The sample was raised, and the final weight was measured after the air-drying process.\n07. The surface roughness test was done by a roughness testing machine. "
+          "type": "list",
+          "id": "93oopqxl7f7",
+          "style": "number",
+          "items": [
+            "The sample surface was prepared for electroplating by removing oxide and contaminants using emery paper. ",
+            "The electroplating solution made for our group was 0.1 M.",
+            "The experiment was done at room temperature.",
+            "The immersion was done with the help of a thin rope.",
+            "The immersion was about five minutes.",
+            " The sample was raised, and the final weight was measured after the air-drying process.",
+            "The surface roughness test was done by a roughness testing machine. "
+          ]
         },
         {
           "type": "heading1",
@@ -2293,18 +2548,17 @@ const DEFAULT_DATA = {
   "github": "https://github.com/tanim-mse",
   "linkedin": "https://linkedin.com/in/",
   "researchgate": "https://researchgate.net/",
-  "orcid": "",
-  "scholar": "",
-  "twitter": "",
-  "website": "",
-  "formspreeID": "xlgowqby",
-  "contactLinks": [],
   "contactMessage": "Have a research idea, collaboration opportunity, or just want to talk materials science? I'd love to hear from you.",
   "appearance": {
     "accentColor": "#7c3aed",
     "fontSize": "17px"
   },
-  "adminPassword": "275056c26a6b4fb1f5e49cd8a8e0f69f5c29b84055a6d3875be68edc820c6c75"
+  "adminPassword": "275056c26a6b4fb1f5e49cd8a8e0f69f5c29b84055a6d3875be68edc820c6c75",
+  "orcid": "",
+  "scholar": "",
+  "twitter": "",
+  "website": "",
+  "formspreeID": "xlgowqby"
 };
 
 function getData() {
