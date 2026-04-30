@@ -189,13 +189,13 @@ const DEFAULT_DATA = {
         {
           "type": "formula",
           "id": "eegyez1cqkwmolg6hcp",
-          "latex": "HV = 1.854 × F / d² (6)",
-          "notes": ""
+          "latex": "HV = 1.854 × \\frac{F}{d²} \\text{ \\text{ \\text{ \\text{ \\text{ }}}}}\\text{ } \\to \\text{ \\text{ }} (6)",
+          "notes": "where,\n F = The applied force in newtons (N), and \nd  = The mean diagonal in millimetres (mm)"
         },
         {
           "type": "paragraph",
           "id": "5zw67ia54yimolg6hcp",
-          "content": "where F is the applied force in newtons (N) and d is the mean diagonal in millimetres (mm). HV is a dimensionless number (by convention), although it is numerically equal to hardness in kgf/mm². To convert to SI units (MPa), the result must be multiplied b y 9.807. This formula, Eq. (6), is the governing equation for all Vickers hardness determinations in this experiment. It assumes: (i) a perfectly sharp indenter, (ii) a flat, polished specimen surface, and (iii) purely geometric self -similarity of the indentation ( i.e., the impression shape does not depend on depth)."
+          "content": ". HV is a dimensionless number (by convention), although it is numerically equal to hardness in kgf/mm². To convert to SI units (MPa), the result must be multiplied by 9.807. This formula, Eq. (6), is the governing equation for all Vickers hardness determinations in this experiment. It assumes: (i) a perfectly sharp indenter, (ii) a flat, polished specimen surface, and (iii) purely geometric self -similarity of the indentation ( i.e., the impression shape does not depend on depth)."
         },
         {
           "type": "paragraph",
