@@ -436,46 +436,39 @@ const DEFAULT_DATA = {
           "type": "formula",
           "id": "lbsit71q04cmolg6hd0",
           "latex": "\\text{ Formula: } HV = 1.854 × \\frac{F}{ d²}",
-          "notes": ""
-        },
-        {
-          "type": "formula",
-          "id": "jd8usylr9rimolg6hd6",
-          "latex": "\\text{ Given: } F = 9.807 N, d = 0.06199 mm",
-          "notes": ""
+          "notes": "Given: F=9.807N, \nd=0.06199mm"
         },
         {
           "type": "formula",
           "id": "2by503xlyz3molg6hd6",
-          "latex": "Substitution: HV = 1.854 × 9.807 / (0.06199)²",
-          "notes": ""
-        },
-        {
-          "type": "formula",
-          "id": "63fqy09ba18molg6hd6",
-          "latex": "= 18.181 / 0.003843",
+          "latex": "\\text{ Substitution: } HV = 1.854 × \\frac{9.807}{(0.06199)²} = \\frac{18.181}{0.003843}",
           "notes": ""
         },
         {
           "type": "formula",
           "id": "n6lr7lm7pxgmolg6hd6",
-          "latex": "Result: HV ≈ 473",
+          "latex": "\\text{ Result: } HV ≈ 473",
           "notes": ""
         },
         {
           "type": "paragraph",
           "id": "a7y5uy9lc1molg6hd6",
-          "content": "Note: The instrument -reported value is HV = 482. The slight discrepancy between the manual calculation (HV ≈ 473) and the instrument reading arises because the instrument internally applies the full precision formula with the exact diagonal measurements; i n particular, d ₂ may not be exactly equal to d ₁ (noted as \"approximately\" equal in the observation notes). The instrument -reported value (HV = 482) is taken as the primary result, with the manual calculation serving as a cross -check."
+          "content": "Note: The instrument -reported value is HV = 482. The slight discrepancy between the manual calculation (HV ≈ 473) and the instrument reading arises because the instrument internally applies the full precision formula with the exact diagonal measurements; in particular, d ₂ may not be exactly equal to d ₁ (noted as \"approximately\" equal in the observation notes). The instrument -reported value (HV = 482) is taken as the primary result, with the manual calculation serving as a cross-check."
+        },
+        {
+          "type": "heading2",
+          "id": "skeecxa9ut",
+          "content": "8.3 Error Propagation "
         },
         {
           "type": "paragraph",
           "id": "gqizwq52yqmolg6hd7",
-          "content": "8.3 Error Propagation The uncertainty in HV is propagated from the uncertainty in d using the partial derivative method. From Eq. (6):"
+          "content": "The uncertainty in HV is propagated from the uncertainty in d using the partial derivative method. From Eq. (6):"
         },
         {
           "type": "formula",
           "id": "9urqk6nmnwmolg6hd7",
-          "latex": "HV = 1.854 F / d² (6)",
+          "latex": "HV = 1.854 F / d² \\text{ \\text{ \\text{ \\text{ \\text{ \\text{ \\text{ }}}}}}} \\to  \\text{ \\text{ \\text{ \\text{ }}}}(6)",
           "notes": ""
         },
         {
@@ -486,7 +479,7 @@ const DEFAULT_DATA = {
         {
           "type": "formula",
           "id": "ln4l93steipmolg6hd7",
-          "latex": "δHV / HV = 2 × (δd / d) (7)",
+          "latex": "\\frac{δHV}{HV } = 2 × \\frac{δd}{d} \\text{ \\text{ \\text{ \\text{ \\text{ \\text{ }}}}}} \\to \\text{ \\text{ \\text{ }}} (7)",
           "notes": ""
         },
         {
@@ -497,19 +490,13 @@ const DEFAULT_DATA = {
         {
           "type": "formula",
           "id": "pr57ew0lbmrmolg6hd7",
-          "latex": "Formula: δHV/HV = 2 × δd/d",
-          "notes": ""
-        },
-        {
-          "type": "formula",
-          "id": "ypelgk8yllmmolg6hd7",
-          "latex": "Given: δd = 0.5 μm, d = 61.99 μm",
-          "notes": ""
+          "latex": "\\text{ Formula:  }δHV/HV = 2 × δd/d",
+          "notes": "Given: \nδd = 0.5 μm,\nd = 61.99 μm"
         },
         {
           "type": "formula",
           "id": "eeagq93klatmolg6hd7",
-          "latex": "Substitution: δHV/HV = 2 × (0.5 / 61.99) = 2 × 0.00807 = 0.01613",
+          "latex": "\\text{ Substitution: }δHV/HV = 2 × (0.5 / 61.99) = 2 × 0.00807 = 0.01613",
           "notes": ""
         },
         {
@@ -521,7 +508,7 @@ const DEFAULT_DATA = {
         {
           "type": "formula",
           "id": "x6d7jf5585molg6hd7",
-          "latex": "Result: HV = 482 ± 8",
+          "latex": "\\text{ Result: } HV = 482 ± 8",
           "notes": ""
         },
         {
@@ -530,14 +517,19 @@ const DEFAULT_DATA = {
           "content": "This uncertainty (±1.7%) is consistent with the typical reproducibility of Vickers microhardness measurements on homogeneous specimens reported in the literature (±2 – 5%)."
         },
         {
+          "type": "heading1",
+          "id": "q6u98j8fcu",
+          "content": "9. Results and Discussion"
+        },
+        {
           "type": "heading2",
           "id": "yrlj08je0mfmolg6hd7",
-          "content": "9. Results and Discussion"
+          "content": "9.1 Summary of Results "
         },
         {
           "type": "paragraph",
           "id": "1bezu1tmts7molg6hd7",
-          "content": "9.1 Summary of Results Table 4. Summary of calculated and instrument -reported hardness values. Quantity Value Uncertainty Source Mean diagonal, d 61.99 μm ± 0.5 μm Measurement"
+          "content": "Table 4. Summary of calculated and instrument -reported hardness values. Quantity Value Uncertainty Source Mean diagonal, d 61.99 μm ± 0.5 μm Measurement"
         },
         {
           "type": "formula",
@@ -557,67 +549,116 @@ const DEFAULT_DATA = {
           "notes": ""
         },
         {
-          "type": "paragraph",
-          "id": "4tauubreqahmolg6hd7",
-          "content": "Page 6 of 9"
-        },
-        {
-          "type": "paragraph",
-          "id": "rtv47frkilmmolg6hdg",
-          "content": "GCE 3160 — Materials Engineering Laboratory | Vickers Microhardness of Soda -Lime Glass"
+          "type": "heading2",
+          "id": "c1qbra55qvj",
+          "content": "9.2 Comparison with Literature Values "
         },
         {
           "type": "paragraph",
           "id": "9mpon7c4dn6molg6hdg",
-          "content": "9.2 Comparison with Literature Values Published Vickers hardness values for soda -lime silicate glass span a range of approximately 440 to 580 HV, depending on chemical composition, annealing history, and test conditions. Taking a mid -range reference value of HV ₙ ᵈᵉ = 500 HV:"
+          "content": "Published Vickers hardness values for soda -lime silicate glass span a range of approximately 440 to 580 HV, depending on chemical composition, annealing history, and test conditions. Taking a mid -range reference value of HVₙᵉᵉ = 500 HV:"
         },
         {
           "type": "formula",
           "id": "6zabztsf17molg6hdg",
-          "latex": "Formula: % error = |HV ᵉ ˣ ᵖ − HV ᵉᵉ | / HV ᵉᵉ × 100",
-          "notes": ""
-        },
-        {
-          "type": "formula",
-          "id": "kx7r1aui0anmolg6hdg",
-          "latex": "Given: HV ᵉ ˣ ᵖ = 482, HV ᵉᵉ = 500",
-          "notes": ""
+          "latex": "\\text{ Formula: Percentage of error } = \\frac{|HV ᵉ ˣ ᵖ − HV ᵉᵉ |}{ HV ᵉᵉ }× 100",
+          "notes": "Given: \nHV ᵉ ˣ ᵖ = 482, \nHV ᵉᵉ = 500"
         },
         {
           "type": "formula",
           "id": "bc46aav0tb9molg6hdg",
-          "latex": "Result: % error = |482 − 500| / 500 × 100 = 3.6%",
+          "latex": "\\text{ Result: \\text{ \\text{ \\text{ }}} Percentage of error} = |482 − 500| / 500 × 100 = 3.6%",
           "notes": ""
         },
         {
           "type": "paragraph",
           "id": "wkkf6drhu8molg6hdg",
-          "content": "A percent error of 3.6% is well within the expected experimental variability for a single -point microhardness test and falls comfortably inside the published range. The measured HV of 482 is consistent with soda -lime glass of normal annealing state. The instrument -computed HRC value of 47.8 is a conversion provided by the Duramin’s internal lookup table; Rockwell C is not a standard scale for glass and is reported here only for reference, as the HV scale is the physically meaningful quantity for this material class."
+          "content": "A percent error of 3.6% is well within the expected experimental variability for a single -point microhardness test and falls comfortably inside the published range. The measured HV of 482 is consistent with soda-lime glass in a normal annealing state. The instrument -computed HRC value of 47.8 is a conversion provided by Duramin’s internal lookup table; Rockwell C is not a standard scale for glass and is reported here only for reference, as the HV scale is the physically meaningful quantity for this material class."
+        },
+        {
+          "type": "heading2",
+          "id": "ve7nijmg8rl",
+          "content": "9.3 Physical Interpretation "
         },
         {
           "type": "paragraph",
           "id": "48lvzhibhftmolg6hdg",
-          "content": "9.3 Physical Interpretation The measured hardness value of HV 482 (≈4.7 GPa) places soda -lime glass in the category of hard but brittle materials, harder than most engineering polymers and aluminium alloys but softer than engineering ceramics such as alumina (HV ≈ 1,400) or silicon c arbide (HV ≈ 2,500). The hardness reflects the strong covalent – ionic bonding of the SiO ₂ network, which resists the atomic -scale shearing required to accommodate plastic deformation. However, the absence of dislocation -based plasticity means that the mater ial cannot redistribute stress concentrations, leading to brittle fracture rather than ductile failure. The near -equality of the two measured diagonals (d ₁ ≈ d ₂ ) indicates that the glass behaves as an isotropic material at this scale, as expected for the amorphous soda -lime glass network. Significant inequality between diagonals would suggest either surface tilt or crystallographic anisotropy, neither of which was observed."
+          "content": "The measured hardness value of HV 482 (≈4.7 GPa) places soda-lime glass in the category of hard but brittle materials, harder than most engineering polymers and aluminium alloys but softer than engineering ceramics such as alumina (HV ≈ 1,400) or silicon carbide (HV ≈ 2,500). The hardness reflects the strong covalent–ionic bonding of the SiO ₂ network, which resists the atomic-scale shearing required to accommodate plastic deformation. However, the absence of dislocation-based plasticity means that the material cannot redistribute stress concentrations, leading to brittle fracture rather than ductile failure. The near-equality of the two measured diagonals (d ₁ ≈ d ₂ ) indicates that the glass behaves as an isotropic material at this scale, as expected for the amorphous soda-lime glass network. Significant inequality between diagonals would suggest either surface tilt or crystallographic anisotropy, neither of which was observed."
+        },
+        {
+          "type": "heading1",
+          "id": "8kjeexxq4f",
+          "content": "10. Sources of Error and Limitations"
         },
         {
           "type": "heading2",
-          "id": "76vezqqqmfrmolg6hdg",
-          "content": "10. Sources of Error and Limitations"
+          "id": "mqmow7vez7s",
+          "content": "Table 5. Identified sources of error, their effects, and suggested remediation. "
+        },
+        {
+          "type": "table",
+          "id": "kimqh6vmnni",
+          "rows": 7,
+          "cols": 5,
+          "data": [
+            [
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          ],
+          "merges": [],
+          "headerRow": true,
+          "headerCol": false
         },
         {
           "type": "paragraph",
           "id": "ywstf7agrklmolg6hdg",
-          "content": "Table 5. Identified sources of error, their effects, and suggested remediation. Type Source Mechanism Direction of Remediation Effect Systematic Instrument The Duramin’s Overestimate Regular calibration diagonal or calibration measurement system underestimate against certified may have a zero d equally for all reference blocks offset if not calibrated readings (ASTM E92). against a reference block. Systematic Surface Residual surface Generally Polish specimen roughness / micro -roughness overestimates to mirror finish preparation blurs the indentation d, thus (P1200 grit or edges, making underestimates finer); validate diagonal HV. with optical measurement profilometry. imprecise."
-        },
-        {
-          "type": "paragraph",
-          "id": "r400ukrnbdlmolg6hdg",
-          "content": "Page 7 of 9"
-        },
-        {
-          "type": "paragraph",
-          "id": "6vu72wninoimolg6hdo",
-          "content": "GCE 3160 — Materials Engineering Laboratory | Vickers Microhardness of Soda -Lime Glass"
+          "content": "Type Source Mechanism Direction of Remediation Effect Systematic Instrument The Duramin’s Overestimate Regular calibration diagonal or calibration measurement system underestimate against certified may have a zero d equally for all reference blocks offset if not calibrated readings (ASTM E92). against a reference block. Systematic Surface Residual surface Generally Polish specimen roughness / micro -roughness overestimates to mirror finish preparation blurs the indentation d, thus (P1200 grit or edges, making underestimates finer); validate diagonal HV. with optical measurement profilometry. imprecise."
         },
         {
           "type": "paragraph",
@@ -635,16 +676,6 @@ const DEFAULT_DATA = {
           "content": "The objective of this experiment was to determine the Vickers Hardness Number of a soda -lime glass specimen under a 1 kgf applied load using the Struers Duramin microhardness tester. The experiment successfully achieved this objective. Both indentation dia gonals were measured to be 61.99 μm, yielding an instrument -reported hardness of HV = 482 ± 8. Manual verification using Eq. (6) gave HV ≈ 473, in close agreement with the instrument value. The measured hardness falls within the published range for soda -li me glass (440 – 580 HV), with a percent error of 3.6% relative to a mid -range reference value of 500 HV. The result confirms the expected hard and brittle character of glass and validates the suitability of the Vickers microhardness technique as the appropriate hardness method for this class of material. Future work should include a minimum of five indentatio ns at different surface locations to obtain statistically representative hardness data, and the specimen should be examined for indentation -induced cracking to ensure measurement validity."
         },
         {
-          "type": "paragraph",
-          "id": "usp6krp5tjhmolg6hdo",
-          "content": "Page 8 of 9"
-        },
-        {
-          "type": "paragraph",
-          "id": "g3jz1bfk92vmolg6hdr",
-          "content": "GCE 3160 — Materials Engineering Laboratory | Vickers Microhardness of Soda -Lime Glass"
-        },
-        {
           "type": "heading2",
           "id": "p3hrklg0x79molg6hdr",
           "content": "12. References"
@@ -653,11 +684,6 @@ const DEFAULT_DATA = {
           "type": "paragraph",
           "id": "qhape8ia4njmolg6hdr",
           "content": "[1] W. D. Callister and D. G. Rethwisch, Materials Science and Engineering: An Introduction , 10th ed. Hoboken, NJ: Wiley, 2018. [2] ASTM International, “ASTM C1327 -15: Standard Test Method for Vickers Indentation Hardness of Advanced Ceramics,” ASTM International, West Conshohocken, PA, 2015. [3] ASTM International, “ASTM E92 -17: Standard Test Methods for Vickers Hardness and Knoop Hardness of Metallic Materials,” ASTM International, West Conshohocken, PA, 2017. [4] Struers, “Duramin Microhardness Tester User Manual,” Struers ApS, Ballerup, Denmark. [5] B. R. Lawn and T. R. Wilshaw, “Indentation fracture: principles and applications,” Journal of Materials Science , vol. 10, no. 6, pp. 1049 – 1081, 1975. [6] M. H. Manghnani, R. A. Fischer, and A. J. Campbell, “Mechanical properties of glasses,” in Handbook of Glass Properties , N. P. Bansal and R. H. Doremus, Eds. New York: Academic Press, 1986."
-        },
-        {
-          "type": "paragraph",
-          "id": "boegnkmswdcmolg6hdr",
-          "content": "Page 9 of 9"
         }
       ]
     },
