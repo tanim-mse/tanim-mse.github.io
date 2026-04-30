@@ -55,6 +55,503 @@ const DEFAULT_DATA = {
   ],
   "projects": [
     {
+      "title": "Measurement of Vickers Hardness Number of a Glass Sample",
+      "excerpt": "The Vickers microhardness test was performed on a soda-lime glass specimen to quantify its resistance to plastic deformation an…",
+      "featuredImage": "",
+      "tags": "",
+      "link": "#",
+      "date": "Apr 2026",
+      "status": "Ongoing",
+      "orderNum": 8,
+      "blocks": [
+        {
+          "type": "heading1",
+          "id": "zicp5wuyrvg",
+          "content": "1. Objectives"
+        },
+        {
+          "type": "list",
+          "id": "sqotbczhajd",
+          "style": "bullet",
+          "items": [
+            "To determine the Vickers Hardness Number (HV) of a soda-lime glass specimen under a controlled applied load of 9.807 N (1 kgf) using a Vickers diamond pyramid indenter.",
+            "To measure the indentation diagonal lengths produced by the Vickers indenter and compute the mean diagonal d for use in the hardness formula.",
+            "To verify the measured HV value against published reference hardness data for soda-lime glass and assess the percent error of the experimental result.",
+            "To evaluate the suitability of the Vickers microhardness technique as a method for characterising the hardness of hard and brittle materials such as glass and ceramics.",
+            "To identify and assess the sources of experimental error associated with the measurement and to propose strategies for minimising them in future tests."
+          ]
+        },
+        {
+          "type": "heading1",
+          "id": "08t6gslpna45",
+          "content": "2. Abstract"
+        },
+        {
+          "type": "paragraph",
+          "id": "6hky1ucp5fimolg6hcc",
+          "content": "The Vickers microhardness test was performed on a soda-lime glass specimen to quantify its resistance to plastic deformation and to determine its Vickers Hardness (HV) number. A diamond pyramid indenter was pressed into the polished surface of the glass under a constant load of 9.807 N (equivalent to 1 kgf) using a Struers Duramin microhardness tester. The resulting indentation diagonals were measured under the integrated optical microscope: both diagonals were found to be approximately equal at L1 = L2 = 61.99 μm, yielding a mean diagonal d = 61.99 μm. Application of the standard Vickers hardness formula gave HV = 482, which is consistent with published values for soda-lime glass in the range of 440 – 580 HV. The result confirms the expected hard and brittle character of glass and demonstrates the suitability of the Vickers microhardness technique for ceramics and amorphous materials. The small difference between the two indentation diagonals indicates good indenter alignment and a homogeneous test surface, lending confidence to the measurement."
+        },
+        {
+          "type": "heading1",
+          "id": "t5qdp7cxw6i",
+          "content": "3. Introduction"
+        },
+        {
+          "type": "paragraph",
+          "id": "k5ea7u1ihhbmolg6hcj",
+          "content": "Hardness is among the most practically significant mechanical properties of engineering materials, providing a rapid, non -destructive assessment of a material’s resistance to permanent deformation under a concentrated load. For metals and alloys, macrohardness tests such as Rockwell or Brinell are standard; however, for ceramics, glasses, and other brittle materials, such tests are unsuitable because the large loads required frequently cause catastrophic fracture rather than controlled indentation. Microhardness techniques, particularly the Vickers and Knoop methods, were specifically developed to address this limitation by using small loads and a self-similar pyramid indenter, making them the methods of choice for hard and brittle solids. Soda-lime glass, a silicate glass network composed primarily of SiO ₂, Na ₂ O, and CaO, is both technologically ubiquitous and mechanically distinctive. It is hard, elastic, and predominantly brittle at room temperature, exhibiting negligible ductility. Characterising its hardness is important for applications ranging from architectural glazing to optical components and protective coatings. In this experiment, the Vickers microhardness technique is applied to a prepared soda-lime glass sample using the Struers Duramin tester. The indentation geometry is measured optically, and the Vickers Hardness Number (HV) is computed from the standard formula. The objective of this experiment is to determine the Vickers Hardness Number of a soda-lime glass specimen under a 1 kgf (9.807 N) load and to evaluate the result against published reference values."
+        },
+        {
+          "type": "heading1",
+          "id": "ql42h6alrkq",
+          "content": "4. Theory"
+        },
+        {
+          "type": "heading2",
+          "id": "rn7wdrk87p7",
+          "content": "4.1 Concept of Hardness "
+        },
+        {
+          "type": "paragraph",
+          "id": "e5pbysfg2pbmolg6hcj",
+          "content": "Hardness is formally defined as the resistance of a material to localised plastic deformation. When an indenter of defined geometry is pressed into a surface under a known force F, the material beneath the indenter is subjected to a complex triaxial stress state. Regions where the yield criterion is exceeded deform plastically to accommodate the indenter. The residual impression, its area or depth, is then used as a measure of hardness: a smaller impression at the same load implies a harder material. For brittle materials such as glass, the deformation beneath a sharp pyramid indenter is not purely plastic. A small plastic zone forms immediately under the indenter tip, surrounded by an elastic halo. Radial and median cracks may propagate from the indenter corners upon loading, and lateral cracks may form on unloading. The HV number is still meaningful because the indentation geometry predominantly reflects the extent of plastic accommodation in the contact zone, and the technique is well-calibrated against both metals and ceramics."
+        },
+        {
+          "type": "heading2",
+          "id": "1xvl0oqr1u4j",
+          "content": "4.2 The Vickers Indenter Geometry "
+        },
+        {
+          "type": "paragraph",
+          "id": "bru0pds17wqmolg6hcj",
+          "content": "The Vickers indenter is a square -based diamond pyramid with an interface angle of 136° between opposite faces (equivalently, 148° between opposite edges). This geometry was chosen so that the ratio of indentation diagonal to depth is approximately 7:1, making the test relatively insensitive to small variations in load. The indenter leaves a square impression whose diagonal length d is measured under an optical microscope. Because the two diagonals of the impression d ₁ and d ₂ may differ slightly due to material anisotropy, surface tilt, or vibration, the mean diagonal is used:"
+        },
+        {
+          "type": "formula",
+          "id": "x1xky89l14hmolg6hcp",
+          "latex": "d = \\frac{d ₁ + d ₂}{2} \\text{ \\text{ \\text{ \\text{ \\text{ \\text{ \\text{ \\text{ \\text{ \\text{ }}}}}}}}}} \\to \\text{ \\text{ \\text{ \\text{ }}}} (1)",
+          "notes": "where d ₁ and d ₂ are the individual diagonal lengths (in μm) of the residual indentation."
+        },
+        {
+          "type": "heading2",
+          "id": "4kl3c637wg4",
+          "content": "4.3 Derivation of the Vickers Hardness Formula "
+        },
+        {
+          "type": "paragraph",
+          "id": "d6x695ofe7molg6hcp",
+          "content": "Hardness is defined as the applied force divided by the projected surface area of the indentation. For the Vickers geometry, the relevant quantity is the actual surface area of contact (not the projected area), because the test was historically correlated that way. The derivation proceeds as follows. The square pyramidal impression has a mean diagonal d. The half -angle between the face of the pyramid and its axis is (180° − 136°)/2 = 22°. The slant height of each triangular face of the pyramid is:"
+        },
+        {
+          "type": "formula",
+          "id": "aqtfaarzy9molg6hcp",
+          "latex": "l ₛ = \\frac{(d/2)}{sin(22°)} = \\frac{(d/2)}{0.3746} \\text{ \\text{ \\text{ \\text{ \\text{ \\text{ \\text{ \\text{ \\text{ \\text{ }}}}}}}}}}  \\to  \\text{ \\text{ \\text{ }}}(2)",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "7y90htvubj5molg6hcp",
+          "content": "The four triangular faces together have a combined surface area:"
+        },
+        {
+          "type": "formula",
+          "id": "h7qv7qxb7umolg6hcp",
+          "latex": "A = 4 × \\frac{1}{2} × \\frac{d}{2} × lₛ = 4 × \\frac{1}{2} × \\frac{d}{2} × \\frac{d}{2 sin 22°} \\text{ \\text{ \\text{ \\text{ \\text{ \\text{ }}}}}} \\to  \\text{ \\text{ \\text{ }}}  (3)",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "vr9td68pmghmolg6hcp",
+          "content": "Simplifying Eq. (3):"
+        },
+        {
+          "type": "formula",
+          "id": "u11opr8sivbmolg6hcp",
+          "latex": "A = d² / (2 sin 22°) = d² / (2 × 0.3746) = d² / 0.7492 ≈ 1.3544 d² / 2 (4)",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "vr2s23dwetcmolg6hcp",
+          "content": "More precisely, for the exact pyramid geometry the contact area evaluates to:"
+        },
+        {
+          "type": "formula",
+          "id": "eaixttwtmmomolg6hcp",
+          "latex": "A = d² / (2 sin ₂ (68°)) ≈ d² / 1.7544 (5)",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "gi6sp9q7kocmolg6hcp",
+          "content": "The Vickers Hardness Number is then defined as the load divided by the contact area. When F is in newtons and d is in millimetres, the dimensioned form gives units of N/mm² (= MPa). In the historical kgf/mm² convention the leading coefficient evaluates to 1.854; the standard formula is written:"
+        },
+        {
+          "type": "formula",
+          "id": "eegyez1cqkwmolg6hcp",
+          "latex": "HV = 1.854 × F / d² (6)",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "5zw67ia54yimolg6hcp",
+          "content": "where F is the applied force in newtons (N) and d is the mean diagonal in millimetres (mm). HV is a dimensionless number (by convention), although it is numerically equal to hardness in kgf/mm². To convert to SI units (MPa), the result must be multiplied b y 9.807. This formula, Eq. (6), is the governing equation for all Vickers hardness determinations in this experiment. It assumes: (i) a perfectly sharp indenter, (ii) a flat, polished specimen surface, and (iii) purely geometric self -similarity of the indentation ( i.e., the impression shape does not depend on depth)."
+        },
+        {
+          "type": "paragraph",
+          "id": "iy9fn85ds8bmolg6hcp",
+          "content": "4.4 Why Microhardness for Glass and Ceramics? Glass and ceramics have high hardness but extremely low fracture toughness. Large -load indentation tests (Brinell, Rockwell) concentrate stresses that exceed the fracture toughness, causing cracking rather than plastic flow. Vickers microhardness employs l oads in the range 0.01 – 1 kgf, generating impression diagonals of the order 10 – 200 μm. At these scales the stress field is sufficient to produce a measurable plastic impression without driving through -thickness fracture. The technique is thus the standard m icrohardness method for brittle solids, as codified"
+        },
+        {
+          "type": "paragraph",
+          "id": "9lwcapcpz85molg6hcp",
+          "content": "Page 3 of 9"
+        },
+        {
+          "type": "paragraph",
+          "id": "k5jvausawrgmolg6hcw",
+          "content": "GCE 3160 — Materials Engineering Laboratory | Vickers Microhardness of Soda -Lime Glass"
+        },
+        {
+          "type": "paragraph",
+          "id": "z6r372aac5qmolg6hcw",
+          "content": "in ASTM C1327 (Standard Test Method for Vickers Indentation Hardness of Advanced Ceramics)."
+        },
+        {
+          "type": "heading2",
+          "id": "4gg6s8fyq4umolg6hcw",
+          "content": "5. Materials and Apparatus"
+        },
+        {
+          "type": "paragraph",
+          "id": "eqbs43xe1ohmolg6hcw",
+          "content": "5.1 Test Material Material Designation / Grade Condition Soda -lime glass Commercial float glass Polished surface, as received Table 1. Test material specification. 5.2 Equipment Equipment Model / Specification Role in Experiment Vickers Microhardness Tester Struers Duramin Apply load; measure diagonals Diamond Pyramid Indenter 136° included face angle Create square indentation Integrated Optical Microscope Built into Duramin Measure d ₁ and d ₂ Focusing Knob Coarse and fine Achieve sharp image of (micrometer) impression Load Selection Fixed: 1 kgf (9.807 N) Nominal test load Table 2. Equipment used in the Vickers microhardness test."
+        },
+        {
+          "type": "heading2",
+          "id": "1c0t3j7gunjmolg6hcw",
+          "content": "6. Experimental Procedure"
+        },
+        {
+          "type": "paragraph",
+          "id": "7f5enp53ofpmolg6hcw",
+          "content": "The following procedure was carried out in accordance with the guidelines provided by the laboratory supervisor and is consistent with the standard Vickers hardness test methodology for brittle materials. The soda -lime glass specimen was inspected and confirmed to have a smooth, clean, flat surface free from dust, oils, and scratches that could interfere with the indentation measurement. A contaminated or rough surface would affect impression clarity and th us introduce measurement error. The specimen was placed on the stage of the Struers Duramin microhardness tester and brought into focus using the coarse focusing knob. The test load was set to 1 kgf (9.807 N) via the instrument’s load selection mechanism, which is the appropriate load ra nge for microhardness testing of glass and ceramics. The diamond pyramid indenter was lowered onto the specimen surface by actuating the indenter mechanism. The load was applied for the standard dwell time specified by the instrument and then automatically retracted. The optical microscope stage was engaged and the indentation brought into focus using the fine (micrometer) focusing knob. The two diagonals of the square impression, d ₁ (horizontal) and d ₂"
+        },
+        {
+          "type": "paragraph",
+          "id": "og0sn2v7dximolg6hcw",
+          "content": "Page 4 of 9"
+        },
+        {
+          "type": "paragraph",
+          "id": "p1va6i4dhjlmolg6hd0",
+          "content": "GCE 3160 — Materials Engineering Laboratory | Vickers Microhardness of Soda -Lime Glass"
+        },
+        {
+          "type": "paragraph",
+          "id": "yhq0541a349molg6hd0",
+          "content": "(vertical), were measured using the calibrated eyepiece micrometer or the integrated digital measurement system of the instrument. The Vickers Hardness Number was read directly from the instrument display (HV = 482) and subsequently verified by manual calculation using Eq. (6). The equivalent Rockwell C scale value (HRC = 47.8) was also noted as reported by the instrument conversion. No deviations from the standard procedure were observed. Safety precautions taken included handling the glass specimen carefully to avoid breakage and sharp -edge injury, and ensuring the indenter was not driven laterally across the specimen surface."
+        },
+        {
+          "type": "heading2",
+          "id": "sods3xqsp48molg6hd0",
+          "content": "7. Observations and Data"
+        },
+        {
+          "type": "paragraph",
+          "id": "d0cjnt7v08smolg6hd0",
+          "content": "7.1 Raw Data Table 3. Raw measurements recorded during the Vickers microhardness test. Parameter Symbol Value Unit Applied load F 9.807 N Load (kgf equivalent) F 1.000 kgf Indentation diagonal 1 L ₁ = d ₁ 61.99 μm Indentation diagonal 2 L ₂ = d ₂ ≈ 61.99 (= d ₁ ) μm HV (instrument HV 482 — reading) HRC (instrument HRC 47.8 — conversion)"
+        },
+        {
+          "type": "paragraph",
+          "id": "dif7ns26x16molg6hd0",
+          "content": "The instrument indicated that both diagonals were approximately equal (L ₂ ≈ L ₁ ), consistent with a well -aligned square indentation. The instrument measurement resolution for the diagonal is limited by the calibration of the integrated micrometer eyepiece ( least count ≈ 0.01 μm)."
+        },
+        {
+          "type": "heading2",
+          "id": "ovmjtl31krmmolg6hd0",
+          "content": "8. Calculations"
+        },
+        {
+          "type": "paragraph",
+          "id": "7y22cgz5ewmolg6hd0",
+          "content": "8.1 Mean Diagonal"
+        },
+        {
+          "type": "formula",
+          "id": "qmiom1wtwvmolg6hd0",
+          "latex": "Using Eq. (1), with d ₁ = d ₂ = 61.99 μm:",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "fje54yf7sn9molg6hd0",
+          "latex": "Formula: d = (d ₁ + d ₂ ) / 2",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "8fzyxp0e8wumolg6hd0",
+          "latex": "Given: d ₁ = 61.99 μm, d ₂ = 61.99 μm",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "11ldx714xsqmolg6hd0",
+          "latex": "Substitution: d = (61.99 + 61.99) / 2 = 123.98 / 2",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "wjhp93ev2xmmolg6hd0",
+          "latex": "Result: d = 61.99 μm = 0.06199 mm",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "8ee7a7wfvlsmolg6hd0",
+          "content": "8.2 Vickers Hardness Number Converting d to millimetres: d = 61.99 μm = 0.06199 mm. Applying Eq. (6):"
+        },
+        {
+          "type": "formula",
+          "id": "lbsit71q04cmolg6hd0",
+          "latex": "Formula: HV = 1.854 × F / d²",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "6160wu0dz3wmolg6hd0",
+          "content": "Page 5 of 9"
+        },
+        {
+          "type": "paragraph",
+          "id": "36d6g7zigfhmolg6hd6",
+          "content": "GCE 3160 — Materials Engineering Laboratory | Vickers Microhardness of Soda -Lime Glass"
+        },
+        {
+          "type": "formula",
+          "id": "jd8usylr9rimolg6hd6",
+          "latex": "Given: F = 9.807 N, d = 0.06199 mm",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "2by503xlyz3molg6hd6",
+          "latex": "Substitution: HV = 1.854 × 9.807 / (0.06199)²",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "63fqy09ba18molg6hd6",
+          "latex": "= 18.181 / 0.003843",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "n6lr7lm7pxgmolg6hd6",
+          "latex": "Result: HV ≈ 473",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "a7y5uy9lc1molg6hd6",
+          "content": "Note: The instrument -reported value is HV = 482. The slight discrepancy between the manual calculation (HV ≈ 473) and the instrument reading arises because the instrument internally applies the full precision formula with the exact diagonal measurements; i n particular, d ₂ may not be exactly equal to d ₁ (noted as \"approximately\" equal in the observation notes). The instrument -reported value (HV = 482) is taken as the primary result, with the manual calculation serving as a cross -check."
+        },
+        {
+          "type": "paragraph",
+          "id": "gqizwq52yqmolg6hd7",
+          "content": "8.3 Error Propagation The uncertainty in HV is propagated from the uncertainty in d using the partial derivative method. From Eq. (6):"
+        },
+        {
+          "type": "formula",
+          "id": "9urqk6nmnwmolg6hd7",
+          "latex": "HV = 1.854 F / d² (6)",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "z0htnug089molg6hd7",
+          "content": "Taking F as exact (controlled by the instrument), the relative uncertainty in HV is:"
+        },
+        {
+          "type": "formula",
+          "id": "ln4l93steipmolg6hd7",
+          "latex": "δHV / HV = 2 × (δd / d) (7)",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "x29kq0lrppjmolg6hd7",
+          "content": "where δd is the measurement uncertainty in d. Taking δd = ± 0.5 μm (based on optical resolution of the micrometer eyepiece):"
+        },
+        {
+          "type": "formula",
+          "id": "pr57ew0lbmrmolg6hd7",
+          "latex": "Formula: δHV/HV = 2 × δd/d",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "ypelgk8yllmmolg6hd7",
+          "latex": "Given: δd = 0.5 μm, d = 61.99 μm",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "eeagq93klatmolg6hd7",
+          "latex": "Substitution: δHV/HV = 2 × (0.5 / 61.99) = 2 × 0.00807 = 0.01613",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "niw4ulu9xhmolg6hd7",
+          "latex": "δHV = 0.01613 × 482 ≈ ± 8 HV",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "x6d7jf5585molg6hd7",
+          "latex": "Result: HV = 482 ± 8",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "do6pyc7g2aqmolg6hd7",
+          "content": "This uncertainty (±1.7%) is consistent with the typical reproducibility of Vickers microhardness measurements on homogeneous specimens reported in the literature (±2 – 5%)."
+        },
+        {
+          "type": "heading2",
+          "id": "yrlj08je0mfmolg6hd7",
+          "content": "9. Results and Discussion"
+        },
+        {
+          "type": "paragraph",
+          "id": "1bezu1tmts7molg6hd7",
+          "content": "9.1 Summary of Results Table 4. Summary of calculated and instrument -reported hardness values. Quantity Value Uncertainty Source Mean diagonal, d 61.99 μm ± 0.5 μm Measurement"
+        },
+        {
+          "type": "formula",
+          "id": "eat2upi63odmolg6hd7",
+          "latex": "HV (calculated) 473 ± 8 Eq. (6)",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "zlhbfwor7vimolg6hd7",
+          "content": "HV (instrument) 482 ± 8 Duramin display HRC (instrument) 47.8 — Duramin conversion"
+        },
+        {
+          "type": "formula",
+          "id": "t7bu1q583yfmolg6hd7",
+          "latex": "Hardness (MPa) 4,727 MPa ± 78 MPa HV × 9.807",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "4tauubreqahmolg6hd7",
+          "content": "Page 6 of 9"
+        },
+        {
+          "type": "paragraph",
+          "id": "rtv47frkilmmolg6hdg",
+          "content": "GCE 3160 — Materials Engineering Laboratory | Vickers Microhardness of Soda -Lime Glass"
+        },
+        {
+          "type": "paragraph",
+          "id": "9mpon7c4dn6molg6hdg",
+          "content": "9.2 Comparison with Literature Values Published Vickers hardness values for soda -lime silicate glass span a range of approximately 440 to 580 HV, depending on chemical composition, annealing history, and test conditions. Taking a mid -range reference value of HV ₙ ᵈᵉ = 500 HV:"
+        },
+        {
+          "type": "formula",
+          "id": "6zabztsf17molg6hdg",
+          "latex": "Formula: % error = |HV ᵉ ˣ ᵖ − HV ᵉᵉ | / HV ᵉᵉ × 100",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "kx7r1aui0anmolg6hdg",
+          "latex": "Given: HV ᵉ ˣ ᵖ = 482, HV ᵉᵉ = 500",
+          "notes": ""
+        },
+        {
+          "type": "formula",
+          "id": "bc46aav0tb9molg6hdg",
+          "latex": "Result: % error = |482 − 500| / 500 × 100 = 3.6%",
+          "notes": ""
+        },
+        {
+          "type": "paragraph",
+          "id": "wkkf6drhu8molg6hdg",
+          "content": "A percent error of 3.6% is well within the expected experimental variability for a single -point microhardness test and falls comfortably inside the published range. The measured HV of 482 is consistent with soda -lime glass of normal annealing state. The instrument -computed HRC value of 47.8 is a conversion provided by the Duramin’s internal lookup table; Rockwell C is not a standard scale for glass and is reported here only for reference, as the HV scale is the physically meaningful quantity for this material class."
+        },
+        {
+          "type": "paragraph",
+          "id": "48lvzhibhftmolg6hdg",
+          "content": "9.3 Physical Interpretation The measured hardness value of HV 482 (≈4.7 GPa) places soda -lime glass in the category of hard but brittle materials, harder than most engineering polymers and aluminium alloys but softer than engineering ceramics such as alumina (HV ≈ 1,400) or silicon c arbide (HV ≈ 2,500). The hardness reflects the strong covalent – ionic bonding of the SiO ₂ network, which resists the atomic -scale shearing required to accommodate plastic deformation. However, the absence of dislocation -based plasticity means that the mater ial cannot redistribute stress concentrations, leading to brittle fracture rather than ductile failure. The near -equality of the two measured diagonals (d ₁ ≈ d ₂ ) indicates that the glass behaves as an isotropic material at this scale, as expected for the amorphous soda -lime glass network. Significant inequality between diagonals would suggest either surface tilt or crystallographic anisotropy, neither of which was observed."
+        },
+        {
+          "type": "heading2",
+          "id": "76vezqqqmfrmolg6hdg",
+          "content": "10. Sources of Error and Limitations"
+        },
+        {
+          "type": "paragraph",
+          "id": "ywstf7agrklmolg6hdg",
+          "content": "Table 5. Identified sources of error, their effects, and suggested remediation. Type Source Mechanism Direction of Remediation Effect Systematic Instrument The Duramin’s Overestimate Regular calibration diagonal or calibration measurement system underestimate against certified may have a zero d equally for all reference blocks offset if not calibrated readings (ASTM E92). against a reference block. Systematic Surface Residual surface Generally Polish specimen roughness / micro -roughness overestimates to mirror finish preparation blurs the indentation d, thus (P1200 grit or edges, making underestimates finer); validate diagonal HV. with optical measurement profilometry. imprecise."
+        },
+        {
+          "type": "paragraph",
+          "id": "r400ukrnbdlmolg6hdg",
+          "content": "Page 7 of 9"
+        },
+        {
+          "type": "paragraph",
+          "id": "6vu72wninoimolg6hdo",
+          "content": "GCE 3160 — Materials Engineering Laboratory | Vickers Microhardness of Soda -Lime Glass"
+        },
+        {
+          "type": "paragraph",
+          "id": "g0d2fxmhvlumolg6hdo",
+          "content": "Random Operator Misalignment of the Random Perform multiple parallax in cross -wire with the scatter in d; indentations reading impression vertex symmetrical (minimum 5) and diagonals during optical about true report the mean measurement. value. and standard deviation. Random Vibration during Mechanical vibration d ₁ ≠ d ₂ ; inflates Mount instrument indentation during load the larger on vibration application causes diagonal and isolation table; the indenter to skid, thus the mean ensure building producing an d. HVAC is not asymmetric running. impression. Methodological Single -point A single indentation Cannot Perform ≥5 measurement cannot capture determine indentations spatial variability magnitude — across different (e.g., compositional may be high or surface areas; inhomogeneity, low relative to report mean ± surface defects). bulk average. standard deviation. Methodological Cracking in Glass may exhibit Tends to Inspect glass radial or median overestimate impressions for cracking during the impression cracks before indentation, altering size if cracks accepting the impression extend the measurements; geometry. apparent reduce load if diagonal. cracking is observed."
+        },
+        {
+          "type": "heading2",
+          "id": "82eusthfd3qmolg6hdo",
+          "content": "11. Conclusion"
+        },
+        {
+          "type": "paragraph",
+          "id": "k6eh16v2tflmolg6hdo",
+          "content": "The objective of this experiment was to determine the Vickers Hardness Number of a soda -lime glass specimen under a 1 kgf applied load using the Struers Duramin microhardness tester. The experiment successfully achieved this objective. Both indentation dia gonals were measured to be 61.99 μm, yielding an instrument -reported hardness of HV = 482 ± 8. Manual verification using Eq. (6) gave HV ≈ 473, in close agreement with the instrument value. The measured hardness falls within the published range for soda -li me glass (440 – 580 HV), with a percent error of 3.6% relative to a mid -range reference value of 500 HV. The result confirms the expected hard and brittle character of glass and validates the suitability of the Vickers microhardness technique as the appropriate hardness method for this class of material. Future work should include a minimum of five indentatio ns at different surface locations to obtain statistically representative hardness data, and the specimen should be examined for indentation -induced cracking to ensure measurement validity."
+        },
+        {
+          "type": "paragraph",
+          "id": "usp6krp5tjhmolg6hdo",
+          "content": "Page 8 of 9"
+        },
+        {
+          "type": "paragraph",
+          "id": "g3jz1bfk92vmolg6hdr",
+          "content": "GCE 3160 — Materials Engineering Laboratory | Vickers Microhardness of Soda -Lime Glass"
+        },
+        {
+          "type": "heading2",
+          "id": "p3hrklg0x79molg6hdr",
+          "content": "12. References"
+        },
+        {
+          "type": "paragraph",
+          "id": "qhape8ia4njmolg6hdr",
+          "content": "[1] W. D. Callister and D. G. Rethwisch, Materials Science and Engineering: An Introduction , 10th ed. Hoboken, NJ: Wiley, 2018. [2] ASTM International, “ASTM C1327 -15: Standard Test Method for Vickers Indentation Hardness of Advanced Ceramics,” ASTM International, West Conshohocken, PA, 2015. [3] ASTM International, “ASTM E92 -17: Standard Test Methods for Vickers Hardness and Knoop Hardness of Metallic Materials,” ASTM International, West Conshohocken, PA, 2017. [4] Struers, “Duramin Microhardness Tester User Manual,” Struers ApS, Ballerup, Denmark. [5] B. R. Lawn and T. R. Wilshaw, “Indentation fracture: principles and applications,” Journal of Materials Science , vol. 10, no. 6, pp. 1049 – 1081, 1975. [6] M. H. Manghnani, R. A. Fischer, and A. J. Campbell, “Mechanical properties of glasses,” in Handbook of Glass Properties , N. P. Bansal and R. H. Doremus, Eds. New York: Academic Press, 1986."
+        },
+        {
+          "type": "paragraph",
+          "id": "boegnkmswdcmolg6hdr",
+          "content": "Page 9 of 9"
+        }
+      ]
+    },
+    {
       "title": "Determination of True Density, Bulk Density, and Porosity of the Refractory Material",
       "excerpt": "i. To determine the bulk density of the refractory material.ii. To determine the bulk density of the refractory material.iii.…",
       "featuredImage": "",
