@@ -3211,9 +3211,8 @@ const DEFAULT_DATA = {
     }
   ],
   "researchInterests": [
-    "Nanomaterials and Nanotechnology",
     "Sustainable and Green Materials",
-    "Energy Storage Materials"
+    "Biodegradable Materials"
   ],
   "publications": [],
   "email": "tanim97@proton.me",
@@ -3233,15 +3232,7 @@ const DEFAULT_DATA = {
   "formspreeID": "xlgowqby"
 };
 
-function getData() {
-  try {
-    const saved = localStorage.getItem('portfolioData');
-    if (saved) { const parsed = JSON.parse(saved); return deepMerge(DEFAULT_DATA, parsed); }
-  } catch (e) {}
-  return JSON.parse(JSON.stringify(DEFAULT_DATA));
-}
-
-function saveData(data) {
+ function getData() {\n  return JSON.parse(JSON.stringify(DEFAULT_DATA));\n}\n function saveData(data) {
   try { localStorage.setItem('portfolioData', JSON.stringify(data)); return true; } catch(e) { return false; }
 }
 
